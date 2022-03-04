@@ -1,0 +1,2 @@
+// TODO login as the last thing to do
+// TODO structure THE ui/ux

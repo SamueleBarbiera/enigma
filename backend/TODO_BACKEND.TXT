@@ -1,2 +1,2 @@
-//TODO implementa il UUID 
-//TODO IMPLEMENTA UN TIPO CON PIU SCELTE PER IL COLORE E LE TAGLIEW IN PRODOTTI
+// TODO use google,instagram and facebook as providers
+// TODO try to implement refreshTokens

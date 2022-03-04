@@ -1,14 +1,5 @@
-// TODO COLLEGA TUTTI GLI HREF
-// TODO INSTALLA TUTTO SU GATSBY
-// TODO USA USESTATE PER CAMBIARE I COMPONENTI 
-// TODO SUDDIVIDI LE PAGINE IN COMPONENTI PIU PICCOLI!!!!! 
-
-
-// TODO METTI SU TUTTE LE PAGINE LA ICONA E IL NOME
-/*
-<Head>
-    <title>Home</title>
-    <meta name="description" content="Enigma Shop" />
-    <link rel="icon" href="/domanda.ico"  className="h-5 w-5"/>
-</Head>
- */
+// TODO apply all the routes available on the href
+// TODO use ISR to fetch the api data
+// TODO use USESTATE and USECONTEXT 
+// TODO use smallet components 
+// TODO use nextHead for every page
