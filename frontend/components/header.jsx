@@ -12,7 +12,7 @@ export default function Header() {
             <div className="inline-block min-h-2 w-full">
                 {!session && (
                     <>
-                        <span className="absolute pt-4 mx-6 z-10 overflow-hidden inline leading-6 text-ellipsis">You are not signed in</span>
+                        <span className=" pt-4 mx-6 z-10 overflow-hidden inline leading-6 text-ellipsis">You are not signed in</span>
                         <a
                             href={`/api/auth/callback?access_token=${accessToken}`}
                             className="float-right mr-1 font-medium border-1 text-xs  leading-tight p-3 relative z-20"
@@ -27,7 +27,7 @@ export default function Header() {
                 )}
                 {session?.user && (
                     <>
-                        {session.user.image && <span style={{ backgroundImage: `url('${session.user.image}')` }} className="rounded-full" />}
+                        <img className="rounded-full w-12" src={`${session.user.image}`} />
                         <span className="pt-0 ml-6">
                             <small>Signed in as</small>
                             <br />
@@ -47,37 +47,20 @@ export default function Header() {
                 )}
             </div>
             <nav>
-                <ul
-                    className="mb-6 p-0"
-                >
-                    <div className="inline-block space-x-4">
-                        <li>
-                            <Link href="/">
-                                <a>Home</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/client">
-                                <a>Client</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/server">
-                                <a>Server</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/protected">
-                                <a>Protected</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/api-example">
-                                <a>API</a>
-                            </Link>
-                        </li>
-                    </div>
-                </ul>
+                <div className="mb-6 inline-flex space-x-4">
+                    <Link href="/">
+                        <a>Home</a>
+                    </Link>
+                    <Link href="/client">
+                        <a>Client</a>
+                    </Link>
+                    <Link href="/protected">
+                        <a>Protected</a>
+                    </Link>
+                    <Link href="/api-example">
+                        <a>API</a>
+                    </Link>
+                </div>
             </nav>
         </header>
     )

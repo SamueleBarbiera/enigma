@@ -1,8 +1,9 @@
-import Layout from '../components/layout'
 
+import Header from '../components/header'
 export default function ApiExamplePage() {
     return (
-        <Layout>
+        <>
+        <Header />
             <h1>API Example</h1>
             <p>The examples below show responses from the example API endpoints.</p>
             <p>
@@ -14,6 +15,6 @@ export default function ApiExamplePage() {
             <h2>JSON Web Token</h2>
             <p>/api/examples/jwt</p>
             <iframe src="/api/examples/jwt" />
-        </Layout>
+        </>
     )
 }

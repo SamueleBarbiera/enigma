@@ -9,6 +9,7 @@ body {
     overflow-x: hidden;
     @apply overflow-x-hidden;
     scrollbar-width: thin;
+    @apply m-6;
 }
 
 ::-webkit-scrollbar {
@@ -23,31 +24,24 @@ body {
     border-radius: 8%;
 }
 
-body {
-    @apply m-6 ;
-    background: #fff;
-    color: #333;
-  }
-  
-  li,
-  p {
+li,
+p {
     line-height: 1.5rem;
-  }
-  
-  a {
+}
+
+a {
     font-weight: 500;
-  }
-  
-  hr {
+}
+
+hr {
     border: 1px solid #ddd;
-  }
-  
-  iframe {
+}
+
+iframe {
     background: #ccc;
     border: 1px solid #ccc;
     height: 10rem;
     width: 100%;
     border-radius: 0.5rem;
     filter: invert(1);
-  }
-  
+}

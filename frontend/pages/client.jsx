@@ -1,8 +1,9 @@
-import Layout from '../components/layout'
 
+import Header from '../components/header'
 export default function ClientPage() {
     return (
-        <Layout>
+        <>
+        <Header />
             <h1>Client Side Rendering</h1>
             <p>
                 This page uses the <strong>useSession()</strong> React Hook in the <strong>&lt;Header/&gt;</strong> component.
@@ -17,6 +18,6 @@ export default function ClientPage() {
             <p>
                 The disadvantage of <strong>useSession()</strong> is that it requires client side JavaScript.
             </p>
-        </Layout>
+        </>
     )
 }

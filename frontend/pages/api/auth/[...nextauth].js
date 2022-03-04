@@ -18,16 +18,12 @@ export default NextAuth({
     
     database: process.env.NEXT_PUBLIC_DATABASE_URL,
     theme: {
-        colorScheme: 'dark',
+        colorScheme: 'light',
     },
     callbacks: {
         async jwt({ token }) {
             token.userRole = 'admin'
             return token
-        },
-        session: async ({ session, token }) => {
-            session.user = token.user
-            return session
         },
     },
 })
