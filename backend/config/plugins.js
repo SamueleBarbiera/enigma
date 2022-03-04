@@ -79,4 +79,11 @@ module.exports = ({ env }) => ({
         },
     },
     documentation: false,
+    'users-permissions': {
+        config: {
+            jwt: {
+                expiresIn: '7d',
+            },
+        },
+    },
 })
