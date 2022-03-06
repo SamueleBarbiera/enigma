@@ -1,23 +1,21 @@
-import type { NextPage } from 'next'
+//import { config, urlFor } from '../sanity'
+//import { Post } from '../typings'
 import Head from 'next/head'
-import Image from 'next/image'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import SignIn from '../components/SignIn'
 
-const Home: NextPage = () => {
-  return (
-    <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default function Home() {
+    return (
+        <>
+            <Head>
+                <title>Home</title>
+                <link rel="icon" href="/domanda.ico" />
+            </Head>
+            <Header />
 
-      <Header />
-            <div>main</div>
+            <SignIn />
             <Footer />
-      
-    </>
-  )
+        </>
+    )
 }
-
-export default Home

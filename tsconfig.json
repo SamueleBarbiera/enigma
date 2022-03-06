@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -15,6 +19,12 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "pages/api/auth/[...nextauth].js", "admin/schemas/verification-request.js", "admin/schemas/user.js", "admin/schemas/schema.js", "admin/schemas/account.js", "admin/schemas/locale/BlockContent.js", "admin/schemas/locale/String.js", "admin/schemas/locale/supportedLanguages.js", "admin/schemas/locale/Text.js", "admin/schemas/blockContent.js", "admin/schemas/category.js", "admin/schemas/product.js", "admin/schemas/productVariant.js", "admin/schemas/vendor.js", "admin/schemas/schema.js", "sanity.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

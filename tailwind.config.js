@@ -12,6 +12,9 @@ module.exports = {
           '2xl': '1536px',
       },
       extend: {
+        animation: {
+          'pulse-slow': 'pulse 3s easy-in-out',
+        },
           spacing: {
               94: '22rem',
               120: '30rem',

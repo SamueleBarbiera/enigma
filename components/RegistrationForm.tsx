@@ -1,7 +1,7 @@
-export default function RegistrationForm () {
-  return (
-      <>
-          <div>registration</div>
-      </>
-  )
+export default function RegistrationForm() {
+    return (
+        <>
+            <div>registration</div>
+        </>
+    )
 }
