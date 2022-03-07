@@ -1,0 +1,23 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html,
+body {
+    overflow-x: hidden;
+    @apply overflow-x-hidden;
+    scrollbar-width: thin;
+    @apply m-6;
+}
+
+::-webkit-scrollbar {
+    @apply bg-beige-800;
+    width: 6px;
+    height: 6px;
+    border-radius: 8%;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-beige-400;
+    border-radius: 8%;
+}

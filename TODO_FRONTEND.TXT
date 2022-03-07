@@ -1,5 +1,0 @@
-// TODO apply all the routes available on the href
-// TODO use ISR to fetch the api data
-// TODO use USESTATE and USECONTEXT 
-// TODO use smallet components 
-// TODO use nextHead for every page

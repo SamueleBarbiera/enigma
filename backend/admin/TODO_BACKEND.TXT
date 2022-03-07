@@ -1,0 +1,5 @@
+["BUG", "DEV", "TODO", "TEST"]
+
+TODO Auth on the admin sanity pannel
+TODO Security for end users and admins
+TODO Modify the ui of the admin pannel

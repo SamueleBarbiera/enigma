@@ -1,0 +1,11 @@
+["BUG", "DEV", "TODO", "TEST"]
+
+
+TODO structure the ui/ux
+BUG facebook & instagram auth
+TODO apply all the routes available on the href
+TODO use ISR to fetch the api data
+TODO use smallet components 
+TODO use nextHead for every page
+TODO give the possibility to have a checkbox during the checkout to pay at the local store & even retire the product there
+TODO Modify the ui of login on next-auth

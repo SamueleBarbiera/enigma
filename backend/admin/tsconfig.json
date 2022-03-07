@@ -1,0 +1,20 @@
+{
+    "include": [
+        "./node_modules/@sanity/base/types/**/*.ts",
+        "./**/*.ts",
+        "./**/*.tsx",
+        "schemas/vendor.ts",
+        "schemas/productVariant.ts",
+        "schemas/produschemas/verification-request.js",
+        "schemas/user.ts",
+        "schemas/schema.ts",
+        "schemas/account.ts",
+        "schemas/locale/BlockContent.ts",
+        "schemas/locale/String.ts",
+        "schemas/locale/supportedLanguages.ts",
+        "schemas/locale/Text.ts",
+        "schemas/blockContent.ts",
+        "schemas/verification-request.ts",
+        "schemas/schema.ts"
+    ]
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "pages/api/auth/[...nextauth].js", "admin/schemas/verification-request.js", "admin/schemas/user.js", "admin/schemas/schema.js", "admin/schemas/account.js", "admin/schemas/locale/BlockContent.js", "admin/schemas/locale/String.js", "admin/schemas/locale/supportedLanguages.js", "admin/schemas/locale/Text.js", "admin/schemas/blockContent.js", "admin/schemas/category.js", "admin/schemas/product.js", "admin/schemas/productVariant.js", "admin/schemas/vendor.js", "admin/schemas/schema.js", "sanity.js", "pages/_document.tsx", "trusted-security-policies.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,2 +1,0 @@
-// TODO use google,instagram and facebook as providers
-// TODO try to implement refreshTokens
