@@ -1,37 +1,57 @@
-## Welcome to GitHub Pages
+<p align="center">
+<a href=""><img src="/frontend/public/logo.png" width="500px" height="200px"/></a>
+</p>
 
-You can use the [editor on GitHub](https://github.com/SamueleBarbiera/enigma/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+# Enigma Ecommerce Site 🔮
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Frontend ⚡
 
-### Markdown
+-   [**Typescript**](https://www.typescriptlang.org/) Main Lang .ts & .tsx files
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Frontend ⚡
 
-```markdown
-Syntax highlighted code block
+-   [**Next**](https://quasar.dev/) React framework used as the frontend wirh ISR & Next-Auth
+-   [**Tailwind css**](https://tailwindcss.com/) CSS framework implemeented with next
 
-# Header 1
-## Header 2
-### Header 3
+## Backend 👨‍💻
 
-- Bulleted
-- List
+-   [**Sanity**](https://www.sanity.io/) Sanity CMS used as a backend for this jamstack project
 
-1. Numbered
-2. List
+## Deployment 🚧
 
-**Bold** and _Italic_ and `Code` text
+-   [**Vercel**](https://vercel.com/) Cloud platform integrated with sanity
+-   [**CDN**](https://vercel.com/docs/concepts/edge-network/overview) Vercel Edge Network used to deliver content everywhere
 
-[Link](url) and ![Image](src)
-```
+## Standard Api 🎯
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+-   [**GraphQL**](https://graphql.org/) GraphQL apis only used on prod env
+-   [**Groq**](https://www.sanity.io/docs/overview-groq) Standard query lang for sanity cms api
+-   [**Stripe**](https://stripe.com/) Payment api used on the checkout
 
-### Jekyll Themes
+## Database 🧱
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SamueleBarbiera/enigma/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+-   [**Content Lake**](https://www.sanity.io/docs/datastore) Database used by sanity
 
-### Support or Contact
+## Dev&Ops 📦
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+-   [**CI/CD Github Actions**](https://docs.github.com/en/actions) Database used by sanity
+
+# My Socials 🤳
+
+<p align="left">
+<a href="https://www.linkedin.com/in/samuele-antonio-barbiera-bb023320b/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="samuele antonio barbiera" height="30" width="40" /></a>
+<a href="https://stackoverflow.com/users/16105959" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="samuelebarbiera" height="30" width="40" /></a>
+<a href="https://discord.gg/2Wj7hmP6Nf" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="samuele#6396" height="30" width="40" /></a>
+</p>
+
+# Donations 💸
+
+<p align="left">
+  <a href="buymeacoffee.com/?via=samueleb" target="_blank">
+    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" >
+  </a>
+</p>
+
+# License ©️
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
