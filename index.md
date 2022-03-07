@@ -1,5 +1,5 @@
 <p align="center">
-<a href=""><img src="/frontend/public/logo.png" width="500px" height="200px"/></a>
+<a href=""><img src="/logo.png" width="500px" height="200px"/></a>
 </p>
 
 # Enigma Ecommerce Site 🔮
