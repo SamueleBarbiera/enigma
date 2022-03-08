@@ -1,9 +1,7 @@
 import { useSession, signIn, signOut } from 'next-auth/client'
 import Image from 'next/image'
+import { myLoader } from '../pages/_app'
 
-const myLoader = ({ src, width, quality }: any) => {
-    return `${src}?w=${width}&q=${quality || 1}`
-}
 
 export default function Home() {
     const [session, loading] = useSession()

@@ -2,6 +2,7 @@
 
 
 TODO structure the ui/ux
+TODO HEADER & FOOTER UI --> WITH SMALL COMPONENTS!
 BUG facebook & instagram auth
 TODO apply all the routes available on the href
 TODO use ISR to fetch the api data
