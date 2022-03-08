@@ -3,5 +3,6 @@ module.exports = {
     swcMinify: true,
     images: {
         domains: ['cdn.sanity.io', 'lh3.googleusercontent.com'],
+        formats: ['image/avif', 'image/webp'],
     },
 }
