@@ -8,7 +8,7 @@ import productVariant from './productVariant'
 import localeString from './locale/String'
 import localeText from './locale/Text'
 import localeBlockContent from './locale/BlockContent'
-import { user, account, verificationRequest } from '../../../frontend/src/schemas'
+import { user, account, verificationRequest } from '../../frontend/src/schemas'
 
 export default createSchema({
     name: 'default',

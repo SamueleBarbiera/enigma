@@ -21,7 +21,7 @@ export default function Login() {
         <>
             <Head>
                 <title>Login</title>
-                <link rel="icon" href="/domanda.ico" />
+                <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />
             <LoginForm />

@@ -8,7 +8,7 @@ export default function registration() {
         <>
             <Head>
                 <title>Registration</title>
-                <link rel="icon" href="/domanda.ico" />
+                <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />
             <RegistrationForm />
