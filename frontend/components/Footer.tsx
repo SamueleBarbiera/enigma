@@ -4,9 +4,9 @@ import { TiSocialFacebook } from 'react-icons/ti'
 
 const footerNavigation = {
     bottomLinks: [
-        { name: 'Facebook', href: '#', image: <TiSocialFacebook className="-mt-[0.05rem] h-6 w-7" aria-hidden="true" /> },
-        { name: 'Instagram', href: '#', image: <RiInstagramLine className="mt-[0.05rem] h-[1.35rem] w-6" aria-hidden="true" /> },
-        { name: 'Whatsapp', href: '#', image: <AiOutlineWhatsApp className="ml-[0.2rem] mt-[0.05rem] h-[1.35rem] w-6" aria-hidden="true" /> },
+        { name: 'Facebook', href: '#', image: <TiSocialFacebook className="-mt-[0.04rem] h-[1.8rem] w-8" aria-hidden="true" /> },
+        { name: 'Instagram', href: '#', image: <RiInstagramLine className="mt-[0.04rem] h-[1.7rem] w-8" aria-hidden="true" /> },
+        { name: 'Whatsapp', href: '#', image: <AiOutlineWhatsApp className="ml-[0.2rem] h-[1.7rem] w-8" aria-hidden="true" /> },
     ],
 }
 

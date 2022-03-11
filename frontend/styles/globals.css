@@ -20,5 +20,5 @@ body {
 
 ::-webkit-scrollbar-thumb {
     @apply bg-beige-400;
-    border-radius: 8%;
+    border-radius: 10%;
 }

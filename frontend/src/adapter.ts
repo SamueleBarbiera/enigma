@@ -2,11 +2,11 @@ import { Profile, Session } from 'next-auth'
 import { Adapter } from 'next-auth/adapters'
 import { User } from 'next-auth'
 import { getUserByIdQuery, getUserByProviderAccountIdQuery, getUserByEmailQuery, getVerificationRequestQuery } from './queries'
-import { client } from '@sanity/client'
+import { SanityClient } from '@sanity/client'
 import { uuid } from '@sanity/uuid'
 import argon2 from 'argon2'
 
-export const SanityAdapter: Adapter<client, never, User & { id: string }, Profile, Session> = (client) => {
+export const SanityAdapter: Adapter<SanityClient, never, User & { id: string }, Profile, Session> = (client) => {
     return {
         async getAdapter({ secret, logger, ...appOptions }) {
             if (!appOptions.jwt) {
