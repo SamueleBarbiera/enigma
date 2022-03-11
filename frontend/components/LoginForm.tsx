@@ -3,11 +3,17 @@ import { useState, useEffect } from 'react'
 
 export default function LoginForm() {
     const [providers, setProviders] = useState<any>(null)
+    const [index, setIndex] = useState(3)
 
     useEffect(() => {
         ;(async () => {
             const res = await getProviders()
             setProviders(res)
+            if (providers === 'any') {
+                console.log('ok')
+            } else {
+                console.log('bug type Unknown')
+            }
             console.log(res)
         })()
     }, [])
@@ -49,12 +55,20 @@ export default function LoginForm() {
                                 </div>
                             </div>
                             <div className="space-y-6">
-                                <button
-                                    type="submit"
-                                    className="text-medium transiction easy-in-out flex w-full justify-center  rounded-lg border-transparent bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600 "
-                                >
-                                    Accedi
-                                </button>
+                                {() => {
+                                    const selectedProfile = providers.filter((provider: { id: string }) => provider.id == 'sanity-login')
+                                    console.log('ss' + selectedProfile)
+                                    selectedProfile.map((provider: any) => (
+                                        <button
+                                            className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                            onClick={() => {
+                                                signIn(provider.id)
+                                            }}
+                                        >
+                                            Accedi
+                                        </button>
+                                    ))
+                                }}
                             </div>
                         </form>
                         <div className="mt-4">
@@ -68,42 +82,35 @@ export default function LoginForm() {
                             </div>
                             <div className="mt-6 grid grid-cols-2 gap-2">
                                 {providers &&
-                                    Object.values(providers).map((providers) => (
-                                        <div key={providers.name}>
+                                    Object.values(providers).map((provider) => (
+                                        <div key={provider.name}>
                                             <button
                                                 className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
                                                 onClick={() => {
-                                                    signIn(providers.id)
+                                                    signIn(provider.id)
                                                 }}
                                             >
-                                                {providers.name == 'Google' ? (
-                                                    <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                                            <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-                                                        </svg>
-                                                    </svg>
-                                                ) : (
-                                                    <div>Error auth google...</div>
-                                                )}
-                                                {providers.name == 'Facebook' ? (
-                                                    <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                                                            <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-                                                        </svg>
-                                                    </svg>
-                                                ) : (
-                                                    <div>Error auth facebook...</div>
-                                                )}
-                                                {providers.name == 'Credentials' ? (
-                                                    <button
-                                                        type="submit"
-                                                        className="text-medium transiction easy-in-out flex w-full justify-center  rounded-lg border-transparent bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600 "
-                                                    >
-                                                        Accedi
-                                                    </button>
-                                                ) : (
-                                                    <div>Error auth facebook...</div>
-                                                )}
+                                                {(() => {
+                                                    if (provider.name == 'Google') {
+                                                        return (
+                                                            <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                                                    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                                                                </svg>
+                                                            </svg>
+                                                        )
+                                                    } else if (provider.name == 'Facebook') {
+                                                        return (
+                                                            <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                                                                    <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
+                                                                </svg>
+                                                            </svg>
+                                                        )
+                                                    } else {
+                                                        return <p>Accedi</p>
+                                                    }
+                                                })()}
                                             </button>
                                         </div>
                                     ))}
