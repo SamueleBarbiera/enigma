@@ -15,6 +15,11 @@
         "schemas/locale/Text.ts",
         "schemas/blockContent.ts",
         "schemas/verification-request.ts",
+        ["./node_modules/@sanity/base/types/**/*.ts", "./**/*.ts", "./**/*.tsx"],
         "schemas/schema.ts"
-    ]
+    ],
+
+    "compilerOptions": {
+        "jsx": "react"
+    }
 }

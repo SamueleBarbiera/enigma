@@ -5,33 +5,33 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag } from 'react-icons/md'
 import { myLoader } from '../pages/_app'
-import { ChartBarIcon, CursorClickIcon, PhoneIcon, PlayIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
+import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
 import { signIn, signOut, useSession } from 'next-auth/client'
 import { useEffect } from 'react'
 
 const solutions = [
     {
         name: 'Analytics',
-        description: 'Get a better understanding of where your traffic is coming from.',
+        description: 'Get a bett',
         href: '#',
         icon: ChartBarIcon,
     },
     {
         name: 'Engagement',
-        description: 'Speak directly to your customers in a more meaningful way.',
+        description: 'Speak dy.',
         href: '#',
         icon: CursorClickIcon,
     },
-    { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
+    { name: 'Security', description: 'Your custore.', href: '#', icon: ShieldCheckIcon },
     {
         name: 'Integrations',
-        description: "Connect with third-party tools that you're already using.",
+        description: 'Connect witht.',
         href: '#',
         icon: ViewGridIcon,
     },
     {
         name: 'Automations',
-        description: 'Build strategic funnels that will drive your customers to convert',
+        description: 'Build strate',
         href: '#',
         icon: RefreshIcon,
     },
@@ -65,23 +65,12 @@ export default function Header() {
         }
         fetchData()
     }, [session])
-    {
-        /*
-    if (loading) {
-        const button = (
-            loading
-        ? <div className="h-screen">Loading</div>
-        : null
-        )
-    }
-*/
-    }
 
     return (
         <>
             {/* Mobile menu */}
             <Transition.Root show={mobileMenuOpen} as={Fragment}>
-                <Dialog as="div" className="fixed inset-0 z-40 flex lg:hidden" onClose={setMobileMenuOpen}>
+                <Dialog as="div" className="fixed  inset-0 z-40 flex lg:hidden" onClose={setMobileMenuOpen}>
                     <Transition.Child
                         as={Fragment}
                         enter="transition-opacity ease-linear duration-300"
@@ -103,8 +92,8 @@ export default function Header() {
                         leaveFrom="translate-x-0"
                         leaveTo="-translate-x-full"
                     >
-                        <div className="relative flex w-2/3 flex-col overflow-y-auto bg-beige-50 pb-12 shadow-xl md:hidden">
-                            <div className="flex px-4 pt-5 pb-2">
+                        <div className="relative flex w-2/3 flex-col overflow-y-auto bg-beige-50 pb-8 shadow-xl md:hidden">
+                            <div className="flex px-4 pt-5 ">
                                 <button type="button" className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-beige-400" onClick={() => setMobileMenuOpen(false)}>
                                     <XIcon className="h-6 w-6" aria-hidden="true" />
                                 </button>
@@ -178,7 +167,7 @@ export default function Header() {
                                                                     <>
                                                                         <Popover.Button
                                                                             className={classNames(
-                                                                                open ? 'text-beige-900' : 'text-beige-500',
+                                                                                open ? 'text-beige-900' : 'text-beige-800',
                                                                                 'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                             )}
                                                                         >
@@ -196,21 +185,27 @@ export default function Header() {
                                                                             leaveFrom="opacity-100 translate-y-0"
                                                                             leaveTo="opacity-0 translate-y-1"
                                                                         >
-                                                                            <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-72 transform px-2 sm:px-0">
-                                                                                <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                                                                    <div className="relative flex-auto gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                                                    <p>Username: {session!.user!.name}</p>
-                                                                                        <p>Email: {session!.user!.email}</p>
-                                                                                        <Image
-                                                                                            layout="fixed"
-                                                                                            loader={myLoader}
-                                                                                            alt="logo"
-                                                                                            width={50}
-                                                                                            height={50}
-                                                                                            className="rounded-full shadow-2xl"
-                                                                                            src={JSON.stringify(session!.user!.image)}
-                                                                                        />
-                                                                                        <button onClick={() => signOut({ redirect: false })}>Sign Out</button>
+                                                                            <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform px-0">
+                                                                                <div className="overflow-hidden rounded-lg shadow-lg">
+                                                                                    <div className="bg-beige-100 relative px-4  py-6">
+                                                                                        <div className="top-1/2 left-1/2 transform translate-x-16 translate-y-1/4 h-16 w-16 mb-6 ">
+                                                                                            <Image
+                                                                                                src={session!.user!.image}
+                                                                                                alt="User Img"
+                                                                                                loader={myLoader}
+                                                                                                layout="fill" 
+                                                                                                objectFit="contain" 
+                                                                                                className="rounded-full"
+                                                                                            />
+                                                                                        </div>
+                                                                                        <p>{session!.user!.name}</p>
+                                                                                        <p>{session!.user!.email}</p>
+                                                                                        <button
+                                                                                            className="text-medium transiction easy-in-out mt-2 inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                                                                            onClick={() => signOut({ redirect: false })}
+                                                                                        >
+                                                                                            Sign Out
+                                                                                        </button>
                                                                                     </div>
                                                                                 </div>
                                                                             </Popover.Panel>
@@ -250,8 +245,8 @@ export default function Header() {
                                                                     leaveFrom="opacity-100 translate-y-0"
                                                                     leaveTo="opacity-0 translate-y-1"
                                                                 >
-                                                                    <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-72 transform px-2 sm:px-0">
-                                                                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                                                    <Popover.Panel className="z-100 absolute mt-8  w-64 -translate-x-52 transform px-0">
+                                                                        <div className="overflow-hidden rounded-lg shadow-lg ">
                                                                             <div className="relative flex-auto gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                                                                                 {solutions.map((item) => (
                                                                                     <a

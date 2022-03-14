@@ -2,10 +2,9 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import LoginForm from '../components/LoginForm'
 import Head from 'next/head'
-import { useSession, signOut } from 'next-auth/client'
+import { getSession, getProviders } from 'next-auth/client'
 
-export default function Login() {
-    
+export default function Login({ providers }: any) {
     return (
         <>
             <Head>
@@ -13,8 +12,23 @@ export default function Login() {
                 <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />
-            <LoginForm />
+            <LoginForm providers={providers} />
             <Footer />
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const session = await getSession()
+    if (session) {
+        return {
+            redirect: { destination: '/' },
+        }
+    }
+
+    return {
+        props: {
+            providers: await getProviders(),
+        },
+    }
 }
