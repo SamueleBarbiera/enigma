@@ -1,4 +1,4 @@
-import { Provider } from 'next-auth/client'
+import { Provider, useSession } from 'next-auth/client'
 import type { AppProps } from 'next/app'
 import '../styles/globals.css'
 import Head from 'next/head'

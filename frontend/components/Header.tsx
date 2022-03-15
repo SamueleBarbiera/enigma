@@ -6,8 +6,7 @@ import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag } from 'react-icons/md'
 import { myLoader } from '../pages/_app'
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
-import { signIn, signOut, useSession } from 'next-auth/client'
-import { useEffect } from 'react'
+import { useSession, signIn, signOut } from 'next-auth/client'
 
 const solutions = [
     {
@@ -52,19 +51,6 @@ function classNames(...classes: any[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session, loading] = useSession()
-    const [content, setContent] = useState()
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('/api/secret')
-            const json = await res.json()
-
-            if (json.content) {
-                setContent(json.content)
-            }
-        }
-        fetchData()
-    }, [session])
 
     return (
         <>
@@ -187,14 +173,14 @@ export default function Header() {
                                                                         >
                                                                             <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform px-0">
                                                                                 <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                    <div className="bg-beige-100 relative px-4  py-6">
-                                                                                        <div className="top-1/2 left-1/2 transform translate-x-16 translate-y-1/4 h-16 w-16 mb-6 ">
+                                                                                    <div className="relative bg-beige-100 px-6  py-6">
+                                                                                        <div className="relative left-1/4 mb-12 h-16 w-16 translate-x-1/4 translate-y-1/4 transform ">
                                                                                             <Image
                                                                                                 src={session!.user!.image}
                                                                                                 alt="User Img"
                                                                                                 loader={myLoader}
-                                                                                                layout="fill" 
-                                                                                                objectFit="contain" 
+                                                                                                layout="fill"
+                                                                                                objectFit="contain"
                                                                                                 className="rounded-full"
                                                                                             />
                                                                                         </div>

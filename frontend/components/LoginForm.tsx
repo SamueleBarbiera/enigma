@@ -1,46 +1,13 @@
 import { signIn } from 'next-auth/client'
-import { useState } from 'react'
-import { signUp } from '../src/dist/client'
-import { useCurrentUser } from '../pages/libs/sanity'
 
-export default function LoginForm({ providers }: any) {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [name, setName] = useState('')
-    console.log(useCurrentUser)
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
-        const user = await signUp({
-            email,
-            password,
-            name,
-        })
-
-        await signIn('credentials', {
-            redirect: false,
-            email,
-            password,
-        })
-
-        console.log(user)
-    }
-
-    const handleSubmitSignIn = async (e: React.FormEvent) => {
-        e.preventDefault()
-        await signIn('credentials', {
-            redirect: false,
-            email,
-            password,
-        })
-    }
-
+export default function LoginForm({ providers }: any,{csrfToken}:any) {
     return (
         <>
             <div className="flex min-h-screen flex-col justify-center bg-beige-400 px-4 py-6">
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-lg bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-                        <form className="" action="#" method="POST">
+                        <form className="" action="/api/auth/callback/credentials" method="POST">
+                            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
                             <div className="">
                                 <label htmlFor="email" className="text-medium block font-medium text-beige-900">
                                     Email address
@@ -141,22 +108,6 @@ export default function LoginForm({ providers }: any) {
                                             })()}
                                         </div>
                                     ))}
-                            </div>
-                            <div>
-                                <h1>Sign Up</h1>
-                                <form onSubmit={handleSubmit}>
-                                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                    <input type="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                                    <button type="submit">Create Account</button>
-                                </form>
-
-                                <h1>Sign In</h1>
-                                <form onSubmit={handleSubmitSignIn}>
-                                    <input type="email" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                    <button type="submit">Sign In</button>
-                                </form>
                             </div>
                         </div>
                     </div>

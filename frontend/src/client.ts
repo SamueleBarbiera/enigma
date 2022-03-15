@@ -9,7 +9,7 @@ export interface SignUpData {
 }
 
 export const signUp = async (data: SignUpData) => {
-    const res = await axios.post<User>('/api/sanity/signUp', {
+    const res = await axios.post<User>('https://api.sanity.io/v2021-06-07/projects/fxcvqb31/users', {
         ...data,
     })
 
