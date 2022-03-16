@@ -50,7 +50,7 @@ function classNames(...classes: any[]) {
 }
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [session, loading] = useSession()
+    const [session] = useSession()
 
     return (
         <>

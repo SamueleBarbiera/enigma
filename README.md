@@ -1,40 +1,34 @@
 <p align="center">
-<a href=""><img src="/frontend/public/logo.png" width="500px" height="200px"/></a>
+<a href=""><img src="frontend/public/logo.png" width="400px" height="150px"/></a>
 </p>
 
 # Enigma Ecommerce Site 🔮
 
 ## Frontend ⚡
 
--   [**Typescript**](https://www.typescriptlang.org/) Main Lang .ts & .tsx files
-
-## Frontend ⚡
-
--   [**Next**](https://quasar.dev/) React framework used as the frontend wirh ISR & Next-Auth
+-   [**Next**](https://quasar.dev/) React framework used with ISR & Next-Auth & tsx
 -   [**Tailwind css**](https://tailwindcss.com/) CSS framework implemeented with next
 
 ## Backend 👨‍💻
 
--   [**Sanity**](https://www.sanity.io/) Sanity CMS used as a backend for this jamstack project
+-   [**Strapi**](https://www.strapi.io/) Sanity CMS used as a backend for this jamstack project
 
 ## Deployment 🚧
 
--   [**Vercel**](https://vercel.com/) Cloud platform integrated with sanity
--   [**CDN**](https://vercel.com/docs/concepts/edge-network/overview) Vercel Edge Network used to deliver content everywhere
+-   [**AWS**](https://aws.amazon.com/) Cloud platform for backend & frontend deployment
 
 ## Standard Api 🎯
 
--   [**GraphQL**](https://graphql.org/) GraphQL apis only used on prod env
--   [**Groq**](https://www.sanity.io/docs/overview-groq) Standard query lang for sanity cms api
+-   [**GraphQL / Restapis**](https://graphql.org/) Apis used to fetch deta
 -   [**Stripe**](https://stripe.com/) Payment api used on the checkout
 
 ## Database 🧱
 
--   [**Content Lake**](https://www.sanity.io/docs/datastore) Database used by sanity
+-   [**Postgres**](https://www.postgresql.org/) Database used by strapi
 
 ## Dev&Ops 📦
 
--   [**CI/CD Github Actions**](https://docs.github.com/en/actions) Database used by sanity
+-   [**CI/CD Github Actions**](https://docs.github.com/en/actions)
 
 # My Socials 🤳
 

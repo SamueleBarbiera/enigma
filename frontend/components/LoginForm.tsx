@@ -1,67 +1,42 @@
-import { signIn } from 'next-auth/client'
-import { useEffect } from 'react'
+import { getCsrfToken, signIn, useSession } from 'next-auth/client'
+
+export async function getServerSideProps(context: any) {
+    return {
+        props: {
+            csrfToken: await getCsrfToken(context),
+        },
+    }
+}
 
 export default function LoginForm({ providers }: any, { csrfToken }: any) {
-    
+    const [session] = useSession()
     return (
         <>
             <div className="flex min-h-screen flex-col justify-center bg-beige-400 px-4 py-6">
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-lg bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-                        <form className="" action="/api/auth/callback/credentials" method="POST">
+                        <form method="post" action="/api/auth/callback/credentials">
                             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-                            <div className="">
-                                <label htmlFor="email" className="text-medium block font-medium text-beige-900">
-                                    Email address
-                                </label>
-                                <div className="mt-1">
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        required
-                                        className="sm:text-medium block w-full appearance-none rounded-lg border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
-                                    />
-                                </div>
-                            </div>
-                            <div className="pb-4 pt-2">
-                                <label htmlFor="password" className="text-medium block font-medium text-beige-900">
-                                    Password
-                                </label>
-                                <div className="mt-1 outline-0 outline-transparent">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        autoComplete="current-password"
-                                        required
-                                        className="sm:text-medium block w-full appearance-none rounded-lg  border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
-                                    />
-                                </div>
-                            </div>
+                            <label>
+                                Username
+                                <input name="username" type="text" />
+                            </label>
+                            <label>
+                                Password
+                                <input name="password" type="password" />
+                            </label>
                             <div className="space-y-6">
-                                {providers &&
-                                    Object.values(providers).map((provider) => (
-                                        <div key={provider.name}>
-                                            {(() => {
-                                                if (provider.name == 'Credentials') {
-                                                    return (
-                                                        <button
-                                                            className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
-                                                            onClick={() => {
-                                                                signIn(provider.id)
-                                                            }}
-                                                        >
-                                                            Accedi
-                                                        </button>
-                                                    )
-                                                }
-                                            })()}
-                                        </div>
-                                    ))}
+                                <button
+                                    className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                    onClick={() => {
+                                        signIn('credentials')
+                                    }}
+                                >
+                                    Accedi
+                                </button>
                             </div>
                         </form>
+                        {!session ? <>Not signed in</> : <div>{JSON.stringify(session!.user!)}</div>}
                         <div className="mt-4">
                             <div className="relative">
                                 <div className="absolute inset-0 flex items-center border-beige-700">
