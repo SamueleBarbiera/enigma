@@ -10,14 +10,14 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-documentation": "^4.1.1",
-    "@strapi/plugin-i18n": "^4.1.1",
-    "@strapi/plugin-users-permissions": "^4.1.1",
-    "@strapi/strapi": "^4.1.1",
+    "@strapi/plugin-documentation": "^4.1.5",
+    "@strapi/plugin-i18n": "^4.1.5",
+    "@strapi/plugin-users-permissions": "^4.1.5",
+    "@strapi/strapi": "^4.1.5",
     "pg": "8.6.0",
-    "strapi-plugin-redis": "^1.0.0-alpha.1",
-    "strapi-plugin-rest-cache": "^4.0.4",
-    "strapi-provider-rest-cache-redis": "^4.0.4"
+    "strapi-plugin-redis": "^1.0.0-alpha.2",
+    "strapi-plugin-rest-cache": "^4.1.0",
+    "strapi-provider-rest-cache-redis": "^4.1.0"
   },
   "author": {
     "name": "Samuele Barbiera"
