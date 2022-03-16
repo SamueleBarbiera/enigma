@@ -2,9 +2,10 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import LoginForm from '../components/LoginForm'
 import Head from 'next/head'
-import { getCsrfToken, getProviders, getSession } from 'next-auth/client'
+import { getProviders, getSession } from 'next-auth/client'
 
-export default function Login({ providers }: any,{csrfToken}:any) {
+export default function Login({ providers }: any) {
+
     return (
         <>
             <Head>
@@ -12,13 +13,12 @@ export default function Login({ providers }: any,{csrfToken}:any) {
                 <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />
-            <LoginForm providers={providers} csrfToken={csrfToken} />
+            <LoginForm providers={providers} />
             <Footer />
         </>
     )
 }
-
-export async function getServerSideProps() {
+export async function getServerSidePropss() {
     const session = await getSession()
 
     if (session) {
@@ -30,7 +30,6 @@ export async function getServerSideProps() {
     return {
         props: {
             providers: await getProviders(),
-            csrfToken: await getCsrfToken(),
         },
     }
 }
