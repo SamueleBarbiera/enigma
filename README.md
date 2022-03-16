@@ -1,5 +1,5 @@
 <p align="center">
-<a href=""><img src="frontend/public/logo.png" width="400px" height="150px"/></a>
+<a href=""><img src="frontend/public/logo.png" width="400px" height="120px"/></a>
 </p>
 
 # Enigma Ecommerce Site 🔮
@@ -19,7 +19,7 @@
 
 ## Standard Api 🎯
 
--   [**GraphQL / Restapis**](https://graphql.org/) Apis used to fetch deta
+-   [**GraphQL / Rest**](https://graphql.org/) Apis used to fetch deta
 -   [**Stripe**](https://stripe.com/) Payment api used on the checkout
 
 ## Database 🧱
@@ -28,7 +28,7 @@
 
 ## Dev&Ops 📦
 
--   [**CI/CD Github Actions**](https://docs.github.com/en/actions)
+-   [**CI/CD Github Actions**](https://docs.github.com/en/actions) Automations for the deployment and testing phase
 
 # My Socials 🤳
 
