@@ -1,24 +1,11 @@
-import { signIn, useSession } from 'next-auth/client'
-import Router from 'next/router'
-import { useState } from 'react'
-import { HandleSubmitData } from '../pages/Login'
-
 export default function LoginForm({ providers }: any) {
-    const [session] = useSession()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
-    async function handlesubmit() {
-        await HandleSubmitData(email, password)
-        Router.push('/')
-    }
 
     return (
         <>
             <div className="flex min-h-screen flex-col justify-center bg-beige-400 px-4 py-6">
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-lg bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-                        <form className="" method="POST">
+                        <form className="" action="#" method="POST">
                             <div className="">
                                 <label htmlFor="email" className="text-medium block font-medium text-beige-900">
                                     Email address
@@ -30,8 +17,6 @@ export default function LoginForm({ providers }: any) {
                                         type="email"
                                         autoComplete="email"
                                         required
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        value={email}
                                         className="sm:text-medium block w-full appearance-none rounded-lg border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
                                     />
                                 </div>
@@ -47,18 +32,12 @@ export default function LoginForm({ providers }: any) {
                                         type="password"
                                         autoComplete="current-password"
                                         required
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        value={password}
                                         className="sm:text-medium block w-full appearance-none rounded-lg  border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
                                     />
                                 </div>
                             </div>
                             <div className="space-y-6">
-                                <button
-                                    type="button"
-                                    onClick={() => handlesubmit()}
-                                    className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
-                                >
+                                <button className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600">
                                     Accedi
                                 </button>
                             </div>

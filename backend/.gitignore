@@ -75,7 +75,7 @@ package-lock.json
 ############################
 # Tests
 ############################
-
+cypress.env.json
 testApp
 coverage
 

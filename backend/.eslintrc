@@ -1,39 +1,36 @@
 {
   "parser": "babel-eslint",
-  "extends": "eslint:recommended",
   "env": {
     "commonjs": true,
-    "es6": true,
+    "esnext": true,
     "node": true,
     "browser": false
   },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": false
-    },
-    "sourceType": "module"
-  },
+  "extends": ["eslint:recommended", "prettier"],
   "globals": {
-    "strapi": true
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+      "strapi": true
+  },
+  "parserOptions": {
+      "ecmaVersion": "latest",
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "jsx": false
+      },
+      "sourceType": "module"
   },
   "rules": {
-    "indent": [
-      "error",
-      4,
-      {
-        "SwitchCase": 1
-      }
-    ],
-    "key-spacing": [
-      "error",
-      {
-        "singleLine": {
-          "beforeColon": false,
-          "afterColon": true
-        }
-      }
-    ],
-    "quotes": ["error", "single"]
+      "indent": ["error", 4],
+      "key-spacing": [
+          "error",
+          {
+              "singleLine": {
+                  "beforeColon": false,
+                  "afterColon": true
+              }
+          }
+      ],
+      "quotes": ["error", "single"]
   }
 }

@@ -7,6 +7,7 @@ import { MdOutlineShoppingBag } from 'react-icons/md'
 import { myLoader } from '../pages/_app'
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
 import { useSession, signIn, signOut } from 'next-auth/client'
+import { useEffect } from 'react'
 
 const solutions = [
     {
@@ -48,9 +49,10 @@ const navigation = {
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
-export default function Header() {
+export default function Header({ handlesubmit }: any) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
+        console.log('USER STATE --> ' + handlesubmit)
 
     return (
         <>
@@ -138,14 +140,14 @@ export default function Header() {
                                         </div>
 
                                         {/* Logo (lg-) */}
-                                        <a href="#" className="hidden">
+                                        <a href="/" className="hidden">
                                             <Image width={2} height={36} loader={myLoader} src={'/domanda.png'} alt="" />
                                         </a>
 
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="flex items-center lg:ml-8">
                                                 {/* Help */}
-                                                <a href="#" className="p-2 text-beige-900 ">
+                                                <a href="/Login" className="p-2 text-beige-900 ">
                                                     {session ? (
                                                         <div className="ml-4 mt-[0.4rem] flow-root">
                                                             <Popover className="relative">
@@ -157,7 +159,7 @@ export default function Header() {
                                                                                 'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                             )}
                                                                         >
-                                                                            <a href="#" className="group -m-2 flex items-center p-2">
+                                                                            <a className="group -m-2 flex items-center p-2">
                                                                                 <FaRegUser className="h-5 w-5" aria-hidden="true" />
                                                                             </a>
                                                                         </Popover.Button>
@@ -203,6 +205,53 @@ export default function Header() {
                                                     ) : (
                                                         <button onClick={() => signIn()}>Sign In</button>
                                                     )}
+                                                    {handlesubmit ? (
+                                                        <div className="ml-4 mt-[0.4rem] flow-root">
+                                                            <Popover className="relative">
+                                                                {({ open }) => (
+                                                                    <>
+                                                                        <Popover.Button
+                                                                            className={classNames(
+                                                                                open ? 'text-beige-900' : 'text-beige-800',
+                                                                                'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
+                                                                            )}
+                                                                        >
+                                                                            <a className="group -m-2 flex items-center p-2">
+                                                                                <FaRegUser className="h-5 w-5" aria-hidden="true" />
+                                                                            </a>
+                                                                        </Popover.Button>
+
+                                                                        <Transition
+                                                                            as={Fragment}
+                                                                            enter="transition ease-out duration-200"
+                                                                            enterFrom="opacity-0 translate-y-1"
+                                                                            enterTo="opacity-100 translate-y-0"
+                                                                            leave="transition ease-in duration-150"
+                                                                            leaveFrom="opacity-100 translate-y-0"
+                                                                            leaveTo="opacity-0 translate-y-1"
+                                                                        >
+                                                                            <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform px-0">
+                                                                                <div className="overflow-hidden rounded-lg shadow-lg">
+                                                                                    <div className="relative bg-beige-100 px-6  py-6">
+                                                                                        <p>{handlesubmit!.user!.username}</p>
+                                                                                        <p>{handlesubmit!.user!.email}</p>
+                                                                                        <button
+                                                                                            className="text-medium transiction easy-in-out mt-2 inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                                                                            onClick={() => signOut({ redirect: false })}
+                                                                                        >
+                                                                                            Sign Out
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </Popover.Panel>
+                                                                        </Transition>
+                                                                    </>
+                                                                )}
+                                                            </Popover>
+                                                        </div>
+                                                    ) : (
+                                                        <button onClick={() => signIn()}>Sign In</button>
+                                                    )}
                                                 </a>
 
                                                 {/* Cart */}
@@ -216,7 +265,7 @@ export default function Header() {
                                                                         'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                     )}
                                                                 >
-                                                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                                                    <a className="group -m-2 flex items-center p-2">
                                                                         <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
                                                                         <span className="ml-2 text-sm font-medium text-beige-900">0</span>
                                                                     </a>
