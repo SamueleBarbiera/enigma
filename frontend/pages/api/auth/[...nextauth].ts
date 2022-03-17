@@ -75,6 +75,7 @@ export const options: NextAuthOptions = {
                 token.id = data.user?.id
                 token.username = data.user?.username
                 token.email = data.user?.email
+                console.log(token)
             } else {
                 console.log('ERROR USER RES SESSION')
             }

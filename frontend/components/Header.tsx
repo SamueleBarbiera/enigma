@@ -7,7 +7,6 @@ import { MdOutlineShoppingBag } from 'react-icons/md'
 import { myLoader } from '../pages/_app'
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
 import { useSession, signIn, signOut } from 'next-auth/client'
-import { useEffect } from 'react'
 
 const solutions = [
     {
@@ -49,10 +48,10 @@ const navigation = {
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
-export default function Header({ handlesubmit }: any) {
+export default function Header({handlesubmit}: any) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
-        console.log('USER STATE --> ' + handlesubmit)
+    console.log(handlesubmit)
 
     return (
         <>
@@ -140,14 +139,14 @@ export default function Header({ handlesubmit }: any) {
                                         </div>
 
                                         {/* Logo (lg-) */}
-                                        <a href="/" className="hidden">
+                                        <a href="#" className="hidden">
                                             <Image width={2} height={36} loader={myLoader} src={'/domanda.png'} alt="" />
                                         </a>
 
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="flex items-center lg:ml-8">
                                                 {/* Help */}
-                                                <a href="/Login" className="p-2 text-beige-900 ">
+                                                <a href="#" className="p-2 text-beige-900 ">
                                                     {session ? (
                                                         <div className="ml-4 mt-[0.4rem] flow-root">
                                                             <Popover className="relative">
@@ -159,7 +158,7 @@ export default function Header({ handlesubmit }: any) {
                                                                                 'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                             )}
                                                                         >
-                                                                            <a className="group -m-2 flex items-center p-2">
+                                                                            <a href="#" className="group -m-2 flex items-center p-2">
                                                                                 <FaRegUser className="h-5 w-5" aria-hidden="true" />
                                                                             </a>
                                                                         </Popover.Button>
@@ -216,7 +215,7 @@ export default function Header({ handlesubmit }: any) {
                                                                                 'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                             )}
                                                                         >
-                                                                            <a className="group -m-2 flex items-center p-2">
+                                                                            <a href="#" className="group -m-2 flex items-center p-2">
                                                                                 <FaRegUser className="h-5 w-5" aria-hidden="true" />
                                                                             </a>
                                                                         </Popover.Button>
@@ -265,7 +264,7 @@ export default function Header({ handlesubmit }: any) {
                                                                         'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                     )}
                                                                 >
-                                                                    <a className="group -m-2 flex items-center p-2">
+                                                                    <a href="#" className="group -m-2 flex items-center p-2">
                                                                         <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
                                                                         <span className="ml-2 text-sm font-medium text-beige-900">0</span>
                                                                     </a>
