@@ -60,7 +60,7 @@ export default function Header() {
 
     const refreshPage = () => {
         localStorage.setItem('email user local auth', 'null')
-        //window.location.reload()
+        window.location.reload()
     }
     console.log(value)
 
