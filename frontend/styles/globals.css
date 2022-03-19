@@ -16,13 +16,13 @@ body {
 }
 
 ::-webkit-scrollbar {
-    @apply bg-beige-800;
+    @apply bg-beige-700;
     width: 6px;
     height: 6px;
-    border-radius: 8%;
+    border-radius: 0%;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-beige-400;
-    border-radius: 10%;
+    @apply bg-beige-300;
+    border-radius: 0%;
 }

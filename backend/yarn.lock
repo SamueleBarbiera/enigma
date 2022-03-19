@@ -1417,6 +1417,17 @@
     "@sentry/utils" "6.3.0"
     "tslib" "^1.9.3"
 
+"@sentry/core@6.7.1":
+  "integrity" "sha512-VAv8OR/7INn2JfiLcuop4hfDcyC7mfL9fdPndQEhlacjmw8gRrgXjR7qyhnCTgzFLkHI7V5bcdIzA83TRPYQpA=="
+  "resolved" "https://registry.npmjs.org/@sentry/core/-/core-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/hub" "6.7.1"
+    "@sentry/minimal" "6.7.1"
+    "@sentry/types" "6.7.1"
+    "@sentry/utils" "6.7.1"
+    "tslib" "^1.9.3"
+
 "@sentry/hub@6.3.0":
   "integrity" "sha512-lAnW3Om66t9IR+t1wya1NpOF9lGbvYG6Ca8wxJJGJ1t2PxKwyxpZKzRx0q8M1QFhlZ5cETCzxmM7lBEZ4QVCBg=="
   "resolved" "https://registry.npmjs.org/@sentry/hub/-/hub-6.3.0.tgz"
@@ -1426,6 +1437,15 @@
     "@sentry/utils" "6.3.0"
     "tslib" "^1.9.3"
 
+"@sentry/hub@6.7.1":
+  "integrity" "sha512-eVCTWvvcp6xa0A5GGNHMQEWslmKPlisE5rGmsV/kjvSUv3zSrI0eIDfb51ikdnCiBjHpK2NBWP8Vy8cZOEJegg=="
+  "resolved" "https://registry.npmjs.org/@sentry/hub/-/hub-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/types" "6.7.1"
+    "@sentry/utils" "6.7.1"
+    "tslib" "^1.9.3"
+
 "@sentry/minimal@6.3.0":
   "integrity" "sha512-ZdPUwdPQkaKroy67NkwQRqmnfKyd/C1OyouM9IqYKyBjAInjOijwwc/Rd91PMHalvCOGfp1scNZYbZ+YFs/qQQ=="
   "resolved" "https://registry.npmjs.org/@sentry/minimal/-/minimal-6.3.0.tgz"
@@ -1433,6 +1453,15 @@
   dependencies:
     "@sentry/hub" "6.3.0"
     "@sentry/types" "6.3.0"
+    "tslib" "^1.9.3"
+
+"@sentry/minimal@6.7.1":
+  "integrity" "sha512-HDDPEnQRD6hC0qaHdqqKDStcdE1KhkFh0RCtJNMCDn0zpav8Dj9AteF70x6kLSlliAJ/JFwi6AmQrLz+FxPexw=="
+  "resolved" "https://registry.npmjs.org/@sentry/minimal/-/minimal-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/hub" "6.7.1"
+    "@sentry/types" "6.7.1"
     "tslib" "^1.9.3"
 
 "@sentry/node@6.3.0":
@@ -1450,6 +1479,21 @@
     "lru_map" "^0.3.3"
     "tslib" "^1.9.3"
 
+"@sentry/node@6.7.1":
+  "integrity" "sha512-rtZo1O8ROv4lZwuljQz3iFZW89oXSlgXCG2VqkxQyRspPWu89abROpxLjYzsWwQ8djnur1XjFv51kOLDUTS6Qw=="
+  "resolved" "https://registry.npmjs.org/@sentry/node/-/node-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/core" "6.7.1"
+    "@sentry/hub" "6.7.1"
+    "@sentry/tracing" "6.7.1"
+    "@sentry/types" "6.7.1"
+    "@sentry/utils" "6.7.1"
+    "cookie" "^0.4.1"
+    "https-proxy-agent" "^5.0.0"
+    "lru_map" "^0.3.3"
+    "tslib" "^1.9.3"
+
 "@sentry/tracing@6.3.0":
   "integrity" "sha512-3UNGgQOrDKBoDqLc4vt+0n27Zv3lbNEoCbBydq4IvGfuYq7ozWMsaTcelsotMsd4ckDuOEh8V/nJTqrDjvL76g=="
   "resolved" "https://registry.npmjs.org/@sentry/tracing/-/tracing-6.3.0.tgz"
@@ -1461,10 +1505,26 @@
     "@sentry/utils" "6.3.0"
     "tslib" "^1.9.3"
 
+"@sentry/tracing@6.7.1":
+  "integrity" "sha512-wyS3nWNl5mzaC1qZ2AIp1hjXnfO9EERjMIJjCihs2LWBz1r3efxrHxJHs8wXlNWvrT3KLhq/7vvF5CdU82uPeQ=="
+  "resolved" "https://registry.npmjs.org/@sentry/tracing/-/tracing-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/hub" "6.7.1"
+    "@sentry/minimal" "6.7.1"
+    "@sentry/types" "6.7.1"
+    "@sentry/utils" "6.7.1"
+    "tslib" "^1.9.3"
+
 "@sentry/types@6.3.0":
   "integrity" "sha512-xWyCYDmFPjS5ex60kxOOHbHEs4vs00qHbm0iShQfjl4OSg9S2azkcWofDmX8Xbn0FSOUXgdPCjNJW1B0bPVhCA=="
   "resolved" "https://registry.npmjs.org/@sentry/types/-/types-6.3.0.tgz"
   "version" "6.3.0"
+
+"@sentry/types@6.7.1":
+  "integrity" "sha512-9AO7HKoip2MBMNQJEd6+AKtjj2+q9Ze4ooWUdEvdOVSt5drg7BGpK221/p9JEOyJAZwEPEXdcMd3VAIMiOb4MA=="
+  "resolved" "https://registry.npmjs.org/@sentry/types/-/types-6.7.1.tgz"
+  "version" "6.7.1"
 
 "@sentry/utils@6.3.0":
   "integrity" "sha512-NZzw4oLelgvCsVBG2e+ZtFtaBvgA7rZYtcGFbZTphhAlYoJ6JMCQUzYk0iwJK79yR1quh510x4UE0jynvvToWg=="
@@ -1472,6 +1532,14 @@
   "version" "6.3.0"
   dependencies:
     "@sentry/types" "6.3.0"
+    "tslib" "^1.9.3"
+
+"@sentry/utils@6.7.1":
+  "integrity" "sha512-Tq2otdbWlHAkctD+EWTYKkEx6BL1Qn3Z/imkO06/PvzpWvVhJWQ5qHAzz5XnwwqNHyV03KVzYB6znq1Bea9HuA=="
+  "resolved" "https://registry.npmjs.org/@sentry/utils/-/utils-6.7.1.tgz"
+  "version" "6.7.1"
+  dependencies:
+    "@sentry/types" "6.7.1"
     "tslib" "^1.9.3"
 
 "@sindresorhus/is@^4.0.0":
@@ -1774,6 +1842,13 @@
   dependencies:
     "@strapi/utils" "4.1.5"
     "lodash" "4.17.21"
+
+"@strapi/plugin-sentry@^4.1.5":
+  "integrity" "sha512-zI/LHJ9Xm2eBA+TFTf+PR4353kPVpmCwdsHlVX1FMpBl0TJtZvyWpJGibLL88qFKp3c1qQQSQYDFfmYOTF4/LA=="
+  "resolved" "https://registry.npmjs.org/@strapi/plugin-sentry/-/plugin-sentry-4.1.5.tgz"
+  "version" "4.1.5"
+  dependencies:
+    "@sentry/node" "6.7.1"
 
 "@strapi/plugin-seo@^1.7.2":
   "integrity" "sha512-1c0ZbAKDoje07E2tZeyejq1jvmu6veo0sfPK39n8reZNmHfa/xMjcc6EOH1Po5qQGSlOviswj2uizUCMiXB97A=="

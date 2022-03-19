@@ -134,6 +134,14 @@ module.exports = ({ env }) => ({
             },
         },
     },
+    sentry: {
+        enabled: true,
+        //enabled: env('NODE_ENV') === 'production',
+        config: {
+            dsn: env('https://c19753e72b914a25960e2497ce04d983@o1171060.ingest.sentry.io/6265122'),
+            sendMetadata: true,
+        },
+    },
     'email-designer': {
         enabled: true,
         config: {
