@@ -5,6 +5,7 @@ import { useState, useContext } from 'react'
 import { useCallback } from 'react'
 import UserContext from '../context/UserContext'
 
+
 export default function LoginForm({ providers }: any) {
     const [session] = useSession()
     const [email, setEmail] = useState('')
@@ -111,15 +112,15 @@ export default function LoginForm({ providers }: any) {
                             </div>
                             <div className="mt-5 grid grid-cols-2 gap-2">
                                 {providers &&
-                                    Object.values(providers).map((provider) => (
-                                        <div key={provider.name}>
+                                    Object.values(providers).map((providers) => (
+                                        <div key={(providers as any).name}>
                                             {(() => {
-                                                if (provider.name == 'Google') {
+                                                if ((providers as any).name == 'Google') {
                                                     return (
                                                         <button
                                                             className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn(provider.id)
+                                                                signIn((providers as any).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -129,12 +130,12 @@ export default function LoginForm({ providers }: any) {
                                                             </svg>
                                                         </button>
                                                     )
-                                                } else if (provider.name == 'Facebook') {
+                                                } else if ((providers as any).name == 'Facebook') {
                                                     return (
                                                         <button
                                                             className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn(provider.id)
+                                                                signIn((providers as any).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

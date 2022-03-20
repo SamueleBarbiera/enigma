@@ -1,47 +1,200 @@
+import axios from 'axios'
+import { signIn } from 'next-auth/client'
+import { useRef, useState, useEffect } from 'react'
+import { IoCloseOutline, IoInformationSharp } from 'react-icons/io5'
+import { FcCheckmark } from 'react-icons/fc'
+import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+const EMAIL_REGEX =
+    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+
 export default function LoginForm({ providers }: any) {
+    const userRef = useRef(null)
+    const errRef = useRef(null)
+    const [user, setUser] = useState('')
+    const [validName, setValidName] = useState(false)
+    const [userFocus, setUserFocus] = useState(false)
+    const [pwd, setPwd] = useState('')
+    const [validPwd, setValidPwd] = useState(false)
+    const [pwdFocus, setPwdFocus] = useState(false)
+    const [matchPwd, setMatchPwd] = useState('')
+    const [validMatch, setValidMatch] = useState(false)
+    const [matchFocus, setMatchFocus] = useState(false)
+    const [email, setEmail] = useState('')
+    const [validEmail, setValidEmail] = useState(false)
+    const [emailFocus, setEmailFocus] = useState(false)
+
+    const [errMsg, setErrMsg] = useState('')
+    const [success, setSuccess] = useState(false)
+
+    useEffect(() => {
+        ;(userRef.current as any).focus()
+    }, [])
+
+    useEffect(() => {
+        setValidEmail(USER_REGEX.test(user))
+    }, [user])
+
+    useEffect(() => {
+        setValidName(EMAIL_REGEX.test(email))
+    }, [email])
+
+    useEffect(() => {
+        setValidPwd(PWD_REGEX.test(pwd))
+        setValidMatch(pwd === matchPwd)
+    }, [pwd, matchPwd])
+
+    useEffect(() => {
+        setErrMsg('')
+    }, [user, pwd, email, matchPwd])
+
+    const handleSubmit = async (e: { preventDefault: () => void }) => {
+        e.preventDefault()
+        // if button enabled with JS hack
+        const v1 = USER_REGEX.test(user)
+        const v2 = PWD_REGEX.test(pwd)
+        const v3 = EMAIL_REGEX.test(email)
+        if (!v1 || !v2) {
+            setErrMsg('Invalid Entry')
+            return
+        }
+        try {
+            const response = await axios.post('http://localhost:1337/auth/local/register', JSON.stringify({ username: user, email: email, password: pwd }), {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true,
+            })
+            console.log(response?.data)
+            console.log(response?.data.jwt)
+            console.log(JSON.stringify(response))
+            setSuccess(true)
+            //clear state and controlled inputs
+            //need value attrib on inputs for this
+            setUser('')
+            setPwd('')
+            setMatchPwd('')
+        } catch (err) {
+            if ((!err as any)?.response) {
+                setErrMsg('No Server Response')
+            } else if ((err as any).response?.status === 405) {
+                setErrMsg('Username Taken')
+            } else {
+                setErrMsg('Registration Failed')
+            }
+            ;(errRef.current as any).focus()
+        }
+    }
 
     return (
         <>
             <div className="flex min-h-screen flex-col justify-center bg-beige-400 px-4 py-6">
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-lg bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-                        <form className="" action="#" method="POST">
-                            <div className="">
-                                <label htmlFor="email" className="text-medium block font-medium text-beige-900">
-                                    Email address
-                                </label>
-                                <div className="mt-1">
+                        {success ? (
+                            <section>
+                                <h1>Success!</h1>
+                                <p>
+                                    <a href="#">Sign In</a>
+                                </p>
+                            </section>
+                        ) : (
+                            <section>
+                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen easy-in-out transition duration-300'} aria-live="assertive">
+                                    {errMsg}
+                                </p>
+                                <form onSubmit={handleSubmit} className="flex flex-col">
+                                    <label htmlFor="password" className="mb-2 flex flex-auto justify-between">
+                                        Email
+                                        <FcCheckmark className={validEmail ? 'valid' : 'hidden'} />
+                                        <IoCloseOutline className={validEmail || !email ? 'hidden' : 'invalid'} />
+                                    </label>
                                     <input
-                                        id="email"
-                                        name="email"
                                         type="email"
-                                        autoComplete="email"
+                                        id="email"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={email}
+                                        placeholder="Inserisci una email valida 🔎"
                                         required
-                                        className="sm:text-medium block w-full appearance-none rounded-lg border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
+                                        aria-invalid={validEmail ? 'false' : 'true'}
+                                        aria-describedby="emailnote"
+                                        onFocus={() => setEmailFocus(true)}
+                                        onBlur={() => setEmailFocus(false)}
                                     />
-                                </div>
-                            </div>
-                            <div className="pb-4 pt-2">
-                                <label htmlFor="password" className="text-medium block font-medium text-beige-900">
-                                    Password
-                                </label>
-                                <div className="mt-1 outline-0 outline-transparent">
+                                    <label htmlFor="username" className="mb-2 flex flex-auto justify-between">
+                                        Username
+                                        <FcCheckmark className={validName ? 'valid' : 'hidden'} />
+                                        <IoCloseOutline className={validName || !user ? 'hidden' : 'invalid'} />
+                                    </label>
                                     <input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        autoComplete="current-password"
+                                        type="text"
+                                        id="username"
+                                        ref={userRef}
+                                        autoComplete="off"
+                                        placeholder="Da 4 a 24, [a-z, A-Z, 0-9] 📝"
+                                        onChange={(e) => setUser(e.target.value)}
+                                        value={user}
                                         required
-                                        className="sm:text-medium block w-full appearance-none rounded-lg  border-0 px-2  py-2 shadow-lg outline-0  outline-transparent"
+                                        aria-invalid={validName ? 'false' : 'true'}
+                                        aria-describedby="uidnote"
+                                        onFocus={() => setUserFocus(true)}
+                                        onBlur={() => setUserFocus(false)}
                                     />
-                                </div>
-                            </div>
-                            <div className="space-y-6">
-                                <button className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600">
-                                    Accedi
-                                </button>
-                            </div>
-                        </form>
+
+                                    <label htmlFor="email" className="mb-2 flex flex-auto justify-between">
+                                        Password
+                                        <FcCheckmark className={validMatch && matchPwd ? 'valid' : 'hidden'} />
+                                        <IoCloseOutline className={validMatch || !matchPwd ? 'hidden' : 'invalid'} />
+                                    </label>
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        onChange={(e) => setPwd(e.target.value)}
+                                        value={pwd}
+                                        placeholder="Da 8 a 24, [a-z, A-Z, 0-9] 🔐"
+                                        required
+                                        aria-invalid={validPwd ? 'false' : 'true'}
+                                        aria-describedby="pwdnote"
+                                        onFocus={() => setPwdFocus(true)}
+                                        onBlur={() => setPwdFocus(false)}
+                                    />
+
+                                    <label htmlFor="confirm_pwd" className="mb-2 flex flex-auto justify-between">
+                                        Confirm Password
+                                        <FcCheckmark className={validMatch && matchPwd ? 'valid' : 'hidden'} />
+                                        <IoCloseOutline className={validMatch || !matchPwd ? 'hidden' : 'invalid'} />
+                                    </label>
+                                    <input
+                                        type="password"
+                                        id="confirm_pwd"
+                                        onChange={(e) => setMatchPwd(e.target.value)}
+                                        value={matchPwd}
+                                        placeholder="Uguale alla password inserita ☝️"
+                                        required
+                                        aria-invalid={validMatch ? 'false' : 'true'}
+                                        aria-describedby="confirmnote"
+                                        onFocus={() => setMatchFocus(true)}
+                                        onBlur={() => setMatchFocus(false)}
+                                    />
+
+                                    <button
+                                        className=" text-medium transiction easy-in-out mt-8 inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                        disabled={!validName || !validPwd ||!validEmail || !validMatch ? true : false}
+                                    >
+                                        Registrati
+                                    </button>
+                                </form>
+                                <p className="mx-1 mt-4 flex flex-row justify-between">
+                                    Ti sei già registrato?
+                                    <br />
+                                    <span className="line text-beige-900">
+                                        {/*put router link here*/}
+                                        <Link href="/Login">Sign In</Link>
+                                    </span>
+                                </p>
+                            </section>
+                        )}
                         <div className="mt-4">
                             <div className="relative">
                                 <div className="absolute inset-0 flex items-center border-beige-700">
@@ -54,14 +207,14 @@ export default function LoginForm({ providers }: any) {
                             <div className="mt-5 grid grid-cols-2 gap-2">
                                 {providers &&
                                     Object.values(providers).map((provider) => (
-                                        <div key={provider.name}>
+                                        <div key={(provider as any).name}>
                                             {(() => {
-                                                if (provider.name == 'Google') {
+                                                if ((provider as any).name == 'Google') {
                                                     return (
                                                         <button
                                                             className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn(provider.id)
+                                                                signIn((provider as any).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -71,12 +224,12 @@ export default function LoginForm({ providers }: any) {
                                                             </svg>
                                                         </button>
                                                     )
-                                                } else if (provider.name == 'Facebook') {
+                                                } else if ((provider as any).name == 'Facebook') {
                                                     return (
                                                         <button
                                                             className="text-medium transiction easy-in-out inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn(provider.id)
+                                                                signIn((provider as any).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

@@ -56,7 +56,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
     const value = useContext(UserContext)
-    const [logindata, setLogindata] = useState<null | string>()
+    const [logindata, setLogindata] = useState<null | string>(null)
 
     const refreshPage = () => {
         localStorage.setItem('email user local auth', 'null')
@@ -197,7 +197,7 @@ export default function Header() {
                                                                                                 <>
                                                                                                     <div className="relative  mb-12 flex h-16 w-16 items-center justify-center">
                                                                                                         <Image
-                                                                                                            src={session!.user!.image}
+                                                                                                            src={session!.user!.image as any}
                                                                                                             alt="User Img"
                                                                                                             loader={myLoader}
                                                                                                             layout="fill"
@@ -222,7 +222,7 @@ export default function Header() {
                                                                     </Popover>
                                                                 </div>
                                                             )
-                                                        } else if (setLogindata) {
+                                                        } else if (setLogindata !== null) {
                                                             return (
                                                                 <div className="ml-4 mt-[0.4rem] flow-root">
                                                                     <Popover className="relative">

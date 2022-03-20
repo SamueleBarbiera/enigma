@@ -8,7 +8,7 @@ import UserContext from '../context/UserContext'
 import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 
-export default function Login({ providers, loginInfo }: any) {
+export default function Login({ providers }: any, { loginInfo }: any) {
     const loginInfoData = useContext(UserContext)
     return (
         <>
@@ -16,7 +16,7 @@ export default function Login({ providers, loginInfo }: any) {
                 <title>Login</title>
                 <link rel="icon" href="/question-solid.svg" />
             </Head>
-            <Header loginInfo={loginInfo} />
+            <Header />
             <LoginForm providers={providers} />
             <Footer />
         </>
@@ -30,11 +30,11 @@ export const getServerSideProps = async ({ ctx }: any) => {
             redirect: { destination: '/' },
         }
     }
-    //const logininfo = parseCookies(ctx).loginInfo
+    const logininfo = parseCookies(ctx).loginInfo
     return {
         props: {
             providers: await getProviders(),
-            //loginInfo: logininfo,
+            loginInfo: logininfo,
         },
     }
 }

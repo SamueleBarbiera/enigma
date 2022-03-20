@@ -3,8 +3,8 @@
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-*{
-    @apply border-transparent focus:border-transparent focus:ring-0
+* {
+    @apply border-transparent focus:border-transparent focus:ring-0;
 }
 
 html,
@@ -13,6 +13,12 @@ body {
     overflow-x: hidden;
     @apply overflow-x-hidden;
     scrollbar-width: thin;
+}
+*:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
 }
 
 ::-webkit-scrollbar {
@@ -25,4 +31,36 @@ body {
 ::-webkit-scrollbar-thumb {
     @apply bg-beige-300;
     border-radius: 0%;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+textarea {
+    @apply block w-full appearance-none rounded-lg border-0 px-2 py-2 shadow-lg outline-0 outline-transparent;
+}
+label {
+    margin-top: 1rem;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
 }
