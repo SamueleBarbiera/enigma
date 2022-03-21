@@ -207,7 +207,7 @@ export default function Header() {
                                                                                                     </div>
                                                                                                     <p>{session!.user!.name}</p>
                                                                                                     <button
-                                                                                                        className="text-medium transiction easy-in-out mt-2 inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                                                                                        className="text-medium easy-in-out mt-2 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
                                                                                                         onClick={() => signOut({ redirect: false })}
                                                                                                     >
                                                                                                         Sign Out
@@ -259,7 +259,7 @@ export default function Header() {
                                                                                                     </div>
                                                                                                     <p>{value.value.loginInfo.identifier}</p>
                                                                                                     <button
-                                                                                                        className="text-medium transiction easy-in-out mt-2 inline-flex  w-full justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg duration-200 hover:bg-beige-600"
+                                                                                                        className="text-medium easy-in-out mt-2 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
                                                                                                         onClick={() => {
                                                                                                             refreshPage()
                                                                                                         }}
@@ -277,7 +277,7 @@ export default function Header() {
                                                                 </div>
                                                             )
                                                         } else {
-                                                            return <button onClick={() => signIn()}>Sign In</button>
+                                                            return <button onClick={() => signIn()}>Accedi</button>
                                                         }
                                                     })()}
                                                 </a>

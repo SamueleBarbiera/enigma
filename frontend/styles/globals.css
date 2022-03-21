@@ -3,10 +3,6 @@
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
-* {
-    @apply border-transparent focus:border-transparent focus:ring-0;
-}
-
 html,
 body {
     font-family: 'Poppins', sans-serif;
@@ -14,23 +10,30 @@ body {
     @apply overflow-x-hidden;
     scrollbar-width: thin;
 }
-*:focus {
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    outline: none;
+
+.instructions {
+    @apply relative mt-4 rounded-lg bg-beige-50 p-4 text-sm font-medium text-red-600 shadow-lg transition duration-300 ease-in-out;
+    transition-delay: 0.1s;
+    visibility: visible;
+    opacity: 1;
+}
+
+.offscreen {
+    opacity: 0;
+    @apply absolute -m-8 rounded-lg bg-beige-50 text-sm font-medium text-red-600 shadow-lg  transition duration-300 ease-in-out;
+    transition: visibility 1s, opacity 0.5s linear;
+    left: -9999px;
 }
 
 ::-webkit-scrollbar {
-    @apply bg-beige-700;
-    width: 6px;
-    height: 6px;
-    border-radius: 0%;
+    @apply mx-4 my-4 bg-beige-700;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
+    width: 4px;
     @apply bg-beige-300;
-    border-radius: 0%;
+    border-radius: 8px;
 }
 
 input[type='text'],
@@ -54,13 +57,15 @@ label {
 }
 
 .errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+    @apply bg-red-200  text-red-700 transition ease-in-out duration-200 rounded-lg font-medium mb-4 p-3;
 }
-
+button:disabled,
+button[disabled] {
+    border: 0px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    @apply hover:bg-gray-300 transition ease-in-out duration-200 hover:cursor-not-allowed;
+}
 .line {
     display: inline-block;
 }

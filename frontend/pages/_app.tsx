@@ -3,6 +3,7 @@ import { Provider } from 'next-auth/client'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import UserContext, { UserContextState, UserContextType } from '../context/UserContext'
 import '../styles/globals.css'
@@ -15,19 +16,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     const [ctxValue, setCtxValue] = useState<UserContextState>({
         loginInfo: {},
     })
-
     return (
         <Provider session={pageProps.session}>
-            <Head>
-                <meta charSet="utf-8" className="next-head" />
-            </Head>
             <UserContext.Provider value={{ value: ctxValue, setValue: setCtxValue }}>
-                <Component {...pageProps} />
+                    <Component {...pageProps} />
             </UserContext.Provider>
         </Provider>
     )
 }
 
 export default MyApp
-
-

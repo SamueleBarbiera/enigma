@@ -54,4 +54,7 @@ module.exports = {
             },
         },
     },
+    variants: {
+        outline: ['focus'],
+    },
 }

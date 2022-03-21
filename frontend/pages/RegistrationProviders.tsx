@@ -1,28 +1,22 @@
 import Footer from '../components/Footer'
 import Header from '../components/Header'
-import LoginForm from '../components/LoginForm'
+import RegistrationFormProviders from '../components/RegistrationFormProviders'
 import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
-import { useContext } from 'react'
-import UserContext from '../context/UserContext'
-import { parseCookies } from 'nookies'
-import { GetServerSideProps } from 'next'
 
-export default function Login({ providers }: any, { loginInfo }: any) {
-    const loginInfoData = useContext(UserContext)
+export default function RegistrationProviders({ providers }: any) {
     return (
         <>
             <Head>
-                <title>Login</title>
+                <title>Registration</title>
                 <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />
-            <LoginForm providers={providers} />
+            <RegistrationFormProviders/>
             <Footer />
         </>
     )
 }
-
 export const getServerSideProps = async ({ ctx }: any) => {
     const session = await getSession()
     if (session) {

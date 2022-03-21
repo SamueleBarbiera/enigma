@@ -4,7 +4,7 @@ import { TiSocialFacebook } from 'react-icons/ti'
 
 const footerNavigation = {
     bottomLinks: [
-        { name: 'Facebook', href: '#', image: <TiSocialFacebook className="-mt-[0.04rem] h-[1.8rem] w-8" aria-hidden="true" /> },
+        { name: 'Facebook', href: '#', image: <TiSocialFacebook className="-mt-[0.1rem] h-[1.9rem] w-8" aria-hidden="true" /> },
         { name: 'Instagram', href: '#', image: <RiInstagramLine className="mt-[0.04rem] h-[1.7rem] w-8" aria-hidden="true" /> },
         { name: 'Whatsapp', href: '#', image: <AiOutlineWhatsApp className="ml-[0.2rem] h-[1.7rem] w-8" aria-hidden="true" /> },
     ],
@@ -13,15 +13,13 @@ const footerNavigation = {
 export default function Footer() {
     return (
         <>
-            <footer className="h-min bg-beige-200">
-                <div className="mx-auto h-min max-w-7xl px-8">
+            <footer className="h-fit w-screen bg-beige-200 px-8 z-100">
                     <div className="h-4 items-center py-10 md:flex md:justify-between">
                         <Socials />
                         <div className="hidden md:flex md:text-left">
-                            <p className="text-medium text-beige-900">&copy; Enigma Moda 2022</p>
+                            <p className="font-medium text-beige-900">Enigma Moda 2022 🤎</p>
                         </div>
                     </div>
-                </div>
             </footer>
         </>
     )

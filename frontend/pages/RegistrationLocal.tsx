@@ -2,9 +2,9 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 import RegistrationForm from '../components/RegistrationForm'
 import Head from 'next/head'
-import { getProviders } from 'next-auth/client'
+import { getProviders, getSession } from 'next-auth/client'
 
-export default function Registration({ providers }: any) {
+export default function RegistrationLocal({ providers }: any) {
     return (
         <>
             <Head>
@@ -17,11 +17,18 @@ export default function Registration({ providers }: any) {
         </>
     )
 }
-
-export async function getServerSidePropss() {
+export const getServerSideProps = async ({ ctx }: any) => {
+    const session = await getSession()
+    if (session) {
+        return {
+            redirect: { destination: '/' },
+        }
+    }
+    //const logininfo = parseCookies(ctx).loginInfo
     return {
         props: {
             providers: await getProviders(),
+            //loginInfo: logininfo,
         },
     }
 }
