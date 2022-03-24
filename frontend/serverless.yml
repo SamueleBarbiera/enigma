@@ -1,37 +1,37 @@
 #docs.serverless.com
 myApp:
-  component: "@sls-next/serverless-component@3.18.2"
-  inputs:
-    domain: ["www", "enigmamoda.com"] # [ sub-domain, domain ]
+  component: "@sls-next/serverless-component@3.7.0-alpha.7"
+  # inputs:
+  #   domain: ["www", "enigmamoda.com"] # [ sub-domain, domain ]
 
 
-service: frontend
-# app and org for use with dashboard.serverless.com
-app: frontend
-org: samuele
+# service: frontend
+# # app and org for use with dashboard.serverless.com
+# app: frontend
+# org: samuele
 
-# You can pin your service to only deploy with a specific Serverless version
-frameworkVersion: '3'
+# # You can pin your service to only deploy with a specific Serverless version
+# # frameworkVersion: '3'
 
-provider:
-  name: aws
-  runtime: nodejs14.x
+# provider:
+#   name: aws
+#   runtime: nodejs14.x
 
-# you can add CloudFormation resource templates here
-resources:
- Resources:
-   NewResource:
-     Type: AWS::S3::Bucket
-     Properties:
-       BucketName: buvket-prova-enigma
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+# # you can add CloudFormation resource templates here
+# resources:
+#  Resources:
+#    NewResource:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: buvket-prova-enigma
+# #  Outputs:
+# #     NewOutput:
+# #       Description: "Description for the output"
+# #       Value: "Some output value"
 
-# you can overwrite defaults here
-stage: dev
-region: eu-central-1
+# # you can overwrite defaults here
+# stage: dev
+# region: eu-central-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
