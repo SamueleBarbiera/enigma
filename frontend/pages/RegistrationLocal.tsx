@@ -17,7 +17,7 @@ export default function RegistrationLocal({ providers }: any) {
         </>
     )
 }
-export const getServerSideProps = async ({ ctx }: any) => {
+export const getServerSideProps = async () => {
     const session = await getSession()
     if (session) {
         return {

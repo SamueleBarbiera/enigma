@@ -4,7 +4,7 @@ import RegistrationFormProviders from '../components/RegistrationFormProviders'
 import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
 
-export default function RegistrationProviders({ providers }: any) {
+export default function RegistrationProviders() {
     return (
         <>
             <Head>
@@ -17,7 +17,7 @@ export default function RegistrationProviders({ providers }: any) {
         </>
     )
 }
-export const getServerSideProps = async ({ ctx }: any) => {
+export const getServerSideProps = async () => {
     const session = await getSession()
     if (session) {
         return {

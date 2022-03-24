@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import getConfig from 'next/config'
-import { parseCookies } from 'nookies'
 import { useEffect } from 'react'
 
 export default function Home() {

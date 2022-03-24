@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+/* eslint-disable no-unused-vars */
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
@@ -8,9 +10,9 @@ import { myLoader } from '../pages/_app'
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon } from '@heroicons/react/outline'
 import { useSession, signIn, signOut } from 'next-auth/client'
 import { useContext } from 'react'
-import UserContext, { UserContextState } from '../context/UserContext'
+import UserContext from '../context/UserContext'
 import { useEffect } from 'react'
-import { useCallback } from 'react'
+//import { useCallback } from 'react'
 
 const solutions = [
     {
@@ -169,7 +171,7 @@ export default function Header() {
                                                             return (
                                                                 <div className="ml-4 mt-[0.4rem] flow-root">
                                                                     <Popover className="relative">
-                                                                        {({ open }) => (
+                                                                        {({ open }:any) => (
                                                                             <>
                                                                                 <Popover.Button
                                                                                     className={classNames(
@@ -226,7 +228,7 @@ export default function Header() {
                                                             return (
                                                                 <div className="ml-4 mt-[0.4rem] flow-root">
                                                                     <Popover className="relative">
-                                                                        {({ open }) => (
+                                                                        {({ open }:any) => (
                                                                             <>
                                                                                 <Popover.Button
                                                                                     className={classNames(
@@ -285,7 +287,7 @@ export default function Header() {
                                                 {/* Cart */}
                                                 <div className="ml-4 mt-[0.4rem] flow-root">
                                                     <Popover className="relative">
-                                                        {({ open }) => (
+                                                        {({ open }:any) => (
                                                             <>
                                                                 <Popover.Button
                                                                     className={classNames(

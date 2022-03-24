@@ -1,4 +1,9 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
 
 # dependencies
 /node_modules
@@ -15,6 +20,21 @@ package-lock.json
 
 # production
 /build
+ public/
+ lib/
+ src/
+ node_modules/
+ build/
+ types/
+ cdk.out/
+ cdk.json
+ bin.ts
+ stack.ts
+ next-env.d.ts
+ next.config.js
+ package-lock.json
+ package.json
+ tsconfig.json
 
 # misc
 .DS_Store

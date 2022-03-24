@@ -1,11 +1,11 @@
-import { GetServerSideProps } from 'next'
+//import { GetServerSideProps } from 'next'
 import { Provider } from 'next-auth/client'
 import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import { parseCookies } from 'nookies'
-import { useEffect } from 'react'
+//import Head from 'next/head'
+//import { parseCookies } from 'nookies'
+//import { useEffect } from 'react'
 import { useState } from 'react'
-import UserContext, { UserContextState, UserContextType } from '../context/UserContext'
+import UserContext, { UserContextState, /*UserContextType*/ } from '../context/UserContext'
 import '../styles/globals.css'
 
 export const myLoader = ({ src, width, quality }: any) => {
@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider session={pageProps.session}>
             <UserContext.Provider value={{ value: ctxValue, setValue: setCtxValue }}>
-                    <Component {...pageProps} />
+                <Component {...pageProps} />
             </UserContext.Provider>
         </Provider>
     )

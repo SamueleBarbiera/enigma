@@ -1,20 +1,21 @@
+/* eslint-disable no-control-regex */
+/* eslint-disable no-unused-vars */
 import { signIn, useSession } from 'next-auth/client'
-import { setCookie } from 'nookies'
+//import { setCookie } from 'nookies'
 import Router from 'next/router'
 import { useState, useContext } from 'react'
-import { XCircleIcon } from '@heroicons/react/solid'
+//import { XCircleIcon } from '@heroicons/react/solid'
 import { useCallback } from 'react'
 import UserContext from '../context/UserContext'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useRef } from 'react'
-import { IoCloseOutline, IoInformationSharp } from 'react-icons/io5'
+import { IoCloseOutline, } from 'react-icons/io5'
 import { FcCheckmark } from 'react-icons/fc'
-import Link from 'next/link'
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
+//import Link from 'next/link'
+//const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const EMAIL_REGEX =
-    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+const EMAIL_REGEX = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
 
 export default function LoginForm({ providers }: any) {
     const [session] = useSession()
@@ -91,10 +92,10 @@ export default function LoginForm({ providers }: any) {
         console.log(loginResponse)
 
         if (res.ok) {
-            setCookie(null, 'jwt', loginResponse.jwt, {
+            /*setCookie(null, 'jwt', loginResponse.jwt, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
-            })
+            })*/
             localStorage.setItem('email user local auth', loginResponse.user.email)
 
             Router.push('/')
@@ -107,7 +108,7 @@ export default function LoginForm({ providers }: any) {
                 },
             }
         }
-    }, [])
+    }, [constxt])
 
     return (
         <>

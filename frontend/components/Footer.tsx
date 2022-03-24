@@ -13,13 +13,13 @@ const footerNavigation = {
 export default function Footer() {
     return (
         <>
-            <footer className="h-fit w-screen bg-beige-200 px-8 z-100">
-                    <div className="h-4 items-center py-10 md:flex md:justify-between">
-                        <Socials />
-                        <div className="hidden md:flex md:text-left">
-                            <p className="font-medium text-beige-900">Enigma Moda 2022 🤎</p>
-                        </div>
+            <footer className="z-100 h-fit w-screen bg-beige-200 px-8">
+                <div className="h-4 items-center py-10 md:flex md:justify-between">
+                    <Socials />
+                    <div className="hidden md:flex md:text-left">
+                        <p className="font-medium text-beige-900">Enigma Moda 2022 🤎</p>
                     </div>
+                </div>
             </footer>
         </>
     )

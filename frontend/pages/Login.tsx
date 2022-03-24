@@ -5,11 +5,10 @@ import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
 import { useContext } from 'react'
 import UserContext from '../context/UserContext'
-import { parseCookies } from 'nookies'
-import { GetServerSideProps } from 'next'
 
-export default function Login({ providers }: any, { loginInfo }: any) {
+export default function Login({ providers }: any) {
     const loginInfoData = useContext(UserContext)
+    console.log('🚀 - file: Login.tsx - line 11 - Login - loginInfoData', loginInfoData)
     return (
         <>
             <Head>
@@ -23,7 +22,7 @@ export default function Login({ providers }: any, { loginInfo }: any) {
     )
 }
 
-export const getServerSideProps = async ({ ctx }: any) => {
+export const getServerSideProps = async () => {
     const session = await getSession()
     if (session) {
         return {

@@ -1,22 +1,18 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
-import { signIn } from 'next-auth/client'
+//import { signIn } from 'next-auth/client'
 import { useRef, useState, useEffect } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import { FcCheckmark } from 'react-icons/fc'
-import { XCircleIcon } from '@heroicons/react/solid'
+//import { XCircleIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const EMAIL_REGEX =
-    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
-
 export default function RegistrationFormProviders() {
     const userRef = useRef(null)
     const errRef = useRef(null)
     const [user, setUser] = useState('')
     const [validName, setValidName] = useState(false)
     const [userFocus, setUserFocus] = useState(false)
-
     const [errMsg, setErrMsg] = useState('')
     const [success, setSuccess] = useState(false)
 
@@ -34,7 +30,6 @@ export default function RegistrationFormProviders() {
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
-        // if button enabled with JS hack
         const v1 = USER_REGEX.test(user)
         if (!v1) {
             setErrMsg('Dato Invalido')

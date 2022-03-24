@@ -1,4 +1,5 @@
-import { createContext, useContext } from 'react'
+/* eslint-disable no-unused-vars */
+import { createContext } from 'react'
 
 export interface UserContextState {
     loginInfo: any
