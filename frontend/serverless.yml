@@ -13,25 +13,34 @@ myApp:
 # # You can pin your service to only deploy with a specific Serverless version
 # # frameworkVersion: '3'
 
-# provider:
-#   name: aws
-#   runtime: nodejs14.x
+provider:
+  name: aws
+  runtime: nodejs14.x
 
 # # you can add CloudFormation resource templates here
-# resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: buvket-prova-enigma
-# #  Outputs:
-# #     NewOutput:
-# #       Description: "Description for the output"
-# #       Value: "Some output value"
+resources:
+ Resources:
+   NewResource:
+     Type: AWS::S3::Bucket
+     Properties:
+       BucketName: bucket-prova-enigma
+YourEC2Instance:
+      Type: AWS::EC2::Instance
+      Properties: 
+        ImageId: pickAnImageOrUseYourOwn
+        KeyName: yourSshKeyName # This needs to be created manually. CloudFormation does not allow it
+        InstanceType: t2.micro 
+        SubnetId: 
+        SecurityGroupIds:
+          - 
+Outputs:
+  NewOutput:
+    Description: "Description for the output"
+    Value: "Some output value"
 
-# # you can overwrite defaults here
-# stage: dev
-# region: eu-central-1
+# you can overwrite defaults here
+stage: dev
+region: eu-central-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
