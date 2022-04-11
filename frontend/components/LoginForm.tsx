@@ -169,7 +169,7 @@ export default function LoginForm({ providers }: any) {
                                         className=" text-medium easy-in-out mt-12 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
                                         disabled={!validPwd || !validEmail ? true : false}
                                     >
-                                        Registrati
+                                        Accedi
                                     </button>
                                 </form>
                                 <div className="mt-4">

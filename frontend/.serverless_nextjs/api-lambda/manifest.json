@@ -1,1 +1,0 @@
-{"apis":{"dynamic":[{"file":"pages/api/auth/[...nextauth].js","regex":"^\\/api\\/auth(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?[\\/#\\?]?$"}],"nonDynamic":{}},"domainRedirects":{},"enableHTTPCompression":false}

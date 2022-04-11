@@ -8,10 +8,13 @@ import { IoCloseOutline, IoInformationSharp } from 'react-icons/io5'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 import { XCircleIcon } from '@heroicons/react/solid'
 import { FcCheckmark } from 'react-icons/fc'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
+
 import Link from 'next/link'
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-const EMAIL_REGEX = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+const EMAIL_REGEX =
+    /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
 
 export default function RegistrationForm({ providers }: any) {
     const userRef = useRef(null)
@@ -58,7 +61,7 @@ export default function RegistrationForm({ providers }: any) {
         const v1 = USER_REGEX.test(user)
         const v2 = PWD_REGEX.test(pwd)
         const v3 = EMAIL_REGEX.test(email)
-        
+
         if (!v1 || !v2 || !v3) {
             setErrMsg('Dati Invalidi')
             return
@@ -82,8 +85,15 @@ export default function RegistrationForm({ providers }: any) {
         })
         const loginResponse = await response.json()
         if (loginResponse.jwt) {
-            console.log('🚀 ~ file: RegistrationForm.tsx ~ line 81 ~ handleSubmit ~ loginResponse', loginResponse)
             console.log(loginResponse)
+            const cookies = parseCookies()
+            console.log({ cookies })
+
+            // Set
+            setCookie(null, 'reg-auth', loginResponse, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            })
             setSuccess(true)
             setUser('')
             setPwd('')
