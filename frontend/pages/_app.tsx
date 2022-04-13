@@ -4,30 +4,30 @@ import type { AppProps } from 'next/app'
 import getConfig from 'next/config'
 import Router from 'next/router'
 import { parseCookies } from 'nookies'
-//import Head from 'next/head'
-//import { parseCookies } from 'nookies'
-//import { useEffect } from 'react'
 import { useState } from 'react'
-import UserContext, { UserContextState /*UserContextType*/ } from '../context/UserContext'
+import { DefaultSeo } from 'next-seo'
+import _ from 'lodash'
 import '../styles/globals.css'
+import CartContext, { CartContextProps } from '../context/CartContext'
+import { CartProvider } from 'use-shopping-cart/react'
+//import SEO from '../next-seo.config'
+const stripe = process.env.STRIPE_SECRET_KEY!
 
 export const myLoader = ({ src, width, quality }: any) => {
     return `${src}?w=${width}&q=${quality || 50}`
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
-    const [ctxValue, setCtxValue] = useState<UserContextState>({
-        loginInfo: {},
-    })
+export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider session={pageProps.session}>
-            <UserContext.Provider value={{ value: ctxValue, setValue: setCtxValue }}>
+            <CartProvider cartMode="checkout-session" stripe={stripe} currency="EUR">
                 <Component {...pageProps} />
-            </UserContext.Provider>
+            </CartProvider>
         </Provider>
     )
 }
 
+/*
 function redirectUser({ ctx }: any, { location }: any) {
     if (ctx.req) {
         ctx.res.writeHead(302, { Location: location })
@@ -56,4 +56,4 @@ MyApp.getServerSideProps = async ({ ctx }: any) => {
         navigation,
     }
 }
-export default MyApp
+*/

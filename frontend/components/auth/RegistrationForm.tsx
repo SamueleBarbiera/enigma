@@ -154,7 +154,6 @@ export default function RegistrationForm({ providers }: any) {
                                         </div>
                                     </div>
                                 </div>
-                                <p className="mb-1 text-center text-4xl font-normal text-beige-900">Registrati</p>
                                 <form onSubmit={handleSubmit} className="flex flex-col">
                                     <label htmlFor="email" className="mb-2 flex flex-auto justify-between">
                                         Email

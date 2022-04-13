@@ -1,7 +1,7 @@
-import Footer from '../components/Footer'
-import Header from '../components/Header'
+import Footer from '../components/page/Footer'
+import Header from '../components/page/Header'
 import RegistrationForm from '../components/RegistrationForm'
-import nookies from 'nookies'
+//import nookies from 'nookies'
 import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
 
@@ -18,7 +18,7 @@ export default function RegistrationLocal({ providers }: any) {
         </>
     )
 }
-export const getServerSideProps = async (ctx: any) => {
+export const getServerSideProps = async (/*ctx: any*/) => {
     const session = await getSession()
     if (session) {
         return {

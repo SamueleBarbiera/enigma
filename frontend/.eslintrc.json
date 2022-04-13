@@ -1,5 +1,5 @@
 {
-    "extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
+    "extends": ["next/babel","next/core-web-vitals", "eslint:recommended", "prettier"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"

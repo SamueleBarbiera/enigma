@@ -15,11 +15,11 @@
 
 ## Deployment 🚧
 
--   [**AWS**](https://aws.amazon.com/) Cloud platform for backend & frontend deployment
+-   [**Railway.app**](https://railway.app/) Cloud platform for backend & frontend deployment
 
 ## Standard Api 🎯
 
--   [**GraphQL / Rest**](https://graphql.org/) Apis used to fetch deta
+-   [**Rest**] Apis used to fetch deta
 -   [**Stripe**](https://stripe.com/) Payment api used on the checkout
 
 ## Database 🧱

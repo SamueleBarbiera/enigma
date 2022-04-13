@@ -30,6 +30,7 @@
         "strictPropertyInitialization": true,
         "stripInternal": true,
         "useDefineForClassFields": true,
+        "useUnknownInCatchVariables": false,
         "baseUrl": ".",
         "paths": {
             "@/components/*": ["./components/*"],
