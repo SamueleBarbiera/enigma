@@ -4,18 +4,20 @@ import { fetchPostJSON } from '../../utils/api-helpers'
 
 const CartSummary = () => {
     const [loading, setLoading] = useState(false)
+    const [cardData, setcardData] = useState()
     const [cartEmpty, setCartEmpty] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
     const { formattedTotalPrice, cartCount, clearCart, cartDetails, redirectToCheckout } = useShoppingCart()
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
-
-    const handleCheckout: React.FormEventHandler<HTMLFormElement> = async (event) => {
-        event.preventDefault()
+    useEffect(() => setcardData(cartCount), [cartCount])
+    
+    const handleCheckout = async (e:any) => {
+        e.preventDefault()
         setLoading(true)
         setErrorMessage('')
-
         const response = await fetchPostJSON('/api/checkout_sessions/cart', cartDetails)
+        console.log("🚀 - file: CartSummary.tsx - line 20 - handleCheckout - response", response)
 
         if (response.statusCode > 399) {
             console.error(response.message)

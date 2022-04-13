@@ -57,7 +57,6 @@ function classNames(...classes: any[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
-    
 
     return (
         <>

@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const Products = () => {
     const { addItem, removeItem } = useShoppingCart()
-    
+
     return (
         <section className="products ">
             {products.map((product) => (
