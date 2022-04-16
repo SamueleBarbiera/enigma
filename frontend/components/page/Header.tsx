@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable no-unused-vars */
+import products from '../../content/data/products'
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
@@ -13,6 +14,8 @@ import CartSummary from '../cart/CartSummary'
 import { useCallback } from 'react'
 import { useReducer } from 'react'
 import { useEffect } from 'react'
+import { DebugCart, useShoppingCart } from 'use-shopping-cart/react'
+import axios from 'axios'
 
 const solutions = [
     {
@@ -57,6 +60,23 @@ function classNames(...classes: any[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
+    const [data, setData] = useState<any>()
+    
+    const { loadCart } = useShoppingCart()
+    useEffect(() => {
+        let cancelled = false
+        async function handler() {
+            const userCartDetails = await setData(products.id)
+            if (!cancelled && userCartDetails) loadCart(userCartDetails, false)
+        }
+
+        if (products?.id) {
+            handler()
+            return () => {
+                cancelled = true
+            }
+        }
+    }, [data])
 
     return (
         <>
@@ -245,7 +265,7 @@ export default function Header() {
                                                                     <Popover.Panel className="z-100 absolute mt-8  w-64 -translate-x-52 transform px-0">
                                                                         <div className="overflow-hidden rounded-lg shadow-lg ">
                                                                             <div className="relative flex-auto gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                                                <CartSummary />
+                                                                                <DebugCart />
                                                                             </div>
                                                                         </div>
                                                                     </Popover.Panel>

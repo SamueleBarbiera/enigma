@@ -9,7 +9,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
  * so you know the pricing information is accurate.
  */
 import { validateCartItems } from 'use-shopping-cart/utilities/serverless'
-import inventory from '../../../data/products'
+import inventory from '../../../content/data/products'
 
 import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

@@ -2,9 +2,6 @@
 node_modules
 jspm_packages
 
-# Serverless directories
-.serverless
-
 # dependencies
 /node_modules
 package-lock.json
@@ -35,6 +32,7 @@ package-lock.json
  package-lock.json
  package.json
  tsconfig.json
+thunder-tests
 
 # misc
 .DS_Store
