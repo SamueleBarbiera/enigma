@@ -7,8 +7,9 @@ html,
 body {
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden  ease-in-out duration-200 ;
     scrollbar-width: thin;
+
 }
 
 /*

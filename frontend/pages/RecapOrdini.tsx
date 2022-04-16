@@ -7,14 +7,14 @@ import Footer from '@/components/page/Footer'
 const products = [
     {
         id: 1,
-        name: 'Nomad Tumbler',
-        description: 'This durable and portable insulated tumbler will keep your beverage at the perfect temperature during your next adventure.',
+        name: 'Nome prodotto ...',
+        description: 'Descrizione prodotto ...',
         href: '#',
         price: '35.00',
-        status: 'Preparing to ship',
+        status: 'La spedizione partirà il ',
         step: 1,
-        date: 'March 24, 2021',
-        datetime: '2021-03-24',
+        date: 'Marzo 24, 2022',
+        datetime: '2022-03-24',
         address: ['Floyd Miles', '7363 Cynthia Pass', 'Toronto, ON N3Y 4H8'],
         email: 'f•••@example.com',
         phone: '1•••••••••40',
@@ -23,14 +23,14 @@ const products = [
     },
     {
         id: 2,
-        name: 'Minimalist Wristwatch',
-        description: 'This contemporary wristwatch has a clean, minimalist look and high quality components.',
+        name: 'Nome prodotto ...',
+        description: 'Descrizione prodotto ...',
         href: '#',
         price: '149.00',
-        status: 'Shipped',
-        step: 0,
-        date: 'March 23, 2021',
-        datetime: '2021-03-23',
+        status: 'Spedito',
+        step: 2,
+        date: 'Marzo 23, 2022',
+        datetime: '2022-03-23',
         address: ['Floyd Miles', '7363 Cynthia Pass', 'Toronto, ON N3Y 4H8'],
         email: 'f•••@example.com',
         phone: '1•••••••••40',
@@ -49,53 +49,43 @@ export default function RecapOrdini() {
         <>
             <Header />
             <div className="bg-beige-50">
-                <main className="mx-auto max-w-2xl pt-8 pb-24 sm:px-6 sm:pt-16 lg:max-w-7xl lg:px-8">
-                    <div className="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
-                        <div className="flex sm:items-baseline sm:space-x-4">
-                            <h1 className="text-2xl font-extrabold tracking-tight text-beige-900 sm:text-3xl">Order #54879</h1>
-                            <a href="#" className="hidden text-sm font-medium text-beige-600 hover:text-beige-500 sm:block">
-                                View invoice<span aria-hidden="true"> &rarr;</span>
-                            </a>
+                <main className="mx-auto max-w-2xl px-6 pt-8 pb-24 smd:pt-16 xmd:max-w-7xl xmd:px-8">
+                    <div className="space-y-2 px-4 smd:flex smd:items-baseline smd:justify-between smd:space-y-0 smd:px-0">
+                        <div className="flex smd:items-baseline smd:space-x-4">
+                            <h1 className="text-2xl font-extrabold tracking-tight text-beige-900 smd:text-3xl">Ordine #54879</h1>
                         </div>
                         <p className="text-sm text-beige-600">
-                            Order placed{' '}
+                            Ordine effettuato{' '}
                             <time dateTime="2021-03-22" className="font-medium text-beige-900">
-                                March 22, 2021
+                                Marzo 22, 2022
                             </time>
                         </p>
-                        <a href="#" className="text-sm font-medium text-beige-600 hover:text-beige-500 sm:hidden">
-                            View invoice<span aria-hidden="true"> &rarr;</span>
-                        </a>
                     </div>
 
                     {/* Products */}
                     <section aria-labelledby="products-heading" className="mt-6">
-                        <h2 id="products-heading" className="sr-only">
-                            Products purchased
-                        </h2>
-
                         <div className="space-y-8">
                             {products.map((product) => (
-                                <div key={product.id} className="border-t border-b border-beige-200 bg-white shadow-sm sm:rounded-lg sm:border">
-                                    <div className="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
-                                        <div className="sm:flex lg:col-span-7">
-                                            <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg sm:aspect-none sm:h-40 sm:w-40">
-                                                <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center sm:h-full sm:w-full" />
+                                <div key={product.id} className="border border-t border-b border-beige-200 bg-white shadow-xl smd:rounded-lg smd:border">
+                                    <div className="gap-y-12 py-6 px-4 smd:px-6 md:gap-x-8 xmd:grid xmd:grid-cols-12 xmd:p-8">
+                                        <div className="smd:flex xmd:col-span-7">
+                                            <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg smd:aspect-none smd:h-40 smd:w-40">
+                                                <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center smd:h-full smd:w-full" />
                                             </div>
 
-                                            <div className="mt-6 sm:mt-0 sm:ml-6">
+                                            <div className="mt-6 smd:mt-0 smd:ml-6">
                                                 <h3 className="text-base font-medium text-beige-900">
                                                     <a href={product.href}>{product.name}</a>
                                                 </h3>
-                                                <p className="mt-2 text-sm font-medium text-beige-900">${product.price}</p>
+                                                <p className="mt-2 text-sm font-medium text-beige-900">{product.price} €</p>
                                                 <p className="mt-3 text-sm text-beige-500">{product.description}</p>
                                             </div>
                                         </div>
 
-                                        <div className="mt-6 lg:col-span-5 lg:mt-0">
+                                        <div className="mt-12 xmd:col-span-5 xmd:mt-0">
                                             <dl className="grid grid-cols-2 gap-x-6 text-sm">
                                                 <div>
-                                                    <dt className="font-medium text-beige-900">Delivery address</dt>
+                                                    <dt className="font-medium text-beige-900">Indirizzo di spedizione</dt>
                                                     <dd className="mt-3 text-beige-500">
                                                         <span className="block">{product.address[0]}</span>
                                                         <span className="block">{product.address[1]}</span>
@@ -103,33 +93,30 @@ export default function RecapOrdini() {
                                                     </dd>
                                                 </div>
                                                 <div>
-                                                    <dt className="font-medium text-beige-900">Shipping updates</dt>
-                                                    <dd className="mt-3 space-y-3 text-beige-500">
+                                                    <dt className="font-medium text-beige-900">Dati per la spedizione</dt>
+                                                    <dd className="mt-3 flex-shrink space-y-3 break-all text-justify text-beige-500">
                                                         <p>{product.email}</p>
                                                         <p>{product.phone}</p>
-                                                        <button type="button" className="font-medium text-beige-600 hover:text-beige-500">
-                                                            Edit
-                                                        </button>
                                                     </dd>
                                                 </div>
                                             </dl>
                                         </div>
                                     </div>
 
-                                    <div className="border-t border-beige-200 py-6 px-4 sm:px-6 lg:p-8">
-                                        <h4 className="sr-only">Status</h4>
+                                    <div className="border-t border-beige-200 py-6 px-4 smd:px-6 xmd:p-8">
+                                        <h4 className="sr-only">Stato</h4>
                                         <p className="text-sm font-medium text-beige-900">
-                                            {product.status} on <time dateTime={product.datetime}>{product.date}</time>
+                                            {product.status} il <time dateTime={product.datetime}>{product.date}</time>
                                         </p>
                                         <div className="mt-6" aria-hidden="true">
                                             <div className="overflow-hidden rounded-full bg-beige-200">
-                                                <div className="h-2 rounded-full bg-beige-600" style={{ width: `calc((${product.step} * 2 + 1) / 8 * 100%)` }} />
+                                                <div className="h-2 rounded-full bg-beige-600" style={{ width: `calc((€{product.step} * 2 + 1) / 8 * 100%)` }} />
                                             </div>
-                                            <div className="mt-6 hidden grid-cols-4 text-sm font-medium text-beige-600 sm:grid">
-                                                <div className="text-beige-600">Order placed</div>
-                                                <div className={classNames(product.step > 0 ? 'text-beige-600' : '', 'text-center')}>Processing</div>
-                                                <div className={classNames(product.step > 1 ? 'text-beige-600' : '', 'text-center')}>Shipped</div>
-                                                <div className={classNames(product.step > 2 ? 'text-beige-600' : '', 'text-right')}>Delivered</div>
+                                            <div className="mt-6 hidden grid-cols-4 text-sm font-medium text-beige-600 smd:grid">
+                                                <div className="text-beige-600">Avviato</div>
+                                                <div className={classNames(product.step > 0 ? 'text-beige-600' : '', 'text-center')}>In Processo</div>
+                                                <div className={classNames(product.step > 1 ? 'text-beige-600' : '', 'text-center')}>Spedito</div>
+                                                <div className={classNames(product.step > 2 ? 'text-beige-600' : '', 'text-right')}>Consegnato</div>
                                             </div>
                                         </div>
                                     </div>
@@ -141,21 +128,21 @@ export default function RecapOrdini() {
                     {/* Billing */}
                     <section aria-labelledby="summary-heading" className="mt-16">
                         <h2 id="summary-heading" className="sr-only">
-                            Billing Summary
+                            Info di pagamento
                         </h2>
 
-                        <div className="bg-beige-100 py-6 px-4 sm:rounded-lg sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-8">
-                            <dl className="grid grid-cols-2 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-7">
+                        <div className="border bg-gray-50 py-6 px-4 shadow-xl smd:rounded-lg smd:px-6 xmd:grid xmd:grid-cols-12 xmd:gap-x-8 xmd:px-8 xmd:py-8">
+                            <dl className="grid grid-cols-2 gap-6 text-sm smd:grid-cols-2 md:gap-x-8 xmd:col-span-7">
                                 <div>
-                                    <dt className="font-medium text-beige-900">Billing address</dt>
+                                    <dt className="font-medium text-beige-900">Indirizzo di spedizione</dt>
                                     <dd className="mt-3 text-beige-500">
-                                        <span className="block">Floyd Miles</span>
-                                        <span className="block">7363 Cynthia Pass</span>
-                                        <span className="block">Toronto, ON N3Y 4H8</span>
+                                        <span className="block">Via ...</span>
+                                        <span className="block">CAP , paese</span>
+                                        <span className="block">Citta, Regione</span>
                                     </dd>
                                 </div>
                                 <div>
-                                    <dt className="font-medium text-beige-900">Payment information</dt>
+                                    <dt className="font-medium text-beige-900">Info di pagamento</dt>
                                     <div className="mt-3">
                                         <dd className="-ml-4 -mt-4 flex flex-wrap">
                                             <div className="ml-4 mt-4 flex-shrink-0">
@@ -169,30 +156,26 @@ export default function RecapOrdini() {
                                                 <p className="sr-only">Visa</p>
                                             </div>
                                             <div className="ml-4 mt-4">
-                                                <p className="text-beige-900">Ending with 4242</p>
-                                                <p className="text-beige-600">Expires 02 / 24</p>
+                                                <p className="text-beige-900">Finisce per 4242</p>
+                                                <p className="text-beige-600">Scade il 02 / 24</p>
                                             </div>
                                         </dd>
                                     </div>
                                 </div>
                             </dl>
 
-                            <dl className="mt-8 divide-y divide-beige-200 text-sm lg:col-span-5 lg:mt-0">
+                            <dl className="mt-8 divide-y divide-beige-200 text-sm xmd:col-span-5 xmd:mt-0">
                                 <div className="flex items-center justify-between pb-4">
-                                    <dt className="text-beige-600">Subtotal</dt>
-                                    <dd className="font-medium text-beige-900">$72</dd>
+                                    <dt className="text-beige-900">Subtotale</dt>
+                                    <dd className="font-medium text-beige-900">72 €</dd>
                                 </div>
                                 <div className="flex items-center justify-between py-4">
-                                    <dt className="text-beige-600">Shipping</dt>
-                                    <dd className="font-medium text-beige-900">$5</dd>
-                                </div>
-                                <div className="flex items-center justify-between py-4">
-                                    <dt className="text-beige-600">Tax</dt>
-                                    <dd className="font-medium text-beige-900">$6.16</dd>
+                                    <dt className="text-beige-900">Spedizione</dt>
+                                    <dd className="font-medium text-beige-900">5 €</dd>
                                 </div>
                                 <div className="flex items-center justify-between pt-4">
-                                    <dt className="font-medium text-beige-900">Order total</dt>
-                                    <dd className="font-medium text-beige-600">$83.16</dd>
+                                    <dt className="font-medium text-beige-900">Totale</dt>
+                                    <dd className="font-bold  text-beige-900">83.16 €</dd>
                                 </div>
                             </dl>
                         </div>
