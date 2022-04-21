@@ -23,7 +23,7 @@ function Products() {
                     console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', res.data.data)
                     setProducts(res.data.data)
                     setError(false)
-                    return
+                    return products
                 }
             } catch (err) {
                 setError(err)
@@ -45,6 +45,7 @@ function Products() {
                     <CartSummary />
                     {products.map((product: any) => (
                         <div key={product.id}>
+                            
                             <img src={product.image.url} alt={product.name} />
                             <h2>{product.name}</h2>
                             <p>
