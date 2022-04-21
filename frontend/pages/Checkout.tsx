@@ -67,7 +67,7 @@ function Checkout() {
                                     <h2 id="order-heading" className="text-lg font-medium text-beige-900">
                                         Il tuo ordine
                                     </h2>
-                                    <Disclosure.Button className="font-medium px-4 text-beige-600 hover:text-beige-500">
+                                    <Disclosure.Button className="px-4 font-medium text-beige-600 hover:text-beige-500">
                                         {open ? <span>Nascondi l'ordine</span> : <span>Visualizza</span>}
                                     </Disclosure.Button>
                                 </div>
@@ -87,7 +87,7 @@ function Checkout() {
                                                     <div className="flex ">
                                                         <button
                                                             type="button"
-                                                            className="rounded-md bg-red-200 p-2 px-4 text-sm font-medium text-red-600 hover:bg-red-300 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-50"
+                                                            className="transiction rounded-md bg-red-200 p-2 px-4 text-sm font-medium text-red-600 shadow-sm duration-200 ease-in-out hover:bg-red-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-50"
                                                         >
                                                             Rimuovi
                                                         </button>
@@ -106,11 +106,11 @@ function Checkout() {
                                                 type="text"
                                                 id="discount-code-mobile"
                                                 name="discount-code-mobile"
-                                                className="block w-full rounded-md border-beige-400 border-2 shadow-xl focus:border-beige-500 focus:ring-beige-500 sm:text-sm"
+                                                className="block w-full rounded-md border-2 border-beige-400 shadow-xl focus:border-beige-500 focus:ring-beige-500 sm:text-sm"
                                             />
                                             <button
                                                 type="submit"
-                                                className="rounded-md bg-beige-500 px-4  shadow-xl text-sm font-medium text-beige-100 hover:bg-beige-300 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2 focus:ring-offset-beige-50"
+                                                className="transiction rounded-md bg-beige-500  px-4 text-sm font-medium text-beige-100 shadow-xl duration-200 ease-in-out hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2 focus:ring-offset-beige-50"
                                             >
                                                 Usa
                                             </button>
@@ -161,7 +161,7 @@ function Checkout() {
                                     <div className="flex space-x-32">
                                         <button
                                             type="button"
-                                            className="rounded-md bg-red-200 p-2 px-4 text-sm font-medium text-red-600 hover:bg-red-300 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-50"
+                                            className="transiction rounded-md bg-red-200 p-2 px-4 text-sm font-medium text-red-600 shadow-sm duration-200 ease-in-out hover:bg-red-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-red-50"
                                         >
                                             Rimuovi
                                         </button>
@@ -181,11 +181,11 @@ function Checkout() {
                                     type="text"
                                     id="discount-code"
                                     name="discount-code"
-                                    className="block w-min rounded-md border-beige-400 border-2 shadow-xl focus:border-beige-500 focus:ring-beige-500 sm:text-sm"
+                                    className="block w-min rounded-md border-2 border-beige-400 shadow-xl focus:border-beige-500 focus:ring-beige-500 sm:text-sm"
                                 />
                                 <button
                                     type="submit"
-                                    className="rounded-md bg-beige-500 shadow-xl px-4 text-sm font-medium text-beige-100 hover:bg-beige-300 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2 focus:ring-offset-beige-50"
+                                    className="transiction rounded-md bg-beige-500 px-4 text-sm font-medium text-beige-100 shadow-xl duration-200 ease-in-out hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2 focus:ring-offset-beige-50"
                                 >
                                     Usa
                                 </button>
@@ -200,7 +200,7 @@ function Checkout() {
                             <div className="flex justify-between">
                                 <dt className="flex">
                                     Sconto
-                                    <span className="ml-2 rounded-full bg-beige-200 py-0.5 px-2 text-xs tracking-wide text-beige-600">{discount.code}</span>
+                                    <span className="rounded-sm1 ml-2 bg-beige-200 py-0.5 px-2 text-xs tracking-wide text-beige-600">{discount.code}</span>
                                 </dt>
                                 <dd className="text-beige-900">-{discount.amount} €</dd>
                             </div>
@@ -230,7 +230,7 @@ function Checkout() {
                         </button>
                         <button
                             type="button"
-                            className="mt-4 flex w-full items-center justify-center rounded-md border border-transparent bg-red-100 py-2 text-white shadow-xl hover:bg-beige-800 focus:outline-none focus:ring-2 focus:ring-beige-900 focus:ring-offset-2"
+                            className="transiction mt-4 flex w-full items-center  justify-center rounded-md border border-transparent bg-red-100 py-2 text-white shadow-xl duration-200 ease-in-out hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-offset-2"
                         >
                             <span className="sr-only">Pay with Satispay</span>
 
@@ -238,9 +238,10 @@ function Checkout() {
                                 <img src={'./Logo_Satispay.png'} className="h-5 w-auto" />
                             </a>
                         </button>
+
                         <button
                             type="button"
-                            className="mt-4 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 py-2 text-white shadow-xl hover:bg-beige-800 focus:outline-none focus:ring-2 focus:ring-beige-900 focus:ring-offset-2"
+                            className="transiction mt-4 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 py-2 text-white shadow-xl duration-200 ease-in-out hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
                         >
                             <span className="sr-only">Pay with Google Pay</span>
                             <svg className="h-5 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 437 174">
@@ -411,7 +412,7 @@ function Checkout() {
                                         name="same-as-shipping"
                                         type="checkbox"
                                         defaultChecked
-                                        className="h-4 w-4 rounded border-2 border-beige-600 shadow-xl bg-beige-200 focus:ring-0 focus:ring-offset-0  text-beige-900"
+                                        className="h-4 w-4 rounded border-2 border-beige-600 bg-beige-200 text-beige-900 shadow-xl focus:ring-0  focus:ring-offset-0"
                                     />
                                 </div>
                                 <label htmlFor="same-as-shipping" className="text-sm font-medium text-beige-900">
@@ -421,7 +422,7 @@ function Checkout() {
 
                             <button
                                 type="submit"
-                                className="mt-6 w-full rounded-md border border-transparent bg-beige-600 py-2 px-4 text-sm font-medium text-white shadow-xl hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
+                                className="transiction mt-6 w-full rounded-md border border-transparent bg-beige-600 py-2 px-4 text-sm font-medium text-white shadow-xl duration-200 ease-in-out hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
                             >
                                 Paga {total} €
                             </button>
@@ -433,6 +434,20 @@ function Checkout() {
                     </div>
                 </section>
             </main>
+            <section>
+                <div className="product">
+                    <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+                    <div className="description">
+                        <h3>Stubborn Attachments</h3>
+                        <h5>$20.00</h5>
+                    </div>
+                </div>
+                <form action="/create-checkout-session" method="POST">
+                    <button type="submit" id="checkout-button">
+                        Checkout
+                    </button>
+                </form>
+            </section>
             <Footer />
         </>
     )

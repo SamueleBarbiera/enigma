@@ -13,7 +13,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "nome": {
+    "name": {
       "type": "string",
       "required": true,
       "unique": true

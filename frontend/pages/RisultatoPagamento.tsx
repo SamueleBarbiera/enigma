@@ -4,16 +4,12 @@ import Layout from '../components/cart/Layout'
 import PrintObject from '../components/cart/PrintObject'
 import Cart from '../components/cart/Cart'
 import ClearCart from '../components/cart/ClearCart'
-import { fetchGetJSON } from '../utils/api-helpers'
+import { fetchGetJSON } from '../content/utils/api-helpers'
 import useSWR from 'swr'
 
-const ResultPage: NextPage = () => {
+const RisultatoPagamento: NextPage = () => {
     const router = useRouter()
-
-    // Fetch CheckoutSession from static page via
-    // https://nextjs.org/docs/basic-features/data-fetching#static-generation
-    const { data, error } = useSWR(router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null, fetchGetJSON)
-
+    const { data, error } = useSWR(router.query.session_id ? `${process.env.FRONTEND_URL}/api/checkout_sessions/${router.query.session_id}` : null, fetchGetJSON)
     if (error) return <div>failed to load</div>
 
     return (
@@ -30,5 +26,4 @@ const ResultPage: NextPage = () => {
         </Layout>
     )
 }
-
-export default ResultPage
+export default RisultatoPagamento

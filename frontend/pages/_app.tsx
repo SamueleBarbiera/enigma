@@ -8,7 +8,6 @@ import { useState } from 'react'
 import { DefaultSeo } from 'next-seo'
 import _ from 'lodash'
 import '../styles/globals.css'
-import CartContext, { CartContextProps } from '../context/CartContext'
 import { CartProvider } from 'use-shopping-cart/react'
 //import SEO from '../next-seo.config'
 const stripe = process.env.STRIPE_SECRET_KEY!
@@ -20,7 +19,7 @@ export const myLoader = ({ src, width, quality }: any) => {
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider session={pageProps.session}>
-            <CartProvider cartMode="checkout-session" stripe={stripe} currency="EUR">
+            <CartProvider cartMode="checkout-session" stripe="" currency="USD" loading={<p aria-live="polite">Loading redux-persist...</p>}>
                 <Component {...pageProps} />
             </CartProvider>
         </Provider>

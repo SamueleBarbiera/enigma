@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { useShoppingCart } from 'use-shopping-cart/react'
-import { fetchPostJSON } from '../../utils/api-helpers'
+import { fetchPostJSON } from '../../content/utils/api-helpers'
 
 const CartSummary = () => {
     const [loading, setLoading] = useState(false)
-    const [cardData, setcardData] = useState()
     const [cartEmpty, setCartEmpty] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
     const { formattedTotalPrice, cartCount, clearCart, cartDetails, redirectToCheckout } = useShoppingCart()
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
-    useEffect(() => setcardData(cartCount), [cartCount])
-    
-    const handleCheckout = async (e:any) => {
-        e.preventDefault()
+
+    const handleCheckout: React.FormEventHandler<HTMLFormElement> = async (event) => {
+        event.preventDefault()
         setLoading(true)
         setErrorMessage('')
-        const response = await fetchPostJSON('/api/checkout_sessions/cart', cartDetails)
-        console.log("🚀 - file: CartSummary.tsx - line 20 - handleCheckout - response", response)
+
+        console.log("🚀 - CartSummary.tsx - line 19 - cartDetails", cartDetails)
+        const response = await fetchPostJSON(`/api/checkout_sessions/cart`, cartDetails)
+        console.log("🚀 - file: CartSummary.tsx - line 20 - consthandleCheckout:React.FormEventHandler<HTMLFormElement>= - response", response)
 
         if (response.statusCode > 399) {
-            console.error(response.message)
+            console.log(response.message)
             setErrorMessage(response.message)
             setLoading(false)
             return
@@ -42,10 +42,10 @@ const CartSummary = () => {
             </p>
 
             {/* Redirects the user to Stripe */}
-            <button className="cart-style-background" type="submit" disabled={cartEmpty || loading}>
+            <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" type="submit" disabled={cartEmpty || loading}>
                 Checkout
             </button>
-            <button className="cart-style-background" type="button" onClick={clearCart}>
+            <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" type="button" onClick={clearCart}>
                 Clear Cart
             </button>
         </form>

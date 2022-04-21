@@ -12,16 +12,17 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "quantita": {
+    "quantity": {
       "type": "integer",
       "required": true,
       "min": 1
     },
-    "prezzo": {
+    "price": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "min": 1
     },
-    "immagine": {
+    "image": {
       "type": "media",
       "multiple": true,
       "required": true,
@@ -46,7 +47,7 @@
       "target": "api::categoria.categoria",
       "inversedBy": "prodottos"
     },
-    "nome": {
+    "name": {
       "type": "string",
       "required": true
     },
@@ -62,6 +63,13 @@
         "taglia.taglia"
       ],
       "required": true
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "required": true,
+      "default": "EUR"
     }
   }
 }

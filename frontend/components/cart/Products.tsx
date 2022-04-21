@@ -1,98 +1,69 @@
-import products from '../../content/data/products'
-import CartContext from 'context/CartContext'
-import { useContext } from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
 import CartSummary from './CartSummary'
-import { useShoppingCart, DebugCart, formatCurrencyString } from 'use-shopping-cart/react'
+import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart/react'
 import { Product, CartActions, CartEntry as ICartEntry } from 'use-shopping-cart/core'
-
-function CartEntry({ entry, removeItem }: { entry: ICartEntry; removeItem: CartActions['removeItem'] }) {
-    return (
-        <div>
-            <h3>{entry.name}</h3>
-            {entry.image ? <img width={100} src={entry.image} alt={entry.description} /> : null}
-            <p>
-                {entry.quantity} x {formatCurrencyString({ value: entry.price, currency: 'USD' })} = {entry.formattedValue}
-            </p>
-            <button onClick={() => removeItem(entry.id)}>Remove</button>
-        </div>
-    )
-}
-
-function Cart() {
-    const cart = useShoppingCart()
-    const { removeItem, cartDetails, clearCart, formattedTotalPrice } = cart
-
-    const cartEntries = Object.values(cartDetails ?? {}).map((entry) => <CartEntry key={entry.id} entry={entry} removeItem={removeItem} />)
-
-    return (
-        <div>
-            <h2>Cart</h2>
-            <p>Total: {formattedTotalPrice}</p>
-            {cartEntries.length === 0 ? <p>Cart is empty.</p> : null}
-            {cartEntries.length > 0 ? (
-                <>
-                    <button onClick={() => clearCart()}>Clear cart</button>
-                    {cartEntries}
-                </>
-            ) : null}
-        </div>
-    )
-}
-function ProductListing({ product, addItem }: { product: Product; addItem: CartActions['addItem'] }) {
-    return (
-        <div key={product.id}>
-            <h3>{product.name}</h3>
-            {product.image ? <img width={300} src={product.image} alt={product.description} /> : null}
-            <p>{formatCurrencyString({ value: product.price, currency: 'USD' })}</p>
-            <button onClick={() => addItem(product)} aria-label={`Add one ${product.name} to your cart.`}>
-                Add 1 to Cart
-            </button>
-        </div>
-    )
-}
-
-function ProductList() {
-    const cart = useShoppingCart()
-    const { addItem } = cart
-
-    return (
-        <div>
-            <h2>Products</h2>
-            {products.map((product) => (
-                <ProductListing key={product.id} product={product} addItem={addItem} />
-            ))}
-        </div>
-    )
-}
-const Products = () => {
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Stripe from 'stripe'
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    // https://github.com/stripe/stripe-node#configuration
+    apiVersion: '2020-08-27',
+})
+function Products() {
     const { addItem, removeItem } = useShoppingCart()
+    const [products, setProducts] = useState<any>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<boolean>()
+
+    useEffect(() => {
+        setLoading(true)
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*`)
+                if (res.status == 200) {
+                    console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', res.data.data)
+                    setProducts(res.data.data)
+                    setError(false)
+                    return
+                }
+            } catch (err) {
+                setError(err)
+                console.log('🚀 ERROR FETCHING', err)
+            }
+        }
+        fetchData()
+        setLoading(false)
+    }, [setProducts])
 
     return (
-        <section className="products ">
-            <CartSummary />
-            <ProductList />
-            <Cart />
-            {products.map((product) => (
-                <div key={product.id} className="product">
-                    <img src={product.image} alt={product.name} />
-                    <h2>{product.name}</h2>
-                    <p className="price">
-                        {formatCurrencyString({
-                            value: product.price,
-                            currency: product.currency,
-                        })}
-                    </p>
-                    <button className="cart-style-background" onClick={() => addItem(product)}>
-                        Add to cart
-                    </button>
-                    <button className="cart-style-background" onClick={() => removeItem(product.id)}>
-                        Remove
-                    </button>
-                </div>
-            ))}
-        </section>
+        <>
+            {loading ? (
+                <p>loading...</p>
+            ) : error ? (
+                <p>{error}</p>
+            ) : (
+                <main className="min-h-screen">
+                    <CartSummary />
+                    {products.map((product: any) => (
+                        <div key={product.id}>
+                            <img src={product.image.url} alt={product.name} />
+                            <h2>{product.name}</h2>
+                            <p>
+                                {formatCurrencyString({
+                                    value: product.price,
+                                    currency: 'EUR',
+                                })}
+                            </p>
+                            <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" onClick={() => addItem(product)}>
+                                Add to cart
+                            </button>
+                            <button className="m-4 rounded-lg bg-red-900 p-2 text-white" onClick={() => removeItem(product.id)}>
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                </main>
+            )}
+        </>
     )
 }
 

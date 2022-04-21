@@ -19,12 +19,7 @@ export default function Home() {
                 </Head>
                 <Header />
                 <main className="flex h-screen items-center justify-center">
-                    <a href="/use-shopping-cart">
-                        <a className="card cart-style-background">
-                            <h2 className="bottom">Use Shopping Cart</h2>
-                            <img src="/use-shopping-cart.png" />
-                        </a>
-                    </a>
+                    Home
                 </main>
                 <Footer />
             </>

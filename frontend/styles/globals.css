@@ -12,7 +12,7 @@ body {
 
 }
 
-/*
+
 .instructions {
     @apply relative mt-4 rounded-lg bg-beige-50 p-4 text-sm font-medium text-red-600 shadow-lg transition duration-300 ease-in-out;
     transition-delay: 0.1s;
@@ -211,19 +211,6 @@ input[type='range'] {
   width: 100%;
 }
 
-button {
-  border-radius: var(--radius);
-  color: white;
-  font-size: larger;
-  border: 0;
-  padding: 12px 16px;
-  margin-top: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: block;
-  width: 100%;
-}
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -259,7 +246,7 @@ button:disabled {
   box-shadow: 20px 20px 60px teal, -20px -20px 60px teal;
 }
 
-/* Products */ /*
+/* Products */ 
 .products {
   display: grid;
   gap: 2rem;
@@ -271,7 +258,7 @@ button:disabled {
   max-width: 100%;
 }
 
-/* Test card number */ /*
+/* Test card number */ 
 .test-card-notice {
   display: block;
   margin-block-start: 1em;
@@ -291,7 +278,7 @@ button:disabled {
   width: 4px;
 }
 
-/* Code block */ /*
+/* Code block */ 
 code,
 pre {
   font-family: 'SF Mono', 'IBM Plex Mono', 'Menlo', monospace;
@@ -382,4 +369,4 @@ pre {
     bottom: 0;
   }
 }
-*/
+

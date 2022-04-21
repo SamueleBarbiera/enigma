@@ -36,7 +36,7 @@ export default function RegistrationFormProviders() {
             return
         }
         try {
-            const response = await axios.post('http://localhost:1337/auth/local/register', JSON.stringify({ Nome: user }), {
+            const response = await axios.post('http://localhost:8082/auth/local/register', JSON.stringify({ Nome: user }), {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true,
             })
@@ -108,7 +108,7 @@ export default function RegistrationFormProviders() {
                                     <br />
                                     <span className="line ">
                                         {/*put router link here*/}
-                                        <Link href="/Login">Accedi</Link>
+                                        <a href="/Login">Accedi</a>
                                     </span>
                                 </p>
                             </section>

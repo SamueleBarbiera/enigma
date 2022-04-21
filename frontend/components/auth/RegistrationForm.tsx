@@ -244,7 +244,7 @@ export default function RegistrationForm({ providers }: any) {
                                     <br />
                                     <span className="line ">
                                         {/*put router link here*/}
-                                        <Link href="/Login">Accedi</Link>
+                                        <a href="/Login">Accedi</a>
                                     </span>
                                 </p>
                                 <div className="mt-4">

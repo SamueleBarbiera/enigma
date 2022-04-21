@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-
-import { CURRENCY, MIN_AMOUNT, MAX_AMOUNT } from '../../../config'
-import { formatAmountForStripe } from '../../../utils/stripe-helpers'
+import { CURRENCY, MIN_AMOUNT, MAX_AMOUNT } from '../../../content/config'
+import { formatAmountForStripe } from '../../../content/utils/stripe-helpers'
 
 import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -45,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const params: Stripe.PaymentIntentCreateParams = {
             amount: formatAmountForStripe(amount, CURRENCY),
             currency: CURRENCY,
-            description: process.env.STRIPE_PAYMENT_DESCRIPTION ?? '',
+            description: '',
             automatic_payment_methods: {
                 enabled: true,
             },

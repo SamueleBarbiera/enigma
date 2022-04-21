@@ -1,49 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable no-unused-vars */
-import products from '../../content/data/products'
+
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag } from 'react-icons/md'
 import { useSession, signIn, signOut } from 'next-auth/client'
-import { useContext, Fragment, useState } from 'react'
-import CartContext from '../../context/CartContext'
+import { Fragment, useState, useEffect } from 'react'
 import { myLoader } from '../../pages/_app'
 import Image from 'next/image'
-import CartSummary from '../cart/CartSummary'
-import { useCallback } from 'react'
-import { useReducer } from 'react'
-import { useEffect } from 'react'
-import { DebugCart, useShoppingCart } from 'use-shopping-cart/react'
-import axios from 'axios'
 
-const solutions = [
-    {
-        name: 'Analytics',
-        description: 'Get a bett',
-        href: '#',
-        icon: ChartBarIcon,
-    },
-    {
-        name: 'Engagement',
-        description: 'Speak dy.',
-        href: '#',
-        icon: CursorClickIcon,
-    },
-    { name: 'Security', description: 'Your custore.', href: '#', icon: ShieldCheckIcon },
-    {
-        name: 'Integrations',
-        description: 'Connect witht.',
-        href: '#',
-        icon: ViewGridIcon,
-    },
-    {
-        name: 'Automations',
-        description: 'Build strate',
-        href: '#',
-        icon: RefreshIcon,
-    },
-]
 const callsToAction = [{ name: 'Checkout', href: '/Checkout', costo_totale: 1 }]
 
 const navigation = {
@@ -61,22 +27,6 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session] = useSession()
     const [data, setData] = useState<any>()
-    
-    const { loadCart } = useShoppingCart()
-    useEffect(() => {
-        let cancelled = false
-        async function handler() {
-            const userCartDetails = await setData(products.id)
-            if (!cancelled && userCartDetails) loadCart(userCartDetails, false)
-        }
-
-        if (products?.id) {
-            handler()
-            return () => {
-                cancelled = true
-            }
-        }
-    }, [data])
 
     return (
         <>
@@ -169,7 +119,7 @@ export default function Header() {
                                         </a>
 
                                         <div className="flex flex-1 items-center justify-end">
-                                            <div className="flex items-center lg:ml-8">
+                                            <div className="flex items-center -mr-12">
                                                 {/* Help */}
                                                 <a href="#" className="p-2 text-beige-900 ">
                                                     {(() => {
@@ -238,41 +188,13 @@ export default function Header() {
                                                 </a>
                                                 {/* Cart */}
                                                 <div className="ml-4 mt-[0.4rem] flow-root">
-                                                    <Popover className="relative">
-                                                        {({ open }: any) => (
-                                                            <>
-                                                                <Popover.Button
-                                                                    className={classNames(
-                                                                        open ? 'text-beige-900' : 'text-beige-500',
-                                                                        'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
-                                                                    )}
-                                                                >
-                                                                    <a href="#" className="group -m-2 flex items-center p-2">
-                                                                        <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
-                                                                        <span className="ml-2 text-sm font-medium text-beige-900">0</span>
-                                                                    </a>
-                                                                </Popover.Button>
-
-                                                                <Transition
-                                                                    as={Fragment}
-                                                                    enter="transition ease-out duration-200"
-                                                                    enterFrom="opacity-0 translate-y-1"
-                                                                    enterTo="opacity-100 translate-y-0"
-                                                                    leave="transition ease-in duration-150"
-                                                                    leaveFrom="opacity-100 translate-y-0"
-                                                                    leaveTo="opacity-0 translate-y-1"
-                                                                >
-                                                                    <Popover.Panel className="z-100 absolute mt-8  w-64 -translate-x-52 transform px-0">
-                                                                        <div className="overflow-hidden rounded-lg shadow-lg ">
-                                                                            <div className="relative flex-auto gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                                                                <DebugCart />
-                                                                            </div>
-                                                                        </div>
-                                                                    </Popover.Panel>
-                                                                </Transition>
-                                                            </>
-                                                        )}
-                                                    </Popover>
+                                                    <div className="relative">
+                                                        <button className="group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 ">
+                                                            <a href="#" className="group -m-2 flex items-center p-2">
+                                                                <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
+                                                             </a>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
