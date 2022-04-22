@@ -6,7 +6,7 @@ const CartSummary = () => {
     const [loading, setLoading] = useState(false)
     const [cartEmpty, setCartEmpty] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
-    const { formattedTotalPrice, cartCount, clearCart, cartDetails, redirectToCheckout } = useShoppingCart()
+    const { formattedTotalPrice, cartCount, clearCart, cartDetails, redirectToCheckout, totalPrice } = useShoppingCart()
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
 
@@ -15,13 +15,12 @@ const CartSummary = () => {
         setLoading(true)
         setErrorMessage('')
 
-        console.log("🚀 - CartSummary.tsx - line 19 - cartDetails", cartDetails)
-        const response = await fetchPostJSON(`/api/checkout_sessions/cart`, cartDetails)
-        console.log("🚀 - file: CartSummary.tsx - line 20 - consthandleCheckout:React.FormEventHandler<HTMLFormElement>= - response", response)
+        const response = await fetchPostJSON(`/api/checkout_sessions/cart`, { cartDetails }, { totalPrice })
+        console.log(response)
 
         if (response.statusCode > 399) {
-            console.log(response.message)
-            setErrorMessage(response.message)
+            console.error(response.message)
+            setErrorMessage(response.message.code)
             setLoading(false)
             return
         }
@@ -38,7 +37,7 @@ const CartSummary = () => {
                 <strong>Number of Items:</strong> {cartCount}
             </p>
             <p suppressHydrationWarning>
-                <strong>Total:</strong> {formattedTotalPrice}
+                <strong>Total:</strong> {Number(totalPrice.toString().slice(0, 5))} €
             </p>
 
             {/* Redirects the user to Stripe */}

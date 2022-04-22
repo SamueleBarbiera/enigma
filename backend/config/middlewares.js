@@ -1,6 +1,19 @@
 module.exports = [
     'strapi::errors',
-    'strapi::security',
+    {
+        name: 'strapi::security',
+        config: {
+            contentSecurityPolicy: {
+                useDefaults: true,
+                directives: {
+                    'connect-src': ["'self'", 'https:'],
+                    'img-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+                    'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+                    upgradeInsecureRequests: null,
+                },
+            },
+        },
+    },
     'strapi::cors',
     'strapi::poweredBy',
     'strapi::logger',
@@ -10,21 +23,21 @@ module.exports = [
     'strapi::favicon',
     'strapi::public',
     {
-    name: "strapi::security",
-    config: {
-    contentSecurityPolicy: {
-        directives: {
-          "script-src": ["'self'", "editor.unlayer.com"],
-          "frame-src": ["'self'", "editor.unlayer.com"],
-          "img-src": [
-            "'self'",
-            "data:",
-            "cdn.jsdelivr.net",
-            "strapi.io",
-            "s3.amazonaws.com",
-          ],
+        name: 'strapi::security',
+        config: {
+            contentSecurityPolicy: {
+                directives: {
+                    'script-src': ["'self'", 'editor.unlayer.com'],
+                    'frame-src': ["'self'", 'editor.unlayer.com'],
+                    'img-src': [
+                        "'self'",
+                        'data:',
+                        'cdn.jsdelivr.net',
+                        'strapi.io',
+                        's3.amazonaws.com',
+                    ],
+                },
+            },
         },
-      },
-    },
     },
 ]

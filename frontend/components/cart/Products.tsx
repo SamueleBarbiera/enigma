@@ -45,12 +45,16 @@ function Products() {
                     <CartSummary />
                     {products.map((product: any) => (
                         <div key={product.id}>
-                            
-                            <img src={product.image.url} alt={product.name} />
+                            <div className="flex flex-1">
+                                {product.image.data.map((image: any) => (
+                                    <img className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
+                                ))}
+                            </div>
+
                             <h2>{product.name}</h2>
                             <p>
                                 {formatCurrencyString({
-                                    value: product.price,
+                                    value: product.price * 100,
                                     currency: 'EUR',
                                 })}
                             </p>

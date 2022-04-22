@@ -10,7 +10,7 @@ export const formatCurrency = (amount = 0, currency = 'EUR') =>
 
 export const isClient = typeof window === 'object'
 
-export const fetcher = (url:string) => axios.get(url).then((res) => res.data)
+export const fetcher = (url:string) => fetch(url).then((res) => res.json())
 
 export const shootFireworks = () => {
     const duration = 15 * 1000

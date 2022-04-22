@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export async function fetchGetJSON(url: string) {
     try {
-        const res = await axios.get(url)
-        return res.data
+        const res = await fetch(url)
+        return res.json()
     } catch (err) {
         if (err instanceof Error) {
             throw new Error(err.message)
@@ -12,16 +12,22 @@ export async function fetchGetJSON(url: string) {
     }
 }
 
-export async function fetchPostJSON(url: string, data?: {}) {
+export async function fetchPostJSON(url: string, data?: {}, amount?: any) {
     try {
         // Default options are marked with *
-        const response = await axios.post(url, {
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
             headers: {
                 'Content-Type': 'application/json',
             },
-            data: JSON.stringify(data || {}), // body data type must match "Content-Type" header
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({data, amount}), // body data type must match "Content-Type" header
         })
-        return await response.data
+        return await response.json()
     } catch (err) {
         console.log({ '❌ Payment failed ': err })
         if (err instanceof Error) {

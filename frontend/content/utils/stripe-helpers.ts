@@ -1,5 +1,5 @@
-export function formatAmountForDisplay(amount: number, currency: string): string {
-    let numberFormat = new Intl.NumberFormat('it-IT', {
+export function formatAmountForDisplay(amount: number, currency: string): number {
+    let numberFormat: any = new Intl.NumberFormat('it-IT', {
         style: 'currency',
         currency,
         minimumIntegerDigits: 2,
@@ -20,7 +20,7 @@ export function formatAmountForStripe(amount: number, currency: string): number 
             zeroDecimalCurrency = false
         }
     }
-    return zeroDecimalCurrency ? amount : Math.round(amount * 1)
+    return zeroDecimalCurrency ? amount : Math.round(amount * 100)
 }
 
 export function formatAmountFromStripe(amount: number, currency: string): number {
@@ -36,5 +36,5 @@ export function formatAmountFromStripe(amount: number, currency: string): number
             zeroDecimalCurrency = false
         }
     }
-    return zeroDecimalCurrency ? amount : Math.round(amount / 1)
+    return zeroDecimalCurrency ? amount : Math.round(amount / 100)
 }
