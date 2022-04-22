@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // const cartdet: any = Object.entries(req.body.data.cartDetails).map((e) => e[1])
     // let img
     // {
-    //     cartdet.map((image: any) => (img = image.image.data.map((image: any) => `https://347e-79-8-186-197.ngrok.io${image.url}`)))
+    //     cartdet.map((image: any) => (img = image.image.data.map((image: any) => `${process.env.NEXT_PUBLIC_API_URL}${image.url}`)))
     // }
     // console.log('🚀 - file: cart.ts - line 57 - handler - img', img)
 

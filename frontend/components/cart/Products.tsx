@@ -1,13 +1,42 @@
 import CartSummary from './CartSummary'
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart/react'
-import { Product, CartActions, CartEntry as ICartEntry } from 'use-shopping-cart/core'
+import { CartActions, CartEntry as ICartEntry } from 'use-shopping-cart/core'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Stripe from 'stripe'
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    // https://github.com/stripe/stripe-node#configuration
-    apiVersion: '2020-08-27',
-})
+
+function CartEntry({ entry, removeItem }: { entry: ICartEntry; removeItem: CartActions['removeItem'] }) {
+    console.log(entry)
+    return (
+        <div>
+            <h3>{entry.name}</h3>
+            {entry.image ? <img width={100} src={process.env.NEXT_PUBLIC_API_URL + '' + entry.image.data[0].url} alt={entry.description} /> : null}
+            <p>
+                {entry.quantity} x {formatCurrencyString({ value: entry.price, currency: 'USD' })} = {entry.formattedValue}
+            </p>
+            <button onClick={() => removeItem(entry.id)}>Remove</button>
+        </div>
+    )
+}
+
+function Cart() {
+    const cart = useShoppingCart()
+    const { removeItem, cartDetails, cartCount } = cart
+
+    const cartEntries = Object.values(cartDetails ?? {}).map((entry) => <CartEntry key={entry.id} entry={entry} removeItem={removeItem} />)
+
+    return (
+        <div>
+            {cartEntries.length === 0 ? <p className="text-red-500">Il carrello è vuoto</p> : null}
+            {cartEntries.length > 0 ? (
+                <>
+                    <strong>Prodotti nel carrello:</strong> {cartCount}
+                    {cartEntries}
+                </>
+            ) : null}
+        </div>
+    )
+}
+
 function Products() {
     const { addItem, removeItem } = useShoppingCart()
     const [products, setProducts] = useState<any>([])
@@ -43,6 +72,7 @@ function Products() {
             ) : (
                 <main className="min-h-screen">
                     <CartSummary />
+                    <Cart />
                     {products.map((product: any) => (
                         <div key={product.id}>
                             <div className="flex flex-1">
