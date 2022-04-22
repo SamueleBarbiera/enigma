@@ -195,6 +195,8 @@ export default function Header() {
                                                             <a href="Carrello" className="group -m-2 flex items-center p-2">
                                                                 <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
                                                             </a>
+                                                            {totalPrice}
+                                                            <span className="text-sm text-gray-500">{cartCount}</span>
                                                         </button>
                                                     </div>
                                                 </div>

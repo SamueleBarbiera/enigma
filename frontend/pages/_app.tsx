@@ -1,13 +1,10 @@
 //import { GetServerSideProps } from 'next'
 import { Provider } from 'next-auth/client'
 import type { AppProps } from 'next/app'
-import getConfig from 'next/config'
-import Router from 'next/router'
 import { parseCookies } from 'nookies'
-import { useState } from 'react'
 import { DefaultSeo } from 'next-seo'
-import _ from 'lodash'
 import '../styles/globals.css'
+import * as config from '../content/config'
 import { CartProvider } from 'use-shopping-cart/react'
 //import SEO from '../next-seo.config'
 const stripe = process.env.STRIPE_SECRET_KEY!
@@ -19,7 +16,7 @@ export const myLoader = ({ src, width, quality }: any) => {
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider session={pageProps.session}>
-            <CartProvider cartMode="checkout-session" stripe="" currency="USD" loading={<p aria-live="polite">Loading redux-persist...</p>}>
+            <CartProvider cartMode="checkout-session" stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string} currency={config.CURRENCY}>
                 <Component {...pageProps} />
             </CartProvider>
         </Provider>

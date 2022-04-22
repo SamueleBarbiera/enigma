@@ -1,3 +1,4 @@
+import { XCircleIcon, XIcon } from '@heroicons/react/solid'
 import React, { useState, useEffect } from 'react'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
@@ -32,9 +33,6 @@ const CartSummary = () => {
         <form onSubmit={handleCheckout}>
             {errorMessage ? <p style={{ color: 'red' }}>Error: {errorMessage}</p> : null}
             {/* This is where we'll render our cart */}
-            <p suppressHydrationWarning>
-                <strong>Totale:</strong> {Number(totalPrice.toString().slice(0, 5))} €
-            </p>
 
             {/* Redirects the user to Stripe */}
             <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" type="submit" disabled={cartEmpty || loading}>
@@ -43,6 +41,7 @@ const CartSummary = () => {
             <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" type="button" onClick={clearCart}>
                 Clear Cart
             </button>
+            
         </form>
     )
 }
