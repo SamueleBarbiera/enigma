@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const amount: number = Number((req.body.amount.totalPrice * 100).toString().slice(0, 4))
+    const amount: number = Number((req.body.amount.totalPrice * 100).toString().slice(0, 6))
     // const cartdet: any = Object.entries(req.body.data.cartDetails).map((e) => e[1])
     // let img
     // {

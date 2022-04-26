@@ -1,16 +1,4 @@
-import axios from 'axios'
 import confetti from 'canvas-confetti'
-
-export const formatCurrency = (amount = 0, currency = 'EUR') =>
-    new Intl.NumberFormat('it-IT', {
-        style: 'currency',
-        currency,
-        minimumIntegerDigits: 2,
-    }).format(amount / 1)
-
-export const isClient = typeof window === 'object'
-
-export const fetcher = (url:string) => fetch(url).then((res) => res.json())
 
 export const shootFireworks = () => {
     const duration = 15 * 1000

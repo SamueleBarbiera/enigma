@@ -8,6 +8,9 @@ module.exports = {
         },
     },
     theme: {
+        container: {
+            center: true,
+        },
         screens: {
             xsm: '300px',
             sm: '400px',

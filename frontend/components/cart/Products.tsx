@@ -1,17 +1,17 @@
-import CartSummary from './CartSummary'
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart/react'
-import { CartActions, CartEntry as ICartEntry } from 'use-shopping-cart/core'
+import { BsPlusLg } from 'react-icons/bs'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { MinusSmIcon, PlusSmIcon, XCircleIcon, XIcon } from '@heroicons/react/solid'
-
-
+import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon, XCircleIcon, XIcon } from '@heroicons/react/solid'
+import { fetchPostJSON } from 'content/utils/api-helpers'
 
 function Products() {
-    const { addItem, removeItem, cartCount, clearCart, cartDetails, totalPrice } = useShoppingCart()
+    const { addItem,  cartCount, cartDetails, totalPrice, redirectToCheckout } = useShoppingCart()
     const [products, setProducts] = useState<any>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<boolean>()
+    const [cartEmpty, setCartEmpty] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         setLoading(true)
@@ -32,92 +32,26 @@ function Products() {
         fetchData()
         setLoading(false)
     }, [setProducts])
-    const cartDet = Object.entries(cartDetails).map((e) => e[1])
+
     return (
         <>
             {loading ? (
-                <p>loading...</p>
+                <div className="mx-auto h-min max-w-full rounded-lg bg-gray-200  py-4  px-4 shadow-xl">
+                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                        <RefreshIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-spin text-gray-800" />
+                        <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
+                    </div>
+                </div>
             ) : error ? (
-                <p>{error}</p>
+                <div className="mx-auto h-min max-w-full rounded-lg bg-red-100 py-4 px-4 shadow-xl">
+                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                        <ExclamationCircleIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-bounce text-red-600" />
+                        <p className="mt-3 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .</p>
+                        <p>{error}</p>
+                    </div>
+                </div>
             ) : (
                 <main className="min-h-screen">
-                    <CartSummary />
-                    <div className="container mx-auto py-12 px-6 xl:max-w-screen-xl">
-                        {cartCount > 0 ? (
-                            <>
-                                <h2 className="text-4xl font-semibold">Your shopping cart</h2>
-                                <p className="mt-1 text-xl">
-                                    {cartCount} items{' '}
-                                    <button onClick={clearCart} className="text-base capitalize opacity-50 hover:opacity-100">
-                                        (Clear all)
-                                    </button>
-                                </p>
-                            </>
-                        ) : (
-                            <>
-                                <h2 className="text-4xl font-semibold">Your shopping cart is empty.</h2>
-                                <p className="mt-1 text-xl">
-                                    Check out our awesome plants{' '}
-                                    <a className="text-red-500 underline" href="/">
-                                        here!
-                                    </a>
-                                </p>
-                            </>
-                        )}
-
-                        {cartCount > 0 ? (
-                            <div className="mt-12">
-                                {cartDet.map((product: any) => (
-                                    <div key={product.id} className="flex justify-between space-x-4 rounded-md border border-opacity-0 p-4 hover:border-opacity-50 hover:shadow-lg">
-                                        {/* Image + Name */}
-                                        <a>
-                                            <a className="group flex items-center space-x-4" href={`/products/${product.id}`}>
-                                                <div className="relative h-20 w-20 transition-transform group-hover:scale-110">
-                                                    <img src={product.image} alt={product.name} />
-                                                </div>
-                                                <p className="text-xl font-semibold group-hover:underline">{product.name}</p>
-                                            </a>
-                                        </a>
-
-                                        {/* Price + Actions */}
-                                        <div className="flex items-center">
-                                            {/* Quantity */}
-                                            <div className="flex items-center space-x-3">
-                                                <button
-                                                    onClick={() => removeItem(product)}
-                                                    disabled={product?.quantity <= 1}
-                                                    className="rounded-md p-1 hover:bg-rose-100 hover:text-rose-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-current"
-                                                >
-                                                    <MinusSmIcon className="h-6 w-6 flex-shrink-0" />
-                                                </button>
-                                                <p className="text-xl font-semibold">{product.quantity}</p>
-                                                <button onClick={() => addItem(product)} className="rounded-md p-1 hover:bg-green-100 hover:text-green-500">
-                                                    <PlusSmIcon className="h-6 w-6 flex-shrink-0 " />
-                                                </button>
-                                            </div>
-
-                                            {/* Price */}
-                                            <p className="ml-16 text-xl font-semibold">
-                                                <XIcon className="inline-block h-4 w-4 text-gray-500" />
-                                                {product.price}
-                                            </p>
-
-                                            {/* Remove item */}
-                                            <button onClick={() => removeItem(product, product.quantity)} className="ml-4 hover:text-rose-500">
-                                                <XCircleIcon className="h-6 w-6 flex-shrink-0 opacity-50 transition-opacity hover:opacity-100" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                <div className="mt-8 flex flex-col items-end border-t py-4">
-                                    <p className="text-xl">
-                                        Total: <span className="font-semibold">{totalPrice}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        ) : null}
-                    </div>
                     {products.map((product: any) => (
                         <div key={product.id}>
                             <div className="flex flex-1">
@@ -133,12 +67,11 @@ function Products() {
                                     currency: 'EUR',
                                 })}
                             </p>
-                            <button className="m-4 rounded-lg bg-beige-900 p-2 text-white" onClick={() => addItem(product)}>
-                                Add to cart
-                            </button>
-                            <button className="m-4 rounded-lg bg-red-900 p-2 text-white" onClick={() => removeItem(product.id)}>
-                                Remove
-                            </button>
+                            <div className="flex items-center space-x-3">
+                                <button onClick={() => addItem(product)} className="rounded-md p-1 hover:bg-green-100 hover:text-green-500">
+                                    <PlusSmIcon className="h-6 w-6 flex-shrink-0 " />
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </main>

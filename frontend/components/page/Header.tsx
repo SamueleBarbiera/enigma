@@ -10,6 +10,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { myLoader } from '../../pages/_app'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart/react'
+import CartSummary from '../cart/CartSummary'
 
 const callsToAction = [{ name: 'Checkout', href: '/Checkout', costo_totale: 1 }]
 
@@ -153,27 +154,24 @@ export default function Header() {
                                                                                 >
                                                                                     <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform px-0">
                                                                                         <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                            <div className="relative bg-beige-100 px-6  py-6">
-                                                                                                <>
-                                                                                                    <div className="relative  mb-12 flex h-16 w-16 items-center justify-center">
-                                                                                                        <Image
-                                                                                                            src={session!.user!.image as any}
-                                                                                                            alt="User Img"
-                                                                                                            loader={myLoader}
-                                                                                                            layout="fill"
-                                                                                                            objectFit="contain"
-                                                                                                            className="rounded-full shadow-md"
-                                                                                                        />
-                                                                                                    </div>
-                                                                                                    <p>{session!.user!.name}</p>
-                                                                                                    <p>{session!.user!.email}</p>
-                                                                                                    <button
-                                                                                                        className="text-medium easy-in-out mt-2 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
-                                                                                                        onClick={() => signOut({ redirect: true })}
-                                                                                                    >
-                                                                                                        Sign Out
-                                                                                                    </button>
-                                                                                                </>
+                                                                                            <div className="absolute bg-beige-100 px-6  py-6">
+                                                                                                <div className="relative mb-12 h-16 w-16 items-center justify-center">
+                                                                                                    <Image
+                                                                                                        src={session!.user!.image as any}
+                                                                                                        alt="User Img"
+                                                                                                        loader={myLoader}
+                                                                                                        layout="fill"
+                                                                                                        className="rounded-full shadow-md"
+                                                                                                    />
+                                                                                                </div>
+                                                                                                <p>{session!.user!.name}</p>
+                                                                                                <p>{session!.user!.email}</p>
+                                                                                                <button
+                                                                                                    className="text-medium easy-in-out mt-2 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                                                                                    onClick={() => signOut({ redirect: true })}
+                                                                                                >
+                                                                                                    Sign Out
+                                                                                                </button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </Popover.Panel>
@@ -190,15 +188,38 @@ export default function Header() {
                                                 </a>
                                                 {/* Cart */}
                                                 <div className="ml-4 mt-[0.4rem] flow-root">
-                                                    <div className="relative">
-                                                        <button className="group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 ">
-                                                            <a href="Carrello" className="group -m-2 flex items-center p-2">
-                                                                <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
-                                                            </a>
-                                                            {totalPrice}
-                                                            <span className="text-sm text-gray-500">{cartCount}</span>
-                                                        </button>
-                                                    </div>
+                                                    <Popover className="relative">
+                                                        {({ open }: any) => (
+                                                            <>
+                                                                <Popover.Button
+                                                                    className={classNames(
+                                                                        open ? 'text-beige-900' : 'text-beige-500',
+                                                                        'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
+                                                                    )}
+                                                                >
+                                                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                                                        <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
+                                                                        <span className="ml-2 text-sm font-medium text-beige-900">{cartCount}</span>
+                                                                    </a>
+                                                                </Popover.Button>
+
+                                                                <Transition
+                                                                    as={Fragment}
+                                                                    enter="transition ease-out duration-200"
+                                                                    enterFrom="opacity-0 translate-y-1"
+                                                                    enterTo="opacity-100 translate-y-0"
+                                                                    leave="transition ease-in duration-150"
+                                                                    leaveFrom="opacity-100 translate-y-0"
+                                                                    leaveTo="opacity-0 translate-y-1"
+                                                                >
+                                                                    <Popover.Panel className="z-100 absolute left-1/2 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0 lg:max-w-3xl">
+                                                                        
+                                                                        <CartSummary />
+                                                                    </Popover.Panel>
+                                                                </Transition>
+                                                            </>
+                                                        )}
+                                                    </Popover>
                                                 </div>
                                             </div>
                                         </div>

@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import useSWR from 'swr'
 import { useShoppingCart } from 'use-shopping-cart/react'
-import { fetcher, shootFireworks } from '../content/lib/Utils'
+import {  shootFireworks } from '../content/lib/Utils'
 import PrintObject from '../components/cart/PrintObject'
 import ClearCart from '../components/cart/ClearCart'
 import { fetchGetJSON } from '../content/utils/api-helpers'
-import { CheckIcon } from '@heroicons/react/solid'
+import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
+import Header from '@/components/page/Header'
+import Footer from '@/components/page/Footer'
 
 const RisultatoPagamento: NextPage = () => {
     const router = useRouter()
@@ -25,29 +27,39 @@ const RisultatoPagamento: NextPage = () => {
     }, [data])
 
     return (
-        <div className="container mx-auto py-12 px-6 text-center xl:max-w-screen-xl">
-            {error ? (
-                <div className="mx-auto max-w-md rounded-md bg-rose-100 p-2 text-rose-500">
-                    <p className="text-lg">Sorry, something went wrong!</p>
-                </div>
-            ) : !data ? (
-                <div className="mx-auto max-w-md rounded-md bg-gray-100 p-2 text-gray-500">
-                    <p className="animate-pulse text-lg">Loading...</p>
-                </div>
-            ) : (
-                <div className="mx-auto max-w-lg rounded-md bg-gray-100 py-4 px-8">
-                    <h2 className="flex flex-col items-center space-x-1 text-4xl font-semibold">
-                        <CheckIcon className="h-12 w-12 flex-shrink-0 text-green-600" />
-                        <span>Thanks for your order!</span>
-                    </h2>
-                    <p className="mt-3 text-lg">Check your inbox for the receipt.</p>
-                </div>
-            )}
-            <h1>Checkout Payment Result</h1>
+        <>
+            <Header />
+            <div className="container h-screen py-12 px-6 text-center xl:max-w-screen-xl">
+                {error ? (
+                    <div className="mx-auto max-w-full rounded-lg bg-red-100 py-4 px-4 shadow-xl">
+                        <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                            <ExclamationCircleIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-bounce text-red-600" />
+                            <p className="mt-3 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .</p>
+                        </div>
+                    </div>
+                ) : !data ? (
+                    <div className="mx-auto max-w-full rounded-lg bg-gray-200  py-4  px-4 shadow-xl">
+                        <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                            <RefreshIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-spin text-gray-800" />
+                            <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="mx-auto max-w-full rounded-lg bg-green-200 py-4 px-4 shadow-xl">
+                        <h2 className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                            <CheckIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-bounce text-green-600" />
+                            <span>Grazie per il tuo ordine!</span>
+                            <p className="mt-3 text-base">Controlla la tua email per vedere la ricevuta!</p>
+                        </h2>
+                    </div>
+                )}
+                {/* <h1>Checkout Payment Result</h1>
             <h2>Status: {data?.payment_intent?.status ?? 'loading...'}</h2>
             <h3>CheckoutSession response:</h3>
-            <PrintObject content={data ?? 'loading...'} />
-        </div>
+            <PrintObject content={data ?? 'loading...'} /> */}
+            </div>
+            <Footer />
+        </>
     )
 }
 export default RisultatoPagamento
