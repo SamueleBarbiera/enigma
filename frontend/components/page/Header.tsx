@@ -152,9 +152,9 @@ export default function Header() {
                                                                                     leaveFrom="opacity-100 translate-y-0"
                                                                                     leaveTo="opacity-0 translate-y-1"
                                                                                 >
-                                                                                    <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform px-0">
+                                                                                    <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
                                                                                         <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                            <div className="absolute bg-beige-100 px-6  py-6">
+                                                                                            <div className="absolute rounded-xl border bg-gray-50 px-6 py-6 shadow-xl">
                                                                                                 <div className="relative mb-12 h-16 w-16 items-center justify-center">
                                                                                                     <Image
                                                                                                         src={session!.user!.image as any}
@@ -212,8 +212,7 @@ export default function Header() {
                                                                     leaveFrom="opacity-100 translate-y-0"
                                                                     leaveTo="opacity-0 translate-y-1"
                                                                 >
-                                                                    <Popover.Panel className="z-100 absolute left-1/2 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0 lg:max-w-3xl">
-                                                                        
+                                                                    <Popover.Panel className="z-100 absolute right-2/4 mt-8 w-max transform px-2 sm:px-0 lg:max-w-3xl">
                                                                         <CartSummary />
                                                                     </Popover.Panel>
                                                                 </Transition>

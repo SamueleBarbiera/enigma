@@ -28,7 +28,7 @@ export default function Footer() {
 function Socials() {
     return (
         <div className="-mt-[0.6rem] flex items-center justify-center md:mt-1">
-            <div className="mb-1 flex space-x-1">
+            <div className="mb-1 flex space-x-2">
                 {footerNavigation.bottomLinks.map((item) => (
                     <a key={item.name} href={item.href} className="text-beige-900 hover:text-beige-700">
                         {item.image}

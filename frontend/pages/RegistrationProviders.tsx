@@ -1,6 +1,6 @@
 import Footer from '../components/page/Footer'
 import Header from '../components/page/Header'
-import RegistrationFormProviders from '../components/RegistrationFormProviders'
+import RegistrationFormProviders from '../components/auth/RegistrationFormProviders'
 import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
 

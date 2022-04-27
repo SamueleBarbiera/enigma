@@ -87,7 +87,7 @@ function AcquistiEffettuati() {
                         <div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
                             <div className="mx-auto max-w-2xl space-y-8 px-4 lg:max-w-4xl lg:px-0 ">
                                 {orders.map((order) => (
-                                    <div key={order.number} className="rounded-xl bg-white shadow-xl ">
+                                    <div key={order.number} className="rounded-xl bg-gray-50 shadow-xl ">
                                         <h3 className="sr-only">
                                             Order placed on <time dateTime={order.createdDatetime}>{order.createdDate}</time>
                                         </h3>
@@ -127,7 +127,7 @@ function AcquistiEffettuati() {
                                                     leaveFrom="transform opacity-100 scale-100"
                                                     leaveTo="transform opacity-0 scale-95"
                                                 >
-                                                    <Menu.Items className="absolute right-0 mt-2 w-40 origin-bottom-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                                    <Menu.Items className="absolute right-0 mt-2 w-40 origin-bottom-right rounded-xl bg-gray-50 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <div className="py-1">
                                                             <Menu.Item>
                                                                 {({ active }) => (
@@ -158,18 +158,18 @@ function AcquistiEffettuati() {
                                             {order.products.map((product) => (
                                                 <li key={product.id} className="p-6">
                                                     <div className="flex items-center">
-                                                        <div className="mr-4 -ml-3 sm:ml-2 flex-shrink-0 overflow-hidden rounded-xl bg-beige-100 h-32 w-32">
+                                                        <div className="mr-4 -ml-3 h-32 w-32 flex-shrink-0 overflow-hidden rounded-xl bg-beige-100 sm:ml-2">
                                                             <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
                                                         </div>
                                                         <div className="ml-4 flex-1 text-sm">
                                                             <div className="font-medium text-beige-900 smd:flex smd:justify-between">
                                                                 <h5 className="">{product.name}</h5>
-                                                                <p className="smd:ml-2 mt-1 smd:mt-0">{product.price}</p>
+                                                                <p className="mt-1 smd:ml-2 smd:mt-0">{product.price}</p>
                                                             </div>
                                                             <p className="hidden text-beige-500 smd:mt-2 smd:block">{product.description}</p>
 
                                                             <div className="mt-4 flex w-full text-sm font-medium smd:hidden">
-                                                                <div className=" flex flex-auto w-full break-before-all flex-shrink-0 text-xs ">
+                                                                <div className=" flex w-full flex-auto flex-shrink-0 break-before-all text-xs ">
                                                                     <a
                                                                         href={product.href}
                                                                         className="transiction whitespace-nowrap rounded-lg border-2 border-solid border-beige-200 bg-beige-200 p-2 text-beige-900 shadow-lg duration-200 ease-in-out hover:bg-beige-100"
@@ -181,15 +181,15 @@ function AcquistiEffettuati() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="mt-6 justify-center items-center flex smd:justify-between">
+                                                    <div className="mt-6 flex items-center justify-center smd:justify-between">
                                                         <div className="flex  items-center">
                                                             <CheckCircleIcon className="h-5 w-5 flex-shrink-0 text-green-500" aria-hidden="true" />
-                                                            <p className=" smd:ml-2 text-sm font-medium text-beige-500">
+                                                            <p className=" text-sm font-medium text-beige-500 smd:ml-2">
                                                                 Spedito il <time dateTime={order.deliveredDatetime}>{order.deliveredDate}</time>
                                                             </p>
                                                         </div>
-                                                        <div className=" hidden mt-0 sm:ml-4 sm:border-none pt-0  smd:flex smd:items-center smd:space-x-4 smd:text-sm smd:font-medium">
-                                                            <div className="flex flex-1 justify-center flex-shrink">
+                                                        <div className=" mt-0 hidden pt-0 sm:ml-4 sm:border-none  smd:flex smd:items-center smd:space-x-4 smd:text-sm smd:font-medium">
+                                                            <div className="flex flex-1 flex-shrink justify-center">
                                                                 <a
                                                                     href={product.href}
                                                                     className="transiction whitespace-nowrap rounded-lg border-2 border-solid border-beige-200 bg-beige-200 p-2 text-beige-900 shadow-lg duration-200 ease-in-out hover:bg-beige-100"

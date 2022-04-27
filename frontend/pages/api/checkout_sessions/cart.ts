@@ -2,10 +2,6 @@ import { validateCartItems } from 'use-shopping-cart/utilities/serverless'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { useEffect, useState } from 'react'
 import Stripe from 'stripe'
-import products from '../../../components/cart/Products'
-import { formatAmountForDisplay } from '../../../content/utils/stripe-helpers'
-import axios from 'axios'
-import { useShoppingCart } from 'use-shopping-cart/react'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: '2020-08-27',

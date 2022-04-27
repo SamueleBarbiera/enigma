@@ -66,7 +66,7 @@ export default function RecapOrdini() {
                     <section aria-labelledby="products-heading" className="mt-6">
                         <div className="space-y-8">
                             {products.map((product) => (
-                                <div key={product.id} className="border border-t border-b border-beige-200 bg-white shadow-xl smd:rounded-lg smd:border">
+                                <div key={product.id} className="border border-t border-b border-beige-200 bg-gray-50 shadow-xl smd:rounded-lg smd:border">
                                     <div className="gap-y-12 py-6 px-4 smd:px-6 md:gap-x-8 xmd:grid xmd:grid-cols-12 xmd:p-8">
                                         <div className="smd:flex xmd:col-span-7">
                                             <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg smd:aspect-none smd:h-40 smd:w-40">

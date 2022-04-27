@@ -262,7 +262,7 @@ function Checkout() {
                                 <div className="w-full border-t " />
                             </div>
                             <div className="relative flex justify-center">
-                                <span className="bg-white px-4 text-sm font-medium text-beige-900">Oppure</span>
+                                <span className="bg-gray-50 px-4 text-sm font-medium text-beige-900">Oppure</span>
                             </div>
                         </div>
 

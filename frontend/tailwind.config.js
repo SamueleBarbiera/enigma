@@ -19,7 +19,7 @@ module.exports = {
             xmd: '715px',
             xlmd: '800px',
             lg: '924px',
-            xl: '1280px',
+            xl: '1200px',
             '2xl': '1536px',
         },
         extend: {
