@@ -151,7 +151,7 @@ export default function LoginForm({ providers }: any) {
                                                     )
                                                 } else if ((providers as any).name == 'Facebook') {
                                                     return (
-                                                        <button
+                                                        <button disabled
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
                                                                 signIn((providers as any).id)

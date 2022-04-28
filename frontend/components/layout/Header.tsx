@@ -129,7 +129,7 @@ export default function Header() {
                                             <div className="-mr-12 flex items-center">
                                                 {/* Help */}
                                                 {session ? (
-                                                    <div className="ml-4 mt-[0.4rem] flow-root">
+                                                    <div className="mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
                                                             {({ open }: any) => (
                                                                 <>
@@ -155,17 +155,15 @@ export default function Header() {
                                                                     >
                                                                         <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                <div className="absolute rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
-                                                                                    {/* <div className="relative mb-12 h-16 w-16 items-center justify-center">
-                                                                                        <Image
-                                                                                            src={session!.user.image! as any}
+                                                                                <div className="absolute rounded-lg border justify-center items-center bg-beige-50 px-6 py-6 shadow-xl">
+                                                                                    <div className="relative my-4 items-center">
+                                                                                        <img
+                                                                                            src={session!.user!.image! as any}
                                                                                             alt="User Img"
-                                                                                            loader={myLoader}
-                                                                                            layout="fill"
-                                                                                            className="rounded-full shadow-md"
+                                                                                            className="mx-auto rounded-full shadow-md h-24 w-24"
                                                                                         />
-                                                                                    </div> */}
-                                                                                    <p>{session!.user!.name}</p>
+                                                                                    </div>
+                                                                                    <p className='font-semibold text-beige-900 contrast-150'>{session!.user!.name}</p>
                                                                                     <p>{session!.user!.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
@@ -182,9 +180,9 @@ export default function Header() {
                                                         </Popover>
                                                     </div>
                                                 ) : loading ? (
-                                                    <RefreshIcon className="mr-1 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
+                                                    <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
-                                                    <button onClick={() => signIn()}>Accedi</button>
+                                                    <button className='mr-4 bg-beige-500 hover:bg-beige-600 transition ease-in-out duration-200 text-beige-50 py-1 px-2 rounded-lg' onClick={() => signIn()}>Accedi</button>
                                                 )}
                                                 {/* Cart */}
                                                 <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
