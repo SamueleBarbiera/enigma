@@ -2,15 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { signIn, useSession } from 'next-auth/client'
 //import { setCookie } from 'nookies'
-import Router from 'next/router'
-import { useState, useContext } from 'react'
 //import { XCircleIcon } from '@heroicons/react/solid'
-import { useCallback } from 'react'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { useRef } from 'react'
-import { IoCloseOutline } from 'react-icons/io5'
-import { FcCheckmark } from 'react-icons/fc'
 //import Link from 'next/link'
 //const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
@@ -74,7 +66,7 @@ export default function LoginForm({ providers }: any) {
                             </section>
                         ) : (
                             <section>
-                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen easy-in-out transition duration-300'} aria-live="assertive">
+                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen ease-in-out transition duration-300'} aria-live="assertive">
                                     {errMsg}
                                 </p>
                                 <form onSubmit={handleSubmit} className="flex flex-col">
@@ -119,7 +111,7 @@ export default function LoginForm({ providers }: any) {
                                 <input name="password" type="password" onChange={(e) => handleUpdate({ password: e.target.value })} />
 
                                 <button
-                                    className=" text-medium easy-in-out mt-12 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                    className=" text-medium ease-in-out mt-12 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
                                     onClick={async () => {
                                         const response = await signIn('credentials', {
                                             redirect: false,
@@ -145,7 +137,7 @@ export default function LoginForm({ providers }: any) {
                                                 if ((providers as any).name == 'Google') {
                                                     return (
                                                         <button
-                                                            className="text-medium easy-in-out inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                                            className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
                                                                 signIn((providers as any).id)
                                                             }}
@@ -160,7 +152,7 @@ export default function LoginForm({ providers }: any) {
                                                 } else if ((providers as any).name == 'Facebook') {
                                                     return (
                                                         <button
-                                                            className="text-medium easy-in-out inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                                            className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
                                                                 signIn((providers as any).id)
                                                             }}

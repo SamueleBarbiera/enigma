@@ -71,7 +71,7 @@ export default function RegistrationFormProviders() {
                             </section>
                         ) : (
                             <section>
-                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen easy-in-out transition duration-300'} aria-live="assertive">
+                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen transition duration-300 ease-in-out'} aria-live="assertive">
                                     {errMsg}
                                 </p>
                                 <p className="mb-3 text-center text-2xl font-normal text-beige-900">Maca poco . . .</p>
@@ -97,7 +97,7 @@ export default function RegistrationFormProviders() {
                                     />
 
                                     <button
-                                        className=" text-medium easy-in-out mt-12 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                        className=" text-medium mt-12 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                         disabled={!validName ? true : false}
                                     >
                                         Registrati
@@ -108,7 +108,7 @@ export default function RegistrationFormProviders() {
                                     <br />
                                     <span className="line ">
                                         {/*put router link here*/}
-                                        <a href="/Login">Accedi</a>
+                                        <a href="/auth/Login">Accedi</a>
                                     </span>
                                 </p>
                             </section>

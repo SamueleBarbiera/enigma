@@ -126,7 +126,7 @@ export default function RegistrationForm({ providers }: any) {
                                                 <div className="-mx-2 -my-1.5 flex">
                                                     <a
                                                         type="button"
-                                                        href="/Login"
+                                                        href="/auth/Login"
                                                         className="rounded-lg bg-green-500  px-2 py-1.5 text-sm font-medium text-white shadow-md outline-none ring-2 ring-green-600 transition ease-in-out hover:bg-green-600"
                                                     >
                                                         Accedi
@@ -139,7 +139,7 @@ export default function RegistrationForm({ providers }: any) {
                             </section>
                         ) : (
                             <section>
-                                <div ref={errRef} className={errMsg ? 'errmsg' : 'offscreen easy-in-out transition duration-300'} aria-live="assertive">
+                                <div ref={errRef} className={errMsg ? 'errmsg' : 'offscreen transition duration-300 ease-in-out'} aria-live="assertive">
                                     <div className="flex">
                                         <div className="flex-shrink-0">
                                             <XCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -233,7 +233,7 @@ export default function RegistrationForm({ providers }: any) {
                                     />
 
                                     <button
-                                        className=" text-medium easy-in-out mt-12 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                        className=" text-medium mt-12 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                         disabled={!validName || !validPwd || !validEmail || !validMatch ? true : false}
                                     >
                                         Registrati
@@ -244,7 +244,7 @@ export default function RegistrationForm({ providers }: any) {
                                     <br />
                                     <span className="line ">
                                         {/*put router link here*/}
-                                        <a href="/Login">Accedi</a>
+                                        <a href="/auth/Login">Accedi</a>
                                     </span>
                                 </p>
                                 <div className="mt-4">
@@ -264,7 +264,7 @@ export default function RegistrationForm({ providers }: any) {
                                                         if ((provider as any).name == 'Google') {
                                                             return (
                                                                 <button
-                                                                    className="text-medium easy-in-out inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                                                    className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                     onClick={() => {
                                                                         signIn((provider as any).id)
                                                                     }}
@@ -279,7 +279,7 @@ export default function RegistrationForm({ providers }: any) {
                                                         } else if ((provider as any).name == 'Facebook') {
                                                             return (
                                                                 <button
-                                                                    className="text-medium easy-in-out inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
+                                                                    className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                     onClick={() => {
                                                                         signIn((provider as any).id)
                                                                     }}

@@ -1,11 +1,9 @@
 import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/solid'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
-import { TrashIcon, XIcon } from '@heroicons/react/solid'
+import { TrashIcon } from '@heroicons/react/outline'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
 
 function CartSummary() {
     const { addItem, removeItem, cartCount, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } = useShoppingCart()
@@ -28,7 +26,6 @@ function CartSummary() {
         setErrorMessage('')
 
         const response = await fetchPostJSON(`/api/checkout_sessions/cart`, { cartDetails }, { totalPrice })
-        console.log('dxcgfjhvghvjhgvgh', response)
 
         if (response.statusCode > 399) {
             console.error(response.message)
@@ -79,11 +76,11 @@ function CartSummary() {
                     </div>
                 </div>
             ) : (
-                <div className="relative flex  bg-white ">
-                    <div className="mx-min container p-2 xl:max-w-screen-xl">
+                <div className="relative flex  bg-beige-50 ">
+                    <div className="mx-min  xl:max-w-screen-xl">
                         {cartCount > 0 ? (
                             <>
-                                <div className="flex-1 overflow-hidden py-6 px-4 sm:px-6">
+                                <div className="flex-1  overflow-hidden py-6 px-4 sm:px-6">
                                     <div className="flex items-start justify-between">
                                         <p className="text-2xl font-semibold text-gray-900">Carrello</p>
                                     </div>
@@ -93,23 +90,23 @@ function CartSummary() {
                                             <ul role="list" className="-my-6 ">
                                                 {cartDet.map((product: any) => (
                                                     <li key={product.id} className="flex py-6">
-                                                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
-                                                            <img
-                                                                className="h-full w-full rounded-md object-cover  object-center shadow-md"
-                                                                src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
-                                                                alt={'not found'}
-                                                            />
-                                                        </div>
+                                                        <a href={`/GalleriaProdotto/${product.id}`}>
+                                                            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
+                                                                <img
+                                                                    className="h-full w-full rounded-md object-cover  object-center shadow-md"
+                                                                    src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
+                                                                    alt={'not found'}
+                                                                />
+                                                            </div>
+                                                        </a>
                                                         <div className="ml-4 flex flex-1 flex-col">
                                                             <div>
-                                                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                                                    <a className="text-lg font-semibold capitalize" href={`/products/${product.id}`}>
+                                                                <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
+                                                                    <a className="font-semibold capitalize" href={`/GalleriaProdotto/${product.id}`}>
                                                                         {product.name}
                                                                     </a>
-
-                                                                    <p className="ml-4">{toFixedIfNecessary(product.price * product.quantity, 2)} €</p>
+                                                                    <p className="ml-2 w-max">{toFixedIfNecessary(product.price * product.quantity, 2)} €</p>
                                                                 </div>
-                                                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                                             </div>
                                                             <div className="flex flex-1 items-end justify-between text-sm">
                                                                 <div className="flex items-center space-x-4">
@@ -129,9 +126,9 @@ function CartSummary() {
                                                                     </button>
                                                                 </div>
 
-                                                                <div className="flex">
+                                                                <div className="mb-1 flex">
                                                                     <button onClick={() => removeItem(product.id, product.quantity)} className="ml-4 hover:text-rose-500">
-                                                                        <TrashIcon className="h-6 w-6 flex-shrink-0 opacity-50 transition-opacity hover:opacity-100" />
+                                                                        <TrashIcon className="h-6 w-6 flex-shrink-0  opacity-50 transition-opacity hover:opacity-100" />
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -143,7 +140,7 @@ function CartSummary() {
                                     </div>
                                 </div>
 
-                                <div className="-m-2 mt-4 bg-beige-200 py-6 px-4 sm:px-6">
+                                <div className="mt-4 bg-beige-200 py-6 px-4 sm:px-6">
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                         <p>Costo Totale</p>
                                         <p>{toFixedIfNecessary(totalPrice, 2)} €</p>
@@ -166,7 +163,7 @@ function CartSummary() {
                                                     type="button"
                                                     disabled
                                                 >
-                                                    Rimuovi tutto
+                                                    Svuota
                                                 </button>
                                             ) : (
                                                 <button
@@ -174,7 +171,7 @@ function CartSummary() {
                                                     type="button"
                                                     onClick={clearCart}
                                                 >
-                                                    Rimuovi tutto
+                                                    Svuota
                                                 </button>
                                             )}
                                         </div>
@@ -183,7 +180,7 @@ function CartSummary() {
                             </>
                         ) : (
                             <div className="rounded-lg bg-beige-100 p-4">
-                                <h2 className="text-4xl font-semibold">Il tuo carello è vuoto.</h2>
+                                <h2 className="text-2xl font-semibold">Il tuo carello è vuoto.</h2>
                                 <p className="mt-3 text-xl ">
                                     Visualizza i nostri vestiti{' '}
                                     <a className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/">

@@ -40,7 +40,7 @@ MyApp.getServerSideProps = async ({ ctx }: any) => {
 
     if (!jwt) {
         if (ctx.pathname === '/Home') {
-            redirectUser(ctx, '/Login')
+            redirectUser(ctx, '/auth/Login')
         }
     }
 

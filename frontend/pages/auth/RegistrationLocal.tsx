@@ -1,6 +1,6 @@
-import Footer from '../components/page/Footer'
-import Header from '../components/page/Header'
-import RegistrationForm from '../components/auth/RegistrationForm'
+import Footer from '../../components/layout/Footer'
+import Header from '../../components/layout/Header'
+import RegistrationForm from '../../components/auth/RegistrationForm'
 //import nookies from 'nookies'
 import Head from 'next/head'
 import { getProviders, getSession } from 'next-auth/client'
@@ -9,7 +9,7 @@ export default function RegistrationLocal({ providers }: any) {
     return (
         <>
             <Head>
-                <title>Registration</title>
+                <title>Registrazione</title>
                 <link rel="icon" href="/question-solid.svg" />
             </Head>
             <Header />

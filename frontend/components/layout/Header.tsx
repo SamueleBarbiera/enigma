@@ -1,24 +1,22 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable no-unused-vars */
-
 import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
-import { MdOutlineShoppingBag } from 'react-icons/md'
+import { MdOutlineShoppingBag, MdOutlineSell } from 'react-icons/md'
 import { useSession, signIn, signOut } from 'next-auth/client'
 import { Fragment, useState, useEffect } from 'react'
 import { myLoader } from '../../pages/_app'
+import { BiTrendingUp, BiHomeAlt } from 'react-icons/bi'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import CartSummary from '../cart/CartSummary'
 
-const callsToAction = [{ name: 'Checkout', href: '/Checkout', costo_totale: 1 }]
-
 const navigation = {
     pages: [
-        { name: 'Prodotti', href: '/Prodotti', icon: 'd' },
-        { name: 'Trends', href: '/Trends' },
-        { name: 'Best sellers', href: '/Best sellers' },
+        { name: 'Home', href: '/', icon: <BiHomeAlt className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
+        { name: 'Prodotti', href: '/Prodotti', icon: <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
+        { name: 'Trends', href: '/Prodotti/Trends', icon: <BiTrendingUp className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
     ],
 }
 
@@ -27,8 +25,7 @@ function classNames(...classes: any[]) {
 }
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [session] = useSession()
-    const [data, setData] = useState<any>()
+    const [session, loading] = useSession()
     const { totalPrice, cartCount } = useShoppingCart()
 
     return (
@@ -58,17 +55,24 @@ export default function Header() {
                         leaveTo="-translate-x-full"
                     >
                         <div className="relative flex w-2/3 flex-col overflow-y-auto bg-beige-50 pb-8 shadow-xl md:hidden">
-                            <div className="flex px-4 pt-5 ">
+                            <div className="flex p-2 ">
                                 <button type="button" className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-beige-400" onClick={() => setMobileMenuOpen(false)}>
-                                    <XIcon className="h-6 w-6" aria-hidden="true" />
+                                    <XIcon className="h-6 w-6 text-beige-900" aria-hidden="true" />
                                 </button>
                             </div>
 
-                            <div className="space-y-6 py-6 px-4">
+                            <div className="space-y-6 py-6 px-6">
                                 {navigation.pages.map((page) => (
                                     <div key={page.name} className="flow-root">
-                                        <a href={page.href} className="-m-2 mb-1 block rounded-lg bg-beige-300 p-2 font-medium text-beige-900">
-                                            {page.name}
+                                        <a href={page.href} className="-m-2 mb-1 block justify-between rounded-lg bg-beige-200 p-2 font-medium text-beige-900">
+                                            <div className="flex flex-1 flex-col">
+                                                <div>
+                                                    <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
+                                                        <p className=" items-end">{page.name}</p>
+                                                        <p className=" items-start">{page.icon}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </a>
                                     </div>
                                 ))}
@@ -124,70 +128,66 @@ export default function Header() {
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="-mr-12 flex items-center">
                                                 {/* Help */}
-                                                <a href="#" className="p-2 text-beige-900 ">
-                                                    {(() => {
-                                                        if (session) {
-                                                            return (
-                                                                <div className="ml-4 mt-[0.4rem] flow-root">
-                                                                    <Popover className="relative">
-                                                                        {({ open }: any) => (
-                                                                            <>
-                                                                                <Popover.Button
-                                                                                    className={classNames(
-                                                                                        open ? 'text-beige-900' : 'text-beige-800',
-                                                                                        'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
-                                                                                    )}
-                                                                                >
-                                                                                    <a href="#" className="group -m-2 flex items-center p-2">
-                                                                                        <FaRegUser className="h-5 w-5" aria-hidden="true" />
-                                                                                    </a>
-                                                                                </Popover.Button>
-
-                                                                                <Transition
-                                                                                    as={Fragment}
-                                                                                    enter="transition ease-out duration-200"
-                                                                                    enterFrom="opacity-0 translate-y-1"
-                                                                                    enterTo="opacity-100 translate-y-0"
-                                                                                    leave="transition ease-in duration-150"
-                                                                                    leaveFrom="opacity-100 translate-y-0"
-                                                                                    leaveTo="opacity-0 translate-y-1"
-                                                                                >
-                                                                                    <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
-                                                                                        <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                            <div className="absolute rounded-xl border bg-gray-50 px-6 py-6 shadow-xl">
-                                                                                                <div className="relative mb-12 h-16 w-16 items-center justify-center">
-                                                                                                    <Image
-                                                                                                        src={session!.user!.image as any}
-                                                                                                        alt="User Img"
-                                                                                                        loader={myLoader}
-                                                                                                        layout="fill"
-                                                                                                        className="rounded-full shadow-md"
-                                                                                                    />
-                                                                                                </div>
-                                                                                                <p>{session!.user!.name}</p>
-                                                                                                <p>{session!.user!.email}</p>
-                                                                                                <button
-                                                                                                    className="text-medium easy-in-out mt-2 inline-flex w-full  justify-center rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 hover:bg-beige-600"
-                                                                                                    onClick={() => signOut({ redirect: true })}
-                                                                                                >
-                                                                                                    Sign Out
-                                                                                                </button>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </Popover.Panel>
-                                                                                </Transition>
-                                                                            </>
+                                                {session ? (
+                                                    <div className="ml-4 mt-[0.4rem] flow-root">
+                                                        <Popover className="relative">
+                                                            {({ open }: any) => (
+                                                                <>
+                                                                    <Popover.Button
+                                                                        className={classNames(
+                                                                            open ? 'text-beige-900' : 'text-beige-800',
+                                                                            'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                         )}
-                                                                    </Popover>
-                                                                </div>
-                                                            )
-                                                        } else {
-                                                            return <button onClick={() => signIn()}>Accedi</button>
-                                                        }
-                                                    })()}
-                                                </a>
+                                                                    >
+                                                                        <a href="#" className="group -m-2 flex items-center p-2">
+                                                                            <FaRegUser className="h-5 w-5" aria-hidden="true" />
+                                                                        </a>
+                                                                    </Popover.Button>
+
+                                                                    <Transition
+                                                                        as={Fragment}
+                                                                        enter="transition ease-out duration-200"
+                                                                        enterFrom="opacity-0 translate-y-1"
+                                                                        enterTo="opacity-100 translate-y-0"
+                                                                        leave="transition ease-in duration-150"
+                                                                        leaveFrom="opacity-100 translate-y-0"
+                                                                        leaveTo="opacity-0 translate-y-1"
+                                                                    >
+                                                                        <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
+                                                                            <div className="overflow-hidden rounded-lg shadow-lg">
+                                                                                <div className="absolute rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
+                                                                                    {/* <div className="relative mb-12 h-16 w-16 items-center justify-center">
+                                                                                        <Image
+                                                                                            src={session!.user.image! as any}
+                                                                                            alt="User Img"
+                                                                                            loader={myLoader}
+                                                                                            layout="fill"
+                                                                                            className="rounded-full shadow-md"
+                                                                                        />
+                                                                                    </div> */}
+                                                                                    <p>{session!.user!.name}</p>
+                                                                                    <p>{session!.user!.email}</p>
+                                                                                    <button
+                                                                                        className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
+                                                                                        onClick={() => signOut({ redirect: true })}
+                                                                                    >
+                                                                                        Sign Out
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </Popover.Panel>
+                                                                    </Transition>
+                                                                </>
+                                                            )}
+                                                        </Popover>
+                                                    </div>
+                                                ) : loading ? (
+                                                    <RefreshIcon className="mr-1 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
+                                                ) : (
+                                                    <button onClick={() => signIn()}>Accedi</button>
+                                                )}
                                                 {/* Cart */}
-                                                <div className="ml-4 mt-[0.4rem] flow-root">
+                                                <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
                                                     <Popover className="relative">
                                                         {({ open }: any) => (
                                                             <>
@@ -212,7 +212,7 @@ export default function Header() {
                                                                     leaveFrom="opacity-100 translate-y-0"
                                                                     leaveTo="opacity-0 translate-y-1"
                                                                 >
-                                                                    <Popover.Panel className="z-100 absolute right-2/4 mt-8 w-max transform px-2 sm:px-0 lg:max-w-3xl">
+                                                                    <Popover.Panel className="z-100 absolute -right-1/4 mt-8 w-min transform lg:max-w-3xl">
                                                                         <CartSummary />
                                                                     </Popover.Panel>
                                                                 </Transition>
