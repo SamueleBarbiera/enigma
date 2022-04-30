@@ -37,6 +37,6 @@
             "@/pages/*": ["./pages/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/GalleriaProdotto/[id].jsx"],
     "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"]
 }

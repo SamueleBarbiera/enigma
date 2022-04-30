@@ -1,40 +1,47 @@
+import { GetStaticProps, GetStaticPaths } from 'next'
 import AccessDenied from '@/components/layout/AccessDenied'
-import Footer from '@/components/layout/Footer'
-import Header from '@/components/layout/Header'
-import { Disclosure, RadioGroup, Tab } from '@headlessui/react'
-import { HeartIcon, MinusSmIcon, PlusSmIcon } from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
 import { useSession } from 'next-auth/client'
+import { useRouter } from 'next/router'
+import { useShoppingCart } from 'use-shopping-cart/react'
+import { useState } from 'react'
+import axios from 'axios'
+import { formatCurrencyString } from 'use-shopping-cart'
+import { MinusSmIcon, PlusSmIcon, HeartIcon, RefreshIcon } from '@heroicons/react/solid'
+import { Disclosure, RadioGroup, Tab } from '@headlessui/react'
 import Head from 'next/head'
-
-const relatedProducts = [
-    {
-        id: 1,
-        name: 'Zip Tote Basket',
-        color: 'White and black',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-01.jpg',
-        imageAlt: 'Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.',
-        price: '$140',
-    },
-    // More products...
-]
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-function GalleriaProdotto() {
-    const [session, loading] = useSession()
+export default function ProductPage(props: any) {
+    console.log('🚀 - file: [id].tsx - line 15 - ProductPage - props', props)
+    const [session] = useSession()
+    const router = useRouter()
+    const { addItem } = useShoppingCart()
+    const [qty, setQty] = useState(1)
+    const [selectedColor, setSelectedColor] = useState(props.colors[0])
+
     if (session) {
-        return (
+        return router.isFallback ? (
             <>
                 <Head>
-                    <title>Galleria Prodotto</title>
+                    <title>Caricamento</title>
+                </Head>
+                <div className="mx-auto flex h-screen w-screen items-center justify-center rounded-lg bg-beige-200 py-4 px-4 shadow-xl">
+                    <div className="mx-auto flex flex-col items-center justify-center space-x-1 text-4xl font-semibold">
+                        <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-gray-800 " />
+                        <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
+                    </div>
+                </div>
+            </>
+        ) : (
+            <>
+                <Head>
+                    <title>Galleria prodotto</title>
                     <link rel="icon" href="/question-solid.svg" />
                     <meta charSet="utf-8" className="next-head" />
                 </Head>
-                <Header />
                 <main className="mx-auto max-w-7xl bg-white sm:px-6 sm:pt-16 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:max-w-none">
                         {/* Product */}
@@ -44,7 +51,7 @@ function GalleriaProdotto() {
                                 {/* Image selector */}
                                 <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
                                     <Tab.List className="grid grid-cols-4 gap-6">
-                                        {product.images.map((image) => (
+                                        {props.images.map((image: any) => (
                                             <Tab
                                                 key={image.id}
                                                 className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -70,7 +77,7 @@ function GalleriaProdotto() {
                                 </div>
 
                                 <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-                                    {product.images.map((image) => (
+                                    {props.images.map((image: any) => (
                                         <Tab.Panel key={image.id}>
                                             <img src={image.src} alt={image.alt} className="h-full w-full object-cover object-center sm:rounded-lg" />
                                         </Tab.Panel>
@@ -80,34 +87,17 @@ function GalleriaProdotto() {
 
                             {/* Product info */}
                             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+                                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{props.name}</h1>
 
                                 <div className="mt-3">
                                     <h2 className="sr-only">Product information</h2>
-                                    <p className="text-3xl text-gray-900">{product.price}</p>
-                                </div>
-
-                                {/* Reviews */}
-                                <div className="mt-3">
-                                    <h3 className="sr-only">Reviews</h3>
-                                    <div className="flex items-center">
-                                        <div className="flex items-center">
-                                            {[0, 1, 2, 3, 4].map((rating) => (
-                                                <StarIcon
-                                                    key={rating}
-                                                    className={classNames(product.rating > rating ? 'text-indigo-500' : 'text-gray-300', 'h-5 w-5 flex-shrink-0')}
-                                                    aria-hidden="true"
-                                                />
-                                            ))}
-                                        </div>
-                                        <p className="sr-only">{product.rating} out of 5 stars</p>
-                                    </div>
+                                    <p className="text-3xl text-gray-900">{props.price}</p>
                                 </div>
 
                                 <div className="mt-6">
                                     <h3 className="sr-only">Description</h3>
 
-                                    <div className="space-y-6 text-base text-gray-700" dangerouslySetInnerHTML={{ __html: product.description }} />
+                                    <div className="space-y-6 text-base text-gray-700" dangerouslySetInnerHTML={{ __html: props.description }} />
                                 </div>
 
                                 <form className="mt-6">
@@ -118,7 +108,7 @@ function GalleriaProdotto() {
                                         <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
                                             <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
                                             <div className="flex items-center space-x-3">
-                                                {product.colors.map((color) => (
+                                                {props.colors.map((color: any) => (
                                                     <RadioGroup.Option
                                                         key={color.name}
                                                         value={color}
@@ -162,7 +152,7 @@ function GalleriaProdotto() {
                                     </h2>
 
                                     <div className="divide-y divide-gray-200 border-t">
-                                        {product.details.map((detail) => (
+                                        {props.details.map((detail: any) => (
                                             <Disclosure as="div" key={detail.name}>
                                                 {({ open }) => (
                                                     <>
@@ -180,7 +170,7 @@ function GalleriaProdotto() {
                                                         </h3>
                                                         <Disclosure.Panel as="div" className="prose prose-sm pb-6">
                                                             <ul role="list">
-                                                                {detail.items.map((item) => (
+                                                                {detail.items.map((item: any) => (
                                                                     <li key={item}>{item}</li>
                                                                 ))}
                                                             </ul>
@@ -200,7 +190,7 @@ function GalleriaProdotto() {
                             </h2>
 
                             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-                                {relatedProducts.map((product) => (
+                                {props.map((product: any) => (
                                     <div key={product.id}>
                                         <div className="relative">
                                             <div className="relative h-72 w-full overflow-hidden rounded-lg">
@@ -229,7 +219,61 @@ function GalleriaProdotto() {
                         </section>
                     </div>
                 </main>
-                <Footer />
+                <div className="container mx-auto py-12 px-6 lg:max-w-screen-lg">
+                    <div className="flex flex-col items-center justify-between space-y-8 md:flex-row md:space-y-0 md:space-x-12">
+                        {/* Product's image */}
+                        <div className="relative h-72 w-72 sm:h-96 sm:w-96">
+                            <img src={props.image} alt={props.name} />
+                        </div>
+
+                        {/* Product's details */}
+                        <div className="max-w-md flex-1 rounded-md border border-opacity-50 p-6 shadow-lg">
+                            <h2 className="text-3xl font-semibold">{props.name}</h2>
+                            <p>
+                                <span className="text-gray-500">Availability:</span> <span className="font-semibold">In stock</span>
+                            </p>
+
+                            {/* Price */}
+                            <div className="mt-8 border-t pt-4">
+                                <p className="text-gray-500">Price:</p>
+                                <p className="text-xl font-semibold">
+                                    {formatCurrencyString({
+                                        value: props.price * 100,
+                                        currency: 'EUR',
+                                    })}
+                                </p>
+                            </div>
+
+                            <div className="mt-4 border-t pt-4">
+                                {/* Quantity */}
+                                <p className="text-gray-500">Quantity:</p>
+                                <div className="mt-1 flex items-center space-x-3">
+                                    <button
+                                        onClick={() => setQty((prev) => prev - 1)}
+                                        disabled={qty <= 1}
+                                        className="rounded-md p-1 hover:bg-rose-100 hover:text-rose-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-current"
+                                    >
+                                        <MinusSmIcon className="h-6 w-6 flex-shrink-0" />
+                                    </button>
+                                    <p className="text-xl font-semibold">{qty}</p>
+                                    <button onClick={() => setQty((prev) => prev + 1)} className="rounded-md p-1 hover:bg-green-100 hover:text-green-500">
+                                        <PlusSmIcon className="h-6 w-6 flex-shrink-0 " />
+                                    </button>
+                                </div>
+
+                                {/* Add to cart button */}
+                                <button
+                                    onClick={() => {
+                                        addItem(props)
+                                    }}
+                                    className="mt-8 rounded border border-rose-500 bg-rose-500 py-2 px-6 text-white transition-colors hover:border-rose-600 hover:bg-rose-600 focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                >
+                                    <PlusSmIcon className="h-6 w-6 flex-shrink-0 " />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </>
         )
     } else {
@@ -237,4 +281,39 @@ function GalleriaProdotto() {
     }
 }
 
-export default GalleriaProdotto
+type Params = {
+    id: string
+}
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+    const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*`)
+    const products: any = await res.data.data
+    console.log(
+        '🚀 - file: [id].tsx - line 106 - constgetStaticPaths:GetStaticPaths<Params>= - products',
+        products.map((prod: any) => prod.id)
+    )
+
+    return {
+        paths: products.map((prod: any) => {
+            return {
+                params: { id: prod.id.toString() },
+            }
+        }), // Existing posts are rendered to HTML at build time
+        fallback: true, // Enable statically generating additional pages
+    }
+}
+
+export const getStaticProps: GetStaticProps = async (context: any) => {
+    console.log('🚀 - file: [id].tsx - line 114 - constgetStaticProps:GetStaticProps= - context', context)
+    try {
+        const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/variantetaglias/${context.params.id}?populate=*`)
+        const products: any = await res.data.data
+
+        return {
+            props: products, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
+            revalidate: 1, // In seconds
+        }
+    } catch (error) {
+        return { notFound: true }
+    }
+}

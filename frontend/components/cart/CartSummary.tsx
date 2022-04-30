@@ -4,6 +4,7 @@ import { TrashIcon } from '@heroicons/react/outline'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 
 function CartSummary() {
     const { addItem, removeItem, cartCount, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } = useShoppingCart()
@@ -90,7 +91,7 @@ function CartSummary() {
                                             <ul role="list" className="-my-6 ">
                                                 {cartDet.map((product: any) => (
                                                     <li key={product.id} className="flex py-6">
-                                                        <a href={`/GalleriaProdotto/${product.id}`}>
+                                                        <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
                                                                 <img
                                                                     className="h-full w-full rounded-md object-cover  object-center shadow-md"
@@ -98,13 +99,11 @@ function CartSummary() {
                                                                     alt={'not found'}
                                                                 />
                                                             </div>
-                                                        </a>
+                                                        </Link>
                                                         <div className="ml-4 flex flex-1 flex-col">
                                                             <div>
                                                                 <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
-                                                                    <a className="font-semibold capitalize" href={`/GalleriaProdotto/${product.id}`}>
-                                                                        {product.name}
-                                                                    </a>
+                                                                    <a className="font-semibold capitalize">{product.name}</a>
                                                                     <p className="ml-2 w-max">{toFixedIfNecessary(product.price * product.quantity, 2)} €</p>
                                                                 </div>
                                                             </div>
@@ -179,11 +178,11 @@ function CartSummary() {
                                 </div>
                             </>
                         ) : (
-                            <div className="rounded-lg bg-beige-100 p-4">
+                            <div className="w-max rounded-lg bg-beige-100 p-4">
                                 <h2 className="text-2xl font-semibold">Il tuo carello è vuoto.</h2>
                                 <p className="mt-3 text-xl ">
                                     Visualizza i nostri vestiti{' '}
-                                    <a className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/">
+                                    <a className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/Prodotti">
                                         qui!
                                     </a>
                                 </p>

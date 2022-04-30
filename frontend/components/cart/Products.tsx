@@ -6,6 +6,8 @@ import { useState, useEffect, Fragment } from 'react'
 import { Zoom, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
+import Link from 'next/link'
+
 toast.configure()
 
 const OrdinaOptions = [
@@ -347,33 +349,40 @@ const Products = () => {
                             <div className="mx-8 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-12 md:grid-cols-2 xl:grid-cols-4">
                                 {products.map((product: any) => (
                                     <a className="group rounded-xl border  p-6 shadow-xl">
-                                        <a href={`/GalleriaProdotto/${product.id}`}>
-                                            {/* Product's image */}
-                                            <div className="h-auto  w-auto items-center justify-center p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
-                                                {loading ? (
-                                                    <div className="mx-auto w-fit rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
-                                                        <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
-                                                            <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
-                                                            <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
-                                                        </div>
+                                        {/* Product's image */}
+                                        <div className="h-auto  w-auto items-center justify-center p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
+                                            {loading ? (
+                                                <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
+                                                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                                                        <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
+                                                        <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
                                                     </div>
-                                                ) : (
+                                                </div>
+                                            ) : error ? (
+                                                <div className="mx-auto w-fit rounded-lg bg-red-200 py-4 px-4 shadow-xl">
+                                                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                                                        <ExclamationCircleIcon className="m-2 h-12 w-12 flex-shrink-0 rounded-full bg-red-100 py-2 text-red-600 " />
+                                                        <p className="m-2 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine!</p>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                     <img
                                                         className="grid h-auto w-full rounded-xl border shadow-md"
                                                         src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
                                                         alt={'not found'}
                                                     />
-                                                )}
-                                                {/* {product.image.data.map((image: any) => (
-                                  <img className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
-                              ))} */}
-                                            </div>
+                                                </Link>
+                                            )}
+                                            {/* {product.image.data.map((image: any) => (
+                                                    <img className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
+                                                ))} */}
+                                        </div>
 
-                                            {/* Name */}
-                                            <div className="mt-4 sm:mt-8">
-                                                <p className="text-lg font-semibold capitalize">{product.name}</p>
-                                            </div>
-                                        </a>
+                                        {/* Name */}
+                                        <div className="mt-4 sm:mt-8">
+                                            <p className="text-lg font-semibold capitalize">{product.name}</p>
+                                        </div>
                                         {/* Price + CTA */}
                                         <div className="mt-4 flex items-center justify-between space-x-2">
                                             <div>
