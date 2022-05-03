@@ -5,7 +5,7 @@ import { CheckCircleIcon } from '@heroicons/react/solid'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
 import { useSession } from 'next-auth/client'
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 import Head from 'next/head'
 
 const orders = [

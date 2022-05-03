@@ -17,34 +17,3 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         </Provider>
     )
 }
-
-/*
-function redirectUser({ ctx }: any, { location }: any) {
-    if (ctx.req) {
-        ctx.res.writeHead(302, { Location: location })
-        ctx.res.end()
-    } else {
-        Router.push(location)
-    }
-}
-
-const { publicRuntimeConfig } = getConfig()
-MyApp.getServerSideProps = async ({ ctx }: any) => {
-    let pageProps = {}
-    const jwt = parseCookies(ctx).jwt
-
-    const res = await fetch(`${publicRuntimeConfig.API_URL}/navigations`)
-    const navigation = await res.json()
-
-    if (!jwt) {
-        if (ctx.pathname === '/Home') {
-            redirectUser(ctx, '/auth/Login')
-        }
-    }
-
-    return {
-        pageProps,
-        navigation,
-    }
-}
-*/

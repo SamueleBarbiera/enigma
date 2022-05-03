@@ -7,6 +7,8 @@ import { Zoom, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import Link from 'next/link'
+import useSWR from 'swr'
+import { fetcher } from 'content/lib/fetcher'
 
 toast.configure()
 
@@ -35,7 +37,7 @@ const Filtri = [
         options: [
             { value: 'white', label: 'White', checked: false },
             { value: 'beige', label: 'Beige', checked: false },
-            { value: 'blue', label: 'Blue', checked: false },
+            { value: 'beige', label: 'beige', checked: false },
             { value: 'brown', label: 'Brown', checked: false },
             { value: 'green', label: 'Green', checked: false },
             { value: 'purple', label: 'Purple', checked: false },
@@ -62,20 +64,22 @@ function classNames(...classes: any[]) {
 }
 
 const Products = () => {
-    const [products, setProdotti] = useState<any>([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<boolean>()
+    const [mobileFiltriOpen, setMobileFiltriOpen] = useState<boolean>(false)
+    const [products, setProducts] = useState<any>([])
+    const [pageIndex, setPageIndex] = useState<number>(1)
+    const [order, setOrder] = useState('DESC')
+    const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
     const { addItem } = useShoppingCart()
-    const [mobileFiltriOpen, setMobileFiltriOpen] = useState(false)
 
     useEffect(() => {
         setLoading(true)
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*`)
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&sort=price:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`)
                 if (res.status == 200) {
-                    console.log('🚀 - file: Prodotti.tsx - line 76 - fetchData - jsonResponse', res.data.data)
-                    setProdotti(res.data.data)
+                    console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', res.data)
+                    setProducts(res.data)
                     setError(false)
                     return products
                 }
@@ -86,7 +90,7 @@ const Products = () => {
         }
         fetchData()
         setLoading(false)
-    }, [setProdotti])
+    }, [setProducts])
 
     const notify = (product: any) => {
         toast.success(
@@ -107,10 +111,10 @@ const Products = () => {
     }
 
     return (
-        <main className="my-12 flex h-full items-center justify-center xl:h-screen">
+        <main className="my-12 flex h-full items-center justify-center xl:h-screen ">
             {loading ? (
-                <div className="mx-auto w-fit rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
-                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
+                <div className="m-32 flex h-screen w-screen items-center justify-center rounded-lg bg-beige-200 py-4 px-4 shadow-xl">
+                    <div className="mx-auto flex flex-col items-center justify-center space-x-1 text-4xl font-semibold">
                         <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
                         <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
                     </div>
@@ -124,7 +128,7 @@ const Products = () => {
                     </div>
                 </div>
             ) : (
-                <div className="bg-gray-50">
+                <div className="h-full rounded-xl bg-beige-200 p-4 pt-8 shadow-xl">
                     {/* Mobile Filtro dialog */}
                     <Transition.Root show={mobileFiltriOpen} as={Fragment}>
                         <Dialog as="div" className="fixed inset-0 z-40 flex sm:hidden" onClose={setMobileFiltriOpen}>
@@ -212,7 +216,7 @@ const Products = () => {
                                 Filtri
                             </h2>
 
-                            <div className="relative  border-b border-gray-200 bg-white pb-4">
+                            <div className="relative  border-b border-beige-200 bg-beige-200 pb-4">
                                 <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                                     <Menu as="div" className="relative inline-block text-left">
                                         <div>
@@ -240,7 +244,7 @@ const Products = () => {
                                                                     href={option.href}
                                                                     className={classNames(
                                                                         option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                                                        active ? 'bg-gray-100' : '',
+                                                                        active ? 'bg-beige-100' : '',
                                                                         'block px-4 py-2 text-sm'
                                                                     )}
                                                                 >
@@ -254,11 +258,11 @@ const Products = () => {
                                         </Transition>
                                     </Menu>
 
-                                    <button type="button" className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden" onClick={() => setMobileFiltriOpen(true)}>
+                                    <button type="button" className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 smd:hidden" onClick={() => setMobileFiltriOpen(true)}>
                                         Filtri
                                     </button>
 
-                                    <div className="hidden sm:block">
+                                    <div className="hidden smd:block">
                                         <div className="flow-root">
                                             <Popover.Group className="-mx-4 flex items-center divide-x divide-gray-200">
                                                 {Filtri.map((section, sectionIdx) => (
@@ -266,7 +270,7 @@ const Products = () => {
                                                         <Popover.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                                             <span>{section.name}</span>
                                                             {sectionIdx === 0 ? (
-                                                                <span className="ml-1.5 rounded bg-gray-200 py-0.5 px-1.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
+                                                                <span className="ml-1.5 rounded bg-beige-400 py-0.5 px-1.5 pt-1 text-xs font-semibold tabular-nums text-gray-700">1</span>
                                                             ) : null}
                                                             <ChevronDownIcon className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                                                         </Popover.Button>
@@ -309,14 +313,12 @@ const Products = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* attivo Filtri */}
-                            <div className="bg-gray-100">
+                                {/* attivo Filtri */}
                                 <div className="mx-auto max-w-7xl py-3 px-4 sm:flex sm:items-center sm:px-6 lg:px-8">
                                     <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">Filtri</h3>
 
-                                    <div aria-hidden="true" className="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block" />
+                                    <div aria-hidden="true" className="hidden h-5 w-px bg-beige-300 sm:ml-4 smd:block" />
 
                                     <div className="mt-2 sm:mt-0 sm:ml-4">
                                         <div className="-m-1 flex flex-wrap items-center">
@@ -326,7 +328,7 @@ const Products = () => {
                                                     className="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900"
                                                 >
                                                     <span>{attivoFiltro.label}</span>
-                                                    <button type="button" className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500">
+                                                    <button type="button" className="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-beige-200 hover:text-gray-500">
                                                         <span className="sr-only">Rimuovi il filtro per {attivoFiltro.label}</span>
                                                         <svg className="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
                                                             <path strokeLinecap="round" strokeWidth="1.5" d="M1 1l6 6m0-6L1 7" />
@@ -347,9 +349,8 @@ const Products = () => {
                             </h2>
 
                             <div className="mx-8 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-12 md:grid-cols-2 xl:grid-cols-4">
-                                {products.map((product: any) => (
+                                {products.data.map((product: any) => (
                                     <a className="group rounded-xl border  p-6 shadow-xl">
-                                        {/* Product's image */}
                                         <div className="h-auto  w-auto items-center justify-center p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                                             {loading ? (
                                                 <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
@@ -379,11 +380,10 @@ const Products = () => {
                                                 ))} */}
                                         </div>
 
-                                        {/* Name */}
                                         <div className="mt-4 sm:mt-8">
                                             <p className="text-lg font-semibold capitalize">{product.name}</p>
                                         </div>
-                                        {/* Price + CTA */}
+
                                         <div className="mt-4 flex items-center justify-between space-x-2">
                                             <div>
                                                 <p className="text-beige-500">Prezzo</p>
@@ -407,6 +407,32 @@ const Products = () => {
                                 ))}
                             </div>
                         </section>
+                        {/* <div className="space-x-2 space-y-2">
+                            <button
+                                className={`rounded p-2 py-2 text-black  md:p-2 ${pageIndex === 1 ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                disabled={pageIndex === 1}
+                                onClick={() => setPageIndex(pageIndex - 1)}
+                            >
+                                {' '}
+                                Previous
+                            </button>
+                            <button
+                                className={`rounded p-2 py-2 text-black  md:p-2 ${pageIndex === (products && products.meta.pagination.pageCount) ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                disabled={pageIndex === (products && products.meta.pagination.pageCount)}
+                                onClick={() => setPageIndex(pageIndex + 1)}
+                            >
+                                Next
+                            </button>
+                            <span>{`${pageIndex} of ${products && products.meta.pagination.pageCount}`}</span>
+                            <button className={`rounded p-2 py-2 text-black md:p-2`} onClick={() => setOrder('DESC')}>
+                                {' '}
+                                DESC
+                            </button>
+                            <button className={`rounded p-2 py-2 text-black  md:p-2`} onClick={() => setOrder('ASC')}>
+                                ASC
+                            </button>
+                            <span>{`${pageIndex} of ${products && products.meta.pagination.pageCount}`}</span>
+                        </div>  */}
                     </main>
                 </div>
             )}

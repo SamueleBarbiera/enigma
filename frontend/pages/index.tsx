@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import { getSession, useSession } from 'next-auth/client'
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 
 export default function Home() {
     const [session, loading] = useSession()

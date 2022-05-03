@@ -1,7 +1,7 @@
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import { CheckIcon } from '@heroicons/react/solid'
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 import { useSession } from 'next-auth/client'
 import Head from 'next/head'
 

@@ -4,7 +4,7 @@ import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon } from '@heroic
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useSession } from 'next-auth/client'
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 import Head from 'next/head'
 
 const products = [

@@ -9,7 +9,7 @@ import { fetchGetJSON } from '../../content/utils/api-helpers'
 import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 import { useSession } from 'next-auth/client'
 import Head from 'next/head'
 
@@ -29,11 +29,11 @@ const RisultatoPagamento: NextPage = () => {
     if (session) {
         return (
             <>
-            <Head>
-        <title>Risultato Pagamento</title>
-        <link rel="icon" href="/question-solid.svg" />
-        <meta charSet="utf-8" className="next-head" />
-    </Head>
+                <Head>
+                    <title>Risultato Pagamento</title>
+                    <link rel="icon" href="/question-solid.svg" />
+                    <meta charSet="utf-8" className="next-head" />
+                </Head>
                 <Header />
                 <div className="container h-screen py-12 px-6 text-center xl:max-w-screen-xl">
                     {error ? (
@@ -60,8 +60,8 @@ const RisultatoPagamento: NextPage = () => {
                         </div>
                     )}
                     {/* 
-                <h2>Status: {data?.payment_intent?.status ?? 'loading...'}</h2>
-                <PrintObject content={data ?? 'loading...'} /> */}
+                    <h2>Status: {data?.payment_intent?.status ?? 'loading...'}</h2>
+                    <p>{data}</p>*/}
                 </div>
                 <Footer />
             </>

@@ -1,4 +1,4 @@
-import AccessDenied from '@/components/layout/AccessDenied'
+import AccessDenied from '@/pages/AccessDenied'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
 import { Disclosure } from '@headlessui/react'
