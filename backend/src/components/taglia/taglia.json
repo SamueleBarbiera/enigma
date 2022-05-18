@@ -2,27 +2,50 @@
   "collectionName": "components_taglia_taglias",
   "info": {
     "displayName": "taglia",
-    "icon": "bread-slice"
+    "icon": "bread-slice",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "small": {
-      "type": "boolean"
+    "xxs": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     },
-    "xsmall": {
-      "type": "boolean"
+    "xs": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     },
-    "medium": {
-      "type": "boolean"
+    "s": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     },
-    "large": {
-      "type": "boolean"
+    "m": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     },
-    "xlarge": {
-      "type": "boolean"
+    "l": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     },
-    "xxlarge": {
-      "type": "boolean"
+    "xl": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "xxl": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "xxxl": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }

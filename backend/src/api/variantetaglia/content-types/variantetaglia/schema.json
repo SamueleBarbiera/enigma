@@ -70,6 +70,12 @@
       "maxLength": 3,
       "required": false,
       "default": "EUR"
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "targetField": "name",
+      "minLength": 1
     }
   }
 }

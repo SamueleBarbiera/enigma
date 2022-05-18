@@ -13,8 +13,8 @@ function CartSummary() {
     const [error, setError] = useState<boolean>()
     const [cartEmpty, setCartEmpty] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
-
-    const [open, setOpen] = useState(true)
+    const [PayShopChecked, setPayShopChecked] = useState<boolean>(true)
+    const [RetirePkgShopChecked, setRetirePkgShopChecked] = useState<boolean>(true)
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
     function toFixedIfNecessary(value: any, dp: number | undefined) {
@@ -228,6 +228,24 @@ function CartSummary() {
                                             )}
                                         </div>
                                     </form>
+                                    <div className="mt-4">
+                                        <label className="flex items-center">
+                                            <input
+                                                onChange={(_e) => setPayShopChecked(!PayShopChecked)}
+                                                type="checkbox"
+                                                className="transiction rounded border-beige-300 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                            />
+                                            <span className="ml-4">Pagerò al negozio fisico</span>
+                                        </label>
+                                        <label className="flex items-center">
+                                            <input
+                                                onChange={(_e) => setRetirePkgShopChecked(!RetirePkgShopChecked)}
+                                                type="checkbox"
+                                                className="transiction rounded border-beige-300 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                            />
+                                            <span className="ml-4">Ritirerò il pacco al negozio fisico</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </>
                         ) : (

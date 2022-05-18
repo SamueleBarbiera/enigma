@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
 /**
  * variantetaglia router.
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
+const { createCoreRouter } = require('@strapi/strapi').factories
 
-module.exports = createCoreRouter('api::variantetaglia.variantetaglia');
+module.exports = createCoreRouter('api::variantetaglia.variantetaglia')

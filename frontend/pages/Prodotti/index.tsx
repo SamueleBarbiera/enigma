@@ -6,7 +6,7 @@ import { getSession } from 'next-auth/client'
 import axios from 'axios'
 import Head from 'next/head'
 
-const Prodotti: NextPage = () => {
+const Prodotti: NextPage = ({ products }: any) => {
     return (
         <>
             <Head>
@@ -15,7 +15,7 @@ const Prodotti: NextPage = () => {
                 <meta charSet="utf-8" className="next-head" />
             </Head>
             <Header />
-            <Products />
+            <Products products={products} />
             <Footer />
         </>
     )
@@ -25,14 +25,12 @@ export default Prodotti
 
 export async function getServerSideProps(ctx: any) {
     const session = await getSession(ctx)
-
-    if (!session) {
+    console.log('🚀 - file: index.tsx - line 28 - getServerSideProps - session', session!.user!.email)
+    
+        const products = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&pagination[page]=1&pagination[pageSize]=4`)
         return {
-            redirect: { destination: '/AccessDenied' },
+            props: { products: await products.data },
+            redirect: false,
         }
-    }
-
-    return {
-        props: { products: null },
-    }
+    
 }

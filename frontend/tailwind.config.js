@@ -15,7 +15,8 @@ module.exports = {
             xsm: '300px',
             sm: '400px',
             smd: '450px',
-            md: '538px',
+            md: '550px',
+            xsmd:'650px',
             xmd: '715px',
             xlmd: '800px',
             lg: '924px',
@@ -49,12 +50,6 @@ module.exports = {
                     800: '#715b4c',
                     900: '#5c4a3e',
                 },
-            },
-            borderRadius: {
-                '4xl': '2rem',
-            },
-            boxShadow: {
-                '4xl': '0 5px 8px 0px rgba(0, 0, 0, 0.3)',
             },
         },
     },

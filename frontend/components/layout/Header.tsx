@@ -7,7 +7,7 @@ import { MdOutlineShoppingBag, MdOutlineSell } from 'react-icons/md'
 import { useSession, signIn, signOut } from 'next-auth/client'
 import { Fragment, useState, useEffect } from 'react'
 import { myLoader } from '../../pages/_app'
-import { BiTrendingUp, BiHomeAlt } from 'react-icons/bi'
+import { BiTrendingUp, BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import CartSummary from '../cart/CartSummary'
@@ -15,8 +15,7 @@ import CartSummary from '../cart/CartSummary'
 const navigation = {
     pages: [
         { name: 'Home', href: '/', icon: <BiHomeAlt className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
-        { name: 'Prodotti', href: '/Prodotti', icon: <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
-        { name: 'Trends', href: '/Prodotti/Trends', icon: <BiTrendingUp className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
+        { name: 'Prodotti', href: '/Prodotti', icon: <BiBarcodeReader className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
     ],
 }
 
@@ -26,7 +25,7 @@ function classNames(...classes: any[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [session, loading] = useSession()
-    const { totalPrice, cartCount } = useShoppingCart()
+    const { cartCount } = useShoppingCart()
 
     return (
         <>
@@ -103,12 +102,11 @@ export default function Header() {
                                         <div className="hidden h-full md:flex">
                                             {/* Flyout menus */}
                                             <Popover.Group className="inset-x-0 bottom-0 px-4">
-                                                <div className="flex h-full justify-center space-x-8">
-                                                    {navigation.pages.map((page) => (
-                                                        <a key={page.name} href={page.href} className="flex items-center text-sm font-medium text-beige-900">
-                                                            {page.name}
-                                                        </a>
-                                                    ))}
+                                                <div className="flex h-full items-center justify-between space-x-8">
+                                                    <a key={navigation?.pages[1]?.name} href={navigation?.pages[1]?.href} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
+                                                        <p className="items-start">{navigation?.pages[1]?.name} </p>
+                                                        <p className="items-end">{navigation?.pages[1]?.icon}</p>
+                                                    </a>
                                                 </div>
                                             </Popover.Group>
                                         </div>
@@ -155,15 +153,11 @@ export default function Header() {
                                                                     >
                                                                         <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
-                                                                                <div className="absolute rounded-lg border justify-center items-center bg-beige-50 px-6 py-6 shadow-xl">
+                                                                                <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
-                                                                                        <img
-                                                                                            src={session!.user!.image! as any}
-                                                                                            alt="User Img"
-                                                                                            className="mx-auto rounded-full shadow-md h-24 w-24"
-                                                                                        />
+                                                                                        <img src={session!.user!.image! as any} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
                                                                                     </div>
-                                                                                    <p className='font-semibold text-beige-900 contrast-150'>{session!.user!.name}</p>
+                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session!.user!.name}</p>
                                                                                     <p>{session!.user!.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
@@ -182,7 +176,12 @@ export default function Header() {
                                                 ) : loading ? (
                                                     <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
-                                                    <button className='mr-4 bg-beige-500 hover:bg-beige-600 transition ease-in-out duration-200 text-beige-50 py-1 px-2 rounded-lg' onClick={() => signIn()}>Accedi</button>
+                                                    <button
+                                                        className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600"
+                                                        onClick={() => signIn()}
+                                                    >
+                                                        Accedi
+                                                    </button>
                                                 )}
                                                 {/* Cart */}
                                                 <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
