@@ -1,20 +1,14 @@
 import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart/react'
-import { CheckCircleIcon, ExclamationCircleIcon, PlusSmIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
+import {  ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
 import { Dialog, Disclosure, Menu, Popover, Tab, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
-import { Zoom, toast } from 'react-toastify'
+import {  toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Link from 'next/link'
 import useSWR from 'swr'
 import { fetcher } from 'content/lib/fetcher'
 
-toast.configure()
-
-const OrdinaOptions = [
-    { name: 'Prezzo ASC', href: '#', current: false },
-    { name: 'Prezzo DESC', href: '#', current: false },
-]
 const Filtri = [
     {
         id: 'category',
@@ -62,7 +56,6 @@ const Products = ({ products }: any) => {
     const [pageIndex, setPageIndex] = useState<number>(1)
     const [order, setOrder] = useState<string>('DESC')
     const [date, setDate] = useState<string>(`${Date.now()}`)
-    const { addItem } = useShoppingCart()
 
     const { data, error, isValidating } = useSWR(
         `${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
@@ -72,24 +65,6 @@ const Products = ({ products }: any) => {
         }
     )
     console.log('🚀 Products.tsx - line 76 - fetchData', data)
-
-    const notify = (product: any) => {
-        toast.success(
-            <>
-                <div className="ml-3 font-semibold text-green-900">{product} </div>
-                <p className="font-base ml-3 text-green-900">aggiunto al carrello!</p>
-            </>,
-            {
-                icon: () => <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
-                position: toast.POSITION.TOP_CENTER,
-
-                pauseOnFocusLoss: false,
-                autoClose: 1500,
-                transition: Zoom,
-                className: 'rounded-lg p-2 m-4 shadow-xl transiction ease-in-out duration-200 gap-y-12',
-            }
-        )
-    }
 
     return (
         <main className="my-12 flex h-full items-center justify-center xl:h-screen ">

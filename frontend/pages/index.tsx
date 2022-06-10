@@ -7,7 +7,7 @@ export default function Home() {
         <>
             <Head>
                 <title>Home</title>
-                <a rel="icon" href="/question-solid.svg" />
+                <link rel="icon" href="/question-solid.svg" />
                 <meta charSet="utf-8" className="next-head" />
             </Head>
             <Header />
@@ -16,4 +16,3 @@ export default function Home() {
         </>
     )
 }
-

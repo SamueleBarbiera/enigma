@@ -233,7 +233,7 @@ function CartSummary() {
                                             <input
                                                 onChange={(_e) => setPayShopChecked(!PayShopChecked)}
                                                 type="checkbox"
-                                                className="transiction rounded border-beige-300 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                                className="transiction border-2 rounded border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
                                             />
                                             <span className="ml-4">Pagerò al negozio fisico</span>
                                         </label>
@@ -241,7 +241,7 @@ function CartSummary() {
                                             <input
                                                 onChange={(_e) => setRetirePkgShopChecked(!RetirePkgShopChecked)}
                                                 type="checkbox"
-                                                className="transiction rounded border-beige-300 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                                className="transiction border-2 rounded border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
                                             />
                                             <span className="ml-4">Ritirerò il pacco al negozio fisico</span>
                                         </label>

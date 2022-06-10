@@ -1,4 +1,3 @@
-import { getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useShoppingCart } from 'use-shopping-cart/react'
 import { useState } from 'react'
@@ -19,8 +18,9 @@ function classNames(...classes: any[]) {
 
 export default function ProductPage(props: any) {
     const products = props.productsData[0]
+    console.log('🚀 - file: [slug].tsx - line 22 - ProductPage - products', products)
     const productsConsigliati = props.productsConsigliati[0]
-    console.log('🚀 - file: [slug].tsx - line 24 - ProductPage - productsConsigliati', productsConsigliati)
+    console.log('🚀 - file: [slug].tsx - line 24 - ProductPage - productsConsigliati', props.productsConsigliati[0])
     const { addItem } = useShoppingCart()
     delete products.dettagli[0].id
     delete products.dettagli[0].__component
@@ -42,14 +42,13 @@ export default function ProductPage(props: any) {
     console.log('🚀 - file: [slug].tsx - line 41 - ProductPage - selectedSize', selectedSize)
     const notify = (products: any) => {
         toast.success(
-            <>
+            <div key={products.id}>
                 <div className="ml-3 font-semibold text-green-900">{products} </div>
                 <p className="font-base ml-3 text-green-900">aggiunto al carrello!</p>
-            </>,
+            </div>,
             {
                 icon: () => <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
                 position: toast.POSITION.TOP_CENTER,
-
                 pauseOnFocusLoss: false,
                 autoClose: 1500,
                 transition: Zoom,
@@ -225,6 +224,7 @@ export default function ProductPage(props: any) {
                                                         </svg>
                                                     </div>
                                                 </>
+                                                notify
                                             </RadioGroup.Option>
                                         ))}
                                     </div>
@@ -290,7 +290,7 @@ export default function ProductPage(props: any) {
                                     className={({ selected }) =>
                                         classNames(
                                             selected ? 'border-beige-600 text-beige-600' : 'border-transparent text-gray-700 hover:border-gray-300 hover:text-gray-800',
-                                            'whitespace-nowrap border-2 py-6 text-sm font-medium'
+                                            'whitespace-nowrap border-b-2 py-6 text-sm font-medium'
                                         )
                                     }
                                 >
@@ -300,7 +300,7 @@ export default function ProductPage(props: any) {
                                     className={({ selected }) =>
                                         classNames(
                                             selected ? 'border-beige-600 text-beige-600' : 'border-transparent text-gray-700 hover:border-gray-300 hover:text-gray-800',
-                                            'whitespace-nowrap border-2 py-6 text-sm font-medium'
+                                            'whitespace-nowrap border-b-2 py-6 text-sm font-medium'
                                         )
                                     }
                                 >
@@ -363,16 +363,15 @@ export const getServerSideProps = async (ctx: any) => {
     try {
         const resRelated: any = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
         const products: any = await resRelated.data.data
-        const resProdCons: any = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}`)
+        const resProdCons: any = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
+        )
         const productsConsigliati: any = await resProdCons.data.data
-        const session = await getSession(ctx)
-        console.log('🚀 - file: [slug].tsx - line 245 - getStaticProps - session', products)
+        console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
 
-        
-            return {
-                props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
-            }
-        
+        return {
+            props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
+        }
     } catch (error) {
         console.log('🚀 - [slug].tsx - line 259 - ERROR ', error)
         return { notFound: true }
