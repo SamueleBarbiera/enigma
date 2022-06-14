@@ -1,5 +1,5 @@
 <p align="center">
-<a href=""><img src="frontend/public/logo.png" width="400px" height="120px"/></a>
+<a href=""><img src="./frontend/public/question-solid.svg" width="400px" height="120px"/></a>
 </p>
 
 # Enigma Ecommerce Site 🔮
