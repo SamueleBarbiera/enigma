@@ -25,29 +25,34 @@ export default function Sidebar({ children }: any) {
     console.log('🚀 ~ file: sidebar.tsx ~ line 25 ~ Sidebar ~ router', JSON.stringify(router.asPath))
 
     const navigation = [
-        { name: 'Prodotti', href: 'prodotti', path: 'admin/prodotti', icon: PhotographIcon },
-        { name: 'Utenti', href: 'utenti', path: 'admin/utenti', icon: UserGroupIcon },
+        { name: 'Prodotti', href: 'prodotti', path: '/admin/prodotti', icon: PhotographIcon },
+        { name: 'Utenti', href: 'utenti', path: '/admin/utenti', icon: UserGroupIcon },
+        { name: 'Categorie', href: 'categorie', path: '/admin/categorie', icon: UserGroupIcon },
     ]
 
     return (
         <div className="flex min-h-screen flex-col">
             <div className="flex flex-1 flex-col md:flex-row">
                 {/* Narrow sidebar */}
-                <div className="hidden w-28 overflow-y-auto bg-indigo-700 md:block">
+                <div className="hidden w-28 overflow-y-auto bg-beige-700 md:block">
                     <div className="flex w-full flex-col items-center py-6">
                         <div className="flex flex-shrink-0 items-center">
                             <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
                         </div>
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {navigation.map((item) => (
-                                <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className={router.asPath === item.path ? 'flex cursor-pointer rounded  bg-fuchsia-600 p-2 text-white' : 'flex cursor-pointer rounded bg-fuchsia-200 p-2 '}
-                                >
-                                    <item.icon className={classNames('h-6 w-6 text-white group-hover:text-white')} aria-hidden="true" />
-                                    <span className="mt-2">{item.name}</span>
-                                </a>
+                                <Link href={item.href}>
+                                    <a
+                                        key={item.name}
+                                        className={classNames(
+                                            router.asPath === item.path ? 'bg-beige-600 text-white' : 'text-beige-100 hover:bg-beige-800 hover:text-white',
+                                            'group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium'
+                                        )}
+                                    >
+                                        <item.icon className={'h-6 w-6 text-white group-hover:text-white'} aria-hidden="true" />
+                                        <span className="mt-2">{item.name}</span>
+                                    </a>
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -76,7 +81,7 @@ export default function Sidebar({ children }: any) {
                             leaveFrom="translate-x-0"
                             leaveTo="-translate-x-full"
                         >
-                            <div className="relative flex w-full max-w-xs flex-1 flex-col bg-indigo-700 pt-5 pb-4">
+                            <div className="relative flex w-full max-w-xs flex-1 flex-col bg-beige-700 pt-5 pb-4">
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-in-out duration-300"
@@ -106,15 +111,13 @@ export default function Sidebar({ children }: any) {
                                             {navigation.map((item) => (
                                                 <a
                                                     key={item.name}
-                                                    href={item.href}
                                                     className={classNames(
-                                                        item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-800 hover:text-white',
-                                                        'group flex items-center rounded-md py-2 px-3 text-sm font-medium'
+                                                        router.asPath === item.path ? 'bg-beige-600 text-white' : 'text-beige-100 hover:bg-beige-800 hover:text-white',
+                                                        'group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium'
                                                     )}
-                                                    aria-current={item.current ? 'page' : undefined}
                                                 >
-                                                    <item.icon className={classNames(item.current ? 'text-white' : 'text-indigo-300 group-hover:text-white', 'mr-3 h-6 w-6')} aria-hidden="true" />
-                                                    <span>{item.name}</span>
+                                                    <item.icon className={'h-6 w-6 text-white group-hover:text-white'} aria-hidden="true" />
+                                                    <span className="mt-2">{item.name}</span>
                                                 </a>
                                             ))}
                                         </div>

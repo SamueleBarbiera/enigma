@@ -34,11 +34,6 @@ const userNavigation = [
     { name: 'Your profile', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
-const tabs = [
-    { name: 'Recently Viewed', href: '#', current: true },
-    { name: 'Recently Added', href: '#', current: false },
-    { name: 'Favorited', href: '#', current: false },
-]
 const files = [
     {
         name: 'IMG_4985.HEIC',
@@ -90,7 +85,7 @@ export default function Page() {
                             <div className="relative z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white shadow-sm">
                                 <button
                                     type="button"
-                                    className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                                    className="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-beige-500 md:hidden"
                                     onClick={() => setMobileMenuOpen(true)}
                                 >
                                     <span className="sr-only">Open sidebar</span>
@@ -130,7 +125,7 @@ export default function Page() {
                                         {/* Profile dropdown */}
                                         <Menu as="div" className="relative flex-shrink-0">
                                             <div>
-                                                <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                                <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2">
                                                     <span className="sr-only">Open user menu</span>
                                                     <img
                                                         className="h-8 w-8 rounded-full"
@@ -164,7 +159,7 @@ export default function Page() {
 
                                         <button
                                             type="button"
-                                            className="flex items-center justify-center rounded-full bg-indigo-600 p-1 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            className="flex items-center justify-center rounded-full bg-beige-600 p-1 text-white hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
                                         >
                                             <PlusSmIconOutline className="h-6 w-6" aria-hidden="true" />
                                             <span className="sr-only">Add file</span>
@@ -178,75 +173,18 @@ export default function Page() {
                         <div className="flex flex-1 items-stretch overflow-hidden">
                             <main className="flex-1 overflow-y-auto">
                                 <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-                                    <div className="flex">
-                                        <h1 className="flex-1 text-2xl font-bold text-gray-900">Photos</h1>
-                                        <div className="ml-6 flex items-center rounded-lg bg-gray-100 p-0.5 sm:hidden">
-                                            <button
-                                                type="button"
-                                                className="rounded-md p-1.5 text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                                            >
-                                                <ViewListIcon className="h-5 w-5" aria-hidden="true" />
-                                                <span className="sr-only">Use list view</span>
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="ml-0.5 rounded-md bg-white p-1.5 text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                                            >
-                                                <ViewGridIconSolid className="h-5 w-5" aria-hidden="true" />
-                                                <span className="sr-only">Use grid view</span>
-                                            </button>
-                                        </div>
-                                    </div>
 
                                     {/* Tabs */}
                                     <div className="mt-3 sm:mt-2">
-                                        <div className="sm:hidden">
-                                            <label htmlFor="tabs" className="sr-only">
-                                                Select a tab
-                                            </label>
-                                            {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-                                            <select
-                                                id="tabs"
-                                                name="tabs"
-                                                className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                                                defaultValue="Recently Viewed"
-                                            >
-                                                <option>Recently Viewed</option>
-                                                <option>Recently Added</option>
-                                                <option>Favorited</option>
-                                            </select>
-                                        </div>
                                         <div className="hidden sm:block">
-                                            <div className="flex items-center border-b border-gray-200">
-                                                <nav className="-mb-px flex flex-1 space-x-6 xl:space-x-8" aria-label="Tabs">
-                                                    {tabs.map((tab) => (
-                                                        <a
-                                                            key={tab.name}
-                                                            href={tab.href}
-                                                            aria-current={tab.current ? 'page' : undefined}
-                                                            className={classNames(
-                                                                tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-                                                                'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium'
-                                                            )}
-                                                        >
-                                                            {tab.name}
-                                                        </a>
-                                                    ))}
-                                                </nav>
-                                                <div className="ml-6 hidden items-center rounded-lg bg-gray-100 p-0.5 sm:flex">
+                                            <div className="flex justify-end  border-b border-gray-200">
+                                        <h1 className="flex-1 text-2xl justify-start font-bold text-gray-900">Photos</h1>
+                                                <div className="ml-6 hidden rounded-lg bg-gray-100 p-0.5 sm:flex">
                                                     <button
                                                         type="button"
-                                                        className="rounded-md p-1.5 text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                                        className="rounded-md p-1.5 text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-beige-500"
                                                     >
-                                                        <ViewListIcon className="h-5 w-5" aria-hidden="true" />
-                                                        <span className="sr-only">Use list view</span>
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="ml-0.5 rounded-md bg-white p-1.5 text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                                                    >
-                                                        <ViewGridIconSolid className="h-5 w-5" aria-hidden="true" />
-                                                        <span className="sr-only">Use grid view</span>
+                                                        <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
                                                     </button>
                                                 </div>
                                             </div>
@@ -255,17 +193,14 @@ export default function Page() {
 
                                     {/* Gallery */}
                                     <section className="mt-8 pb-16" aria-labelledby="gallery-heading">
-                                        <h2 id="gallery-heading" className="sr-only">
-                                            Recently viewed
-                                        </h2>
                                         <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                                             {files.map((file) => (
                                                 <li key={file.name} className="relative">
                                                     <div
                                                         className={classNames(
                                                             file.current
-                                                                ? 'ring-2 ring-indigo-500 ring-offset-2'
-                                                                : 'focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100',
+                                                                ? 'ring-2 ring-beige-500 ring-offset-2'
+                                                                : 'focus-within:ring-2 focus-within:ring-beige-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100',
                                                             'group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100'
                                                         )}
                                                     >
@@ -300,7 +235,7 @@ export default function Page() {
                                             </div>
                                             <button
                                                 type="button"
-                                                className="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                className="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-beige-500"
                                             >
                                                 <HeartIcon className="h-6 w-6" aria-hidden="true" />
                                                 <span className="sr-only">Favorite</span>
@@ -310,10 +245,10 @@ export default function Page() {
                                     <div>
                                         <h3 className="font-medium text-gray-900">Information</h3>
                                         <dl className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
-                                            {Object.keys(currentFile.information).map((key) => (
+                                            {Object.keys((currentFile as any).information).map((key: any) => (
                                                 <div key={key} className="flex justify-between py-3 text-sm font-medium">
                                                     <dt className="text-gray-500">{key}</dt>
-                                                    <dd className="text-gray-900">{currentFile.information[key]}</dd>
+                                                    <dd className="text-gray-900">{(currentFile as any).information[key]}</dd>
                                                 </div>
                                             ))}
                                         </dl>
@@ -324,7 +259,7 @@ export default function Page() {
                                             <p className="text-sm italic text-gray-500">Add a description to this image.</p>
                                             <button
                                                 type="button"
-                                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-beige-500"
                                             >
                                                 <PencilIcon className="h-5 w-5" aria-hidden="true" />
                                                 <span className="sr-only">Add description</span>
@@ -342,18 +277,18 @@ export default function Page() {
                                                     </div>
                                                     <button
                                                         type="button"
-                                                        className="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                        className="ml-6 rounded-md bg-white text-sm font-medium text-beige-600 hover:text-beige-500 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
                                                     >
                                                         Remove<span className="sr-only"> {person.name}</span>
                                                     </button>
                                                 </li>
                                             ))}
                                             <li className="flex items-center justify-between py-2">
-                                                <button type="button" className="group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                                <button type="button" className="group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-beige-500">
                                                     <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
                                                         <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
                                                     </span>
-                                                    <span className="ml-4 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">Share</span>
+                                                    <span className="ml-4 text-sm font-medium text-beige-600 group-hover:text-beige-500">Share</span>
                                                 </button>
                                             </li>
                                         </ul>
@@ -361,13 +296,13 @@ export default function Page() {
                                     <div className="flex">
                                         <button
                                             type="button"
-                                            className="flex-1 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            className="flex-1 rounded-md border border-transparent bg-beige-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
                                         >
                                             Download
                                         </button>
                                         <button
                                             type="button"
-                                            className="ml-3 flex-1 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                            className="ml-3 flex-1 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
                                         >
                                             Delete
                                         </button>
@@ -386,7 +321,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const session = await getSession(context)
     console.log('🚀 ~ file: prodotti.tsx ~ line 387 ~ getServerSideProps ~ session', session)
 
-    if (!session || session?.user?.role !== 'ADMIN') {
+    if (!session || (session as any).user?.role! !== 'ADMIN') {
         return { redirect: { permanent: false, destination: '/' } }
     }
 
