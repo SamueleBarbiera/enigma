@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("NEXT_PUBLIC_DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -52,7 +52,7 @@ model VerificationToken {
 }
 
 model categoria {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(cuid())
   name            String?   @db.VarChar(255)
   descrizione     String?
   opzionefiltrata Json?
@@ -67,7 +67,7 @@ model categoria {
 }
 
 model colore {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(cuid())
   purple Boolean?
   red    Boolean?
   orange Boolean?
@@ -83,7 +83,7 @@ model colore {
 }
 
 model taglia {
-  id   Int      @id @default(autoincrement())
+  id   String   @id @default(cuid())
   xxs  Boolean?
   xs   Boolean?
   s    Boolean?
@@ -95,7 +95,7 @@ model taglia {
 }
 
 model files {
-  id                Int       @id @default(autoincrement())
+  id                String    @id @default(cuid())
   name              String?   @db.VarChar(255)
   alternative_text  String?   @db.VarChar(255)
   caption           String?   @db.VarChar(255)
@@ -120,7 +120,7 @@ model files {
 }
 
 model prodotto {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   quantity      Int?
   price         Decimal?  @db.Decimal(10, 2)
   design        String?
