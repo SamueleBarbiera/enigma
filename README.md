@@ -1,21 +1,22 @@
 <p align="center">
-<a href=""><img src="./frontend/public/question-solid.svg" width="400px" height="120px"/></a>
+<a href=""><img src="./ui/ProductGallery.png" width="auto" height="auto"/></a>
 </p>
 
 # Enigma Ecommerce Site 🔮
 
 ## Frontend ⚡
 
--   [**Next**](https://quasar.dev/) React framework used with ISR & Next-Auth & tsx
+-   [**Next**](https://quasar.dev/) React framework with Next-Auth, tsx
 -   [**Tailwind css**](https://tailwindcss.com/) CSS framework implemeented with next
 
 ## Backend 👨‍💻
 
--   [**Strapi**](https://www.strapi.io/) Sanity CMS used as a backend for this jamstack project
+-   [**Prisma**](https://www.prisma.io/) Prisma ORM used to create the headless CMS with admin access
+-   [**Zod**](https://zod.dev/) TypeScript-first schema validation with static type inference
 
 ## Deployment 🚧
 
--   [**Railway.app**](https://railway.app/) Cloud platform for backend & frontend deployment
+-   [**Railway**](https://railway.app/) Cloud platform for backend & frontend deployment
 
 ## Standard Api 🎯
 

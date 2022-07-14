@@ -35,7 +35,6 @@
         "canvas-confetti": "^1.5.1",
         "next": "12.1.6",
         "next-auth": "^4.7.0",
-        "next-pwa": "^5.5.4",
         "next-validations": "^0.2.0",
         "nextjs-progressbar": "^0.0.14",
         "react": "18.2.0",
