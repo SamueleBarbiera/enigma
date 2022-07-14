@@ -2,6 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// generator dbml {
+//   provider = "prisma-dbml-generator"
+// }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -39,8 +43,14 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role         Role    @default(USER)
   accounts      Account[]
   sessions      Session[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {
@@ -51,91 +61,62 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model categoria {
-  id              String    @id @default(cuid())
-  name            String?   @db.VarChar(255)
-  descrizione     String?
-  opzionefiltrata Json?
-  created_at      DateTime? @db.Timestamp(6)
-  updated_at      DateTime? @db.Timestamp(6)
-  published_at    DateTime? @db.Timestamp(6)
-  created_by_id   Int?
-  updated_by_id   Int?
-
-  @@index([created_by_id], map: "categorias_created_by_id_fk")
-  @@index([updated_by_id], map: "categorias_updated_by_id_fk")
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
 }
 
-model colore {
-  id     String   @id @default(cuid())
-  purple Boolean?
-  red    Boolean?
-  orange Boolean?
-  yellow Boolean?
-  black  Boolean?
-  white  Boolean?
-  pink   Boolean?
-  blue   Boolean?
-  sky    Boolean?
-  teal   Boolean?
-  green  Boolean?
-  gray   Boolean?
+model Color {
+  id         String    @id @default(cuid())
+  purple     Boolean?  @default(false)
+  red        Boolean?  @default(false)
+  orange     Boolean?  @default(false)
+  yellow     Boolean?  @default(false)
+  black      Boolean?  @default(false)
+  white      Boolean?  @default(false)
+  pink       Boolean?  @default(false)
+  blue       Boolean?  @default(false)
+  sky        Boolean?  @default(false)
+  teal       Boolean?  @default(false)
+  green      Boolean?  @default(false)
+  gray       Boolean?  @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  Product    Product?  @relation(fields: [productId], references: [id])
+  productId  String?
 }
 
-model taglia {
-  id   String   @id @default(cuid())
-  xxs  Boolean?
-  xs   Boolean?
-  s    Boolean?
-  m    Boolean?
-  l    Boolean?
-  xl   Boolean?
-  xxl  Boolean?
-  xxxl Boolean?
+model Size {
+  id         String    @id @default(cuid())
+  xxs        Boolean?  @default(false)
+  xs         Boolean?  @default(false)
+  s          Boolean?  @default(false)
+  m          Boolean?  @default(false)
+  l          Boolean?  @default(false)
+  xl         Boolean?  @default(false)
+  xxl        Boolean?  @default(false)
+  xxxl       Boolean?  @default(false)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  Product    Product?  @relation(fields: [productId], references: [id])
+  productId  String?
 }
 
-model files {
-  id                String    @id @default(cuid())
-  name              String?   @db.VarChar(255)
-  alternative_text  String?   @db.VarChar(255)
-  caption           String?   @db.VarChar(255)
-  width             Int?
-  height            Int?
-  formats           Json?
-  hash              String?   @db.VarChar(255)
-  ext               String?   @db.VarChar(255)
-  mime              String?   @db.VarChar(255)
-  size              Decimal?  @db.Decimal(10, 2)
-  url               String?   @db.VarChar(255)
-  preview_url       String?   @db.VarChar(255)
-  provider          String?   @db.VarChar(255)
-  provider_metadata Json?
-  created_at        DateTime? @db.Timestamp(6)
-  updated_at        DateTime? @db.Timestamp(6)
-  created_by_id     Int?
-  updated_by_id     Int?
-
-  @@index([created_by_id], map: "files_created_by_id_fk")
-  @@index([updated_by_id], map: "files_updated_by_id_fk")
-}
-
-model prodotto {
-  id            String    @id @default(cuid())
-  quantity      Int?
-  price         Decimal?  @db.Decimal(10, 2)
-  design        String?
-  materiale     String?
-  misure        String?
-  name          String?   @db.VarChar(255)
-  descrizione   String?
-  currency      String?   @db.VarChar(255)
-  slug          String?   @unique(map: "variantetaglias_slug_unique") @db.VarChar(255)
-  created_at    DateTime? @db.Timestamp(6)
-  updated_at    DateTime? @db.Timestamp(6)
-  published_at  DateTime? @db.Timestamp(6)
-  created_by_id Int?
-  updated_by_id Int?
-
-  @@index([created_by_id], map: "variantetaglias_created_by_id_fk")
-  @@index([updated_by_id], map: "variantetaglias_updated_by_id_fk")
+model Product {
+  id          String    @id @default(cuid())
+  quantity    Int?
+  price       Decimal?  @db.Decimal(10, 2)
+  design      String?
+  material    String?
+  img_url     String?
+  name        String?   @unique
+  description String?
+  currency    String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  size        Size[]
+  color       Color[]
 }

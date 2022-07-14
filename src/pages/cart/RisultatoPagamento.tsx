@@ -2,7 +2,7 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import useSWR from 'swr'
-import { useShoppingCart } from 'use-shopping-cart/react'
+import { useShoppingCart } from 'use-shopping-cart'
 import { shootFireworks } from '../../content/lib/Utils'
 //import PrintObject from '../components/cart/PrintObject'
 import { fetchGetJSON } from '../../content/utils/api-helpers'
@@ -10,14 +10,14 @@ import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import AccessDenied from '@/pages/AccessDenied'
-import { getSession, useSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 
 const RisultatoPagamento: NextPage = () => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
     const { data, error } = useSWR(() => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null), fetchGetJSON)
-    const [session, loading] = useSession()
+    const {data:session, status} = useSession()
 
     useEffect(() => {
         if (data) {

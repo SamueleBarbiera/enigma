@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
 import { Disclosure } from '@headlessui/react'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import { getSession, useSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
 

@@ -4,12 +4,12 @@ import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIc
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag, MdOutlineSell } from 'react-icons/md'
-import { useSession, signIn, signOut } from 'next-auth/client'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Fragment, useState, useEffect } from 'react'
 import { myLoader } from '../../pages/_app'
 import { BiTrendingUp, BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
-import { useShoppingCart } from 'use-shopping-cart/react'
+import { useShoppingCart } from 'use-shopping-cart'
 import CartSummary from '../cart/CartSummary'
 
 const navigation = {
@@ -24,7 +24,7 @@ function classNames(...classes: any[]) {
 }
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [session, loading] = useSession()
+    const {data:session, status} = useSession()
     const { cartCount } = useShoppingCart()
 
     return (
@@ -173,7 +173,7 @@ export default function Header() {
                                                             )}
                                                         </Popover>
                                                     </div>
-                                                ) : loading ? (
+                                                ) : status==='loading' ? (
                                                     <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
                                                     <button

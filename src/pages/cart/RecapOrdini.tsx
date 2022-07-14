@@ -3,7 +3,7 @@ import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon } from '@heroicons/react/outline'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { getSession, useSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/react'
 import AccessDenied from '@/pages/AccessDenied'
 import Head from 'next/head'
 

@@ -7,11 +7,10 @@ html,
 body {
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    @apply overflow-x-hidden  ease-in-out duration-200 ;
+    @apply overflow-x-hidden transition ease-in-out duration-200 ;
     scrollbar-width: thin;
 
 }
-
 
 .instructions {
     @apply relative mt-4 rounded-lg bg-beige-50 p-4 text-sm font-medium text-red-600 shadow-lg transition duration-300 ease-in-out;

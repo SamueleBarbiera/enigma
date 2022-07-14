@@ -7,7 +7,7 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import prisma from '../../../../content/lib/prisma'
+import prisma from '../../../content/lib/prisma'
 
 const GOOGLE_AUTHORIZATION_URL =
     'https://accounts.google.com/o/oauth2/v2/auth?' +
@@ -58,8 +58,8 @@ const refreshAccessToken: any = async (payload: any, clientId: string, clientSec
 }
 
 let ErrorGoogleEnv = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'production'
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env
-if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || FACEBOOK_CLIENT_ID || FACEBOOK_CLIENT_SECRET) {
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } = process.env
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !FACEBOOK_CLIENT_ID || !FACEBOOK_CLIENT_SECRET) {
     console.log('⚠️ Google auth credentials were not added ⚠️')
     ErrorGoogleEnv = true
 }
@@ -98,45 +98,11 @@ if (ErrorGoogleEnv) {
                     image: profile.picture,
                 } as any
             },
-        })
+        }),
         FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        }),
-        /*
-        Providers.Credentials({
-            name: 'Credentials',
-            credentials: {
-                email: { label: 'email', type: 'email' },
-                password: { label: 'password', type: 'password' },
-            },
-            async authorize(credentials) {
-                const loginInfo = {
-                    identifier: credentials.email,
-                    password: credentials.password,
-                }
-                try {
-                    console.log(loginInfo)
-                    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}7api/auth/local`, {
-                        identifier: credentials.email,
-                        password: credentials.password,
-                    })
-                    if (res.data) {
-                        return res.data
-                    } else {
-                        return null
-                    }
-                } catch (err) {
-                    if ((!err as any)?.response) {
-                        console.log('Server non raggiungibile', (!err as any)?.response.data.message[0].messages[0].message)
-                    } else if ((err as any).response?.status === 400) {
-                        console.log('Login fallito')
-                    }
-                    ;(errRef.current as any).focus()
-                }
-            },
-        }),
-        */
+            clientId: process.env.FACEBOOK_CLIENT_ID!,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+        })
     )
 }
 
@@ -149,9 +115,8 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async session({ session, token, user }: any) {
-            console.log('🚀 - file: [...nextauth].ts - line 113 - session - token', token)
-            console.log('🚀 - file: [...nextauth].ts - line 113 - session - user', user)
-            console.log('🚀 - file: [...nextauth].ts - line 113 - session - session', session)
+            console.log('🚀 - file: [...nextauth].ts - line 113 - session - user', user, session)
+            session.user.role = user.role
             session.jwt = user.jwt
             session.id = user.id
             return session
@@ -159,16 +124,10 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user, account }: any) {
             const isSignIn = user && account ? true : false
             if (isSignIn) {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account!.provider}/callback?access_token=${account!?.access_token
-                    }`
-                )
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account!.provider}/callback?access_token=${account!?.access_token}`)
                 const data = await response.json()
                 console.log('🚀 - file: [...nextauth].ts - line 127 - jwt - data', data)
-                    ; (token.access_token = account!.access_token),
-                        (token.accessTokenExpires = account!.expires_in!),
-                        (token.refreshToken = account!.refresh_token),
-                        (token.jwt = data.jwt)
+                ;(token.access_token = account!.access_token), (token.accessTokenExpires = account!.expires_in!), (token.refreshToken = account!.refresh_token), (token.jwt = data.jwt)
                 token.access_token = account.access_token
                 token.id = data.user.id
                 console.log(data, token)
@@ -180,11 +139,7 @@ export const authOptions: NextAuthOptions = {
             }
 
             // Access token has expired, try to update it
-            return await refreshAccessToken(
-                token,
-                String(process.env.GOOGLE_CLIENT_ID),
-                String(process.env.GOOGLE_CLIENT_SECRET)
-            )
+            return await refreshAccessToken(token, String(process.env.GOOGLE_CLIENT_ID), String(process.env.GOOGLE_CLIENT_SECRET))
         },
         async signIn() {
             const isAllowedToSignIn = true

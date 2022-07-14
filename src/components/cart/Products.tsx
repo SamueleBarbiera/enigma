@@ -1,4 +1,4 @@
-import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart/react'
+import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
 import {  ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
 import { Dialog, Disclosure, Menu, Popover, Tab, Transition } from '@headlessui/react'

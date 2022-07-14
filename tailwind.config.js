@@ -2,13 +2,7 @@
 
 module.exports = {
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio')],
-    content: {
-        enabled: process.env.NODE_ENV === 'production',
-        content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-        options: {
-            safelist: [],
-        },
-    },
+    content: ['./src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         container: {
             center: true,
@@ -18,7 +12,7 @@ module.exports = {
             sm: '400px',
             smd: '450px',
             md: '550px',
-            xsmd:'650px',
+            xsmd: '650px',
             xmd: '715px',
             xlmd: '800px',
             lg: '924px',

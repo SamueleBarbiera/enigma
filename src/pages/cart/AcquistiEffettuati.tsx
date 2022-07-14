@@ -4,7 +4,7 @@ import { DotsVerticalIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
-import { getSession, useSession } from 'next-auth/client'
+import { getSession, useSession } from 'next-auth/react'
 import AccessDenied from '@/pages/AccessDenied'
 import Head from 'next/head'
 

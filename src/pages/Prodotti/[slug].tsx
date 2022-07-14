@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
-import { useShoppingCart } from 'use-shopping-cart/react'
+import { useShoppingCart } from 'use-shopping-cart'
 import { useState } from 'react'
-import axios from 'axios'
 import { MinusSmIcon, PlusSmIcon, RefreshIcon, CheckCircleIcon } from '@heroicons/react/solid'
 import { Disclosure, RadioGroup, Tab } from '@headlessui/react'
 import Head from 'next/head'
-import Footer from '@/components/layout/Footer'
-import Header from '@/components/layout/Header'
+import Footer from '../../components/layout/Footer'
+import Header from '../../components/layout/Header'
 import { formatCurrencyString } from 'use-shopping-cart'
 import { Fragment } from 'react'
 import { Zoom, toast } from 'react-toastify'
@@ -361,9 +360,9 @@ export default function ProductPage(props: any) {
 
 export const getServerSideProps = async (ctx: any) => {
     try {
-        const resRelated: any = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
+        const resRelated: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
         const products: any = await resRelated.data.data
-        const resProdCons: any = await axios.get(
+        const resProdCons: any = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
         )
         const productsConsigliati: any = await resProdCons.data.data

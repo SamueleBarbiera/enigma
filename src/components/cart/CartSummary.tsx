@@ -1,9 +1,8 @@
 import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/solid'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
 import { TrashIcon } from '@heroicons/react/outline'
-import { useShoppingCart } from 'use-shopping-cart/react'
+import { useShoppingCart } from 'use-shopping-cart'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Link from 'next/link'
 
 function CartSummary() {
@@ -42,10 +41,11 @@ function CartSummary() {
         setLoading(true)
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*`)
-                if (res.status == 200) {
-                    console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', res.data.data)
-                    setProducts(res.data.data)
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*`)
+                const data = await res.json()
+                if (data.status == 200) {
+                    console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', data)
+                    setProducts(data)
                     setError(false)
                     return products
                 }
