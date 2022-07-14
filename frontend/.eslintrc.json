@@ -1,13 +1,37 @@
 {
-    "extends": ["next/babel","next/core-web-vitals", "eslint:recommended", "prettier"],
+    "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "prettier",
+        "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+        "sourceType": "module", // Allows for the use of imports,
+        "project": "tsconfig.json"
     },
     "rules": {
+        "semicolon": ["error", "never"],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
+        "@typescript-eslint/no-explicit-any": "on",
+        "no-unused-vars": 0,
+        "@typescript-eslint/no-unused-vars": 0,
         "indent": ["error", 4],
         "key-spacing": [
             "error",

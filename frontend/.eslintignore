@@ -47,7 +47,6 @@ yarn-error.log*
 .env.local
 .env.development.local
 .env.test.local
-.env.production*
 .env.production.local
 .env 
 
@@ -55,4 +54,3 @@ yarn-error.log*
 .vercel
 
 **/debug.log
-.vercel

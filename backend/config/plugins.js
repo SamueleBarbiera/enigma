@@ -5,9 +5,10 @@ module.exports = ({ env }) => ({
             connections: {
                 default: {
                     connection: {
-                        host: '127.0.0.1',
-                        port: 6379,
+                        host: 'containers-us-west-79.railway.app',
+                        port: 5548,
                         db: 0,
+                    password:'3fXw4h0AGUXt0mkBdYws',
                     },
                     settings: {
                         debug: false,

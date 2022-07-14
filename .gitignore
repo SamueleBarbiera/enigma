@@ -2,3 +2,5 @@ node_modules/
 **/debug.log
 debug.log
 thunder-tests/
+backend/
+backend/**/*

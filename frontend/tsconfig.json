@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": false,
+        "allowJs": true,
+        "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
@@ -13,7 +14,6 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "skipLibCheck": true,
         "alwaysStrict": true,
         "downlevelIteration": true,
         "inlineSourceMap": true,
@@ -37,6 +37,11 @@
             "@/pages/*": ["./pages/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/GalleriaProdotto/[id].jsx"],
-    "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"]
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/map/Map.tsx", "src/pages/index.tsx"],
+    "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "commonjs"
+        }
+    }
 }
