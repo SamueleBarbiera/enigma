@@ -17,19 +17,12 @@ import {
 } from '@heroicons/react/outline'
 import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon, ViewGridIcon as ViewGridIconSolid, ViewListIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/sidebar'
+import CreateProduct from '../../components/admin/createProduct'
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: false },
-    { name: 'All Files', href: '#', icon: ViewGridIconOutline, current: false },
-    { name: 'Photos', href: '/', icon: PhotographIcon, current: true },
-    { name: 'Shared', href: '#', icon: UserGroupIcon, current: false },
-    { name: 'Albums', href: '#', icon: CollectionIcon, current: false },
-    { name: 'Settings', href: '#', icon: CogIcon, current: false },
-]
 const userNavigation = [
     { name: 'Your profile', href: '#' },
     { name: 'Sign out', href: '#' },
@@ -71,8 +64,9 @@ const currentFile = {
 export default function Page() {
     const { status, data: session } = useSession()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
     if (status === 'loading') {
-        return 'Loading or not authenticated...'
+        return 'Loading...'
     }
 
     return (
@@ -173,23 +167,6 @@ export default function Page() {
                         <div className="flex flex-1 items-stretch overflow-hidden">
                             <main className="flex-1 overflow-y-auto">
                                 <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-
-                                    {/* Tabs */}
-                                    <div className="mt-3 sm:mt-2">
-                                        <div className="hidden sm:block">
-                                            <div className="flex justify-end  border-b border-gray-200">
-                                        <h1 className="flex-1 text-2xl justify-start font-bold text-gray-900">Photos</h1>
-                                                <div className="ml-6 hidden rounded-lg bg-gray-100 p-0.5 sm:flex">
-                                                    <button
-                                                        type="button"
-                                                        className="rounded-md p-1.5 text-gray-400 hover:bg-white hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-inset focus:ring-beige-500"
-                                                    >
-                                                        <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     {/* Gallery */}
                                     <section className="mt-8 pb-16" aria-labelledby="gallery-heading">

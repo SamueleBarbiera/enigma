@@ -8,7 +8,7 @@ import Footer from '../../components/layout/Footer'
 import Header from '../../components/layout/Header'
 import { formatCurrencyString } from 'use-shopping-cart'
 import { Fragment } from 'react'
-import { Zoom, toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import Link from 'next/link'
 
 function classNames(...classes: any[]) {
@@ -46,14 +46,10 @@ export default function ProductPage(props: any) {
                 <p className="font-base ml-3 text-green-900">aggiunto al carrello!</p>
             </div>,
             {
-                icon: () => <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
-                position: toast.POSITION.TOP_CENTER,
-                pauseOnFocusLoss: false,
-                autoClose: 1500,
-                transition: Zoom,
-                className: 'rounded-lg p-2 m-4 shadow-xl transiction ease-in-out duration-200 gap-y-12',
-            }
-        )
+                icon: <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
+                position: "top-center",
+                duration: 1500
+            })
     }
 
     return router.isFallback ? (

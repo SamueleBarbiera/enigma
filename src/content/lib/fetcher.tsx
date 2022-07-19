@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export async function fetcher(url: string, options = {}) {
     let res
     if (!options) {

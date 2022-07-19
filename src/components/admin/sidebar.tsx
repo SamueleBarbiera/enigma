@@ -1,20 +1,12 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import {
-    CogIcon,
-    CollectionIcon,
-    HeartIcon,
-    HomeIcon,
-    MenuAlt2Icon,
     PhotographIcon,
-    PlusSmIcon as PlusSmIconOutline,
     UserGroupIcon,
-    ViewGridIcon as ViewGridIconOutline,
     XIcon,
 } from '@heroicons/react/outline'
-import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon, ViewGridIcon as ViewGridIconSolid, ViewListIcon } from '@heroicons/react/solid'
 
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
@@ -22,7 +14,6 @@ function classNames(...classes: any[]) {
 export default function Sidebar({ children }: any) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const router = useRouter()
-    console.log('🚀 ~ file: sidebar.tsx ~ line 25 ~ Sidebar ~ router', JSON.stringify(router.asPath))
 
     const navigation = [
         { name: 'Prodotti', href: 'prodotti', path: '/admin/prodotti', icon: PhotographIcon },

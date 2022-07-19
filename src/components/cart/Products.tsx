@@ -3,11 +3,9 @@ import {  ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon,
 import { XIcon } from '@heroicons/react/outline'
 import { Dialog, Disclosure, Menu, Popover, Tab, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
-import {  toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import Link from 'next/link'
 import useSWR from 'swr'
-import { fetcher } from 'content/lib/fetcher'
+import { fetcher } from '../../content/lib/fetcher'
 
 const Filtri = [
     {

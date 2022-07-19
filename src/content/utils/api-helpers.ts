@@ -1,10 +1,8 @@
-import axios from 'axios'
-
 export async function fetchGetJSON(url: string) {
     try {
-        const res = await axios.get(url)
-        console.log("🚀 - file: api-helpers.ts - line 6 - fetchGetJSON - res", res.data)
-        return res.data
+        const res = await fetch(url)
+        const data = await res.json()
+        return data
     } catch (err) {
         if (err instanceof Error) {
             throw new Error(err.message)

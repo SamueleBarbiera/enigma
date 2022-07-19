@@ -43,7 +43,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role         Role    @default(USER)
+  role          Role      @default(USER)
   accounts      Account[]
   sessions      Session[]
 }
@@ -107,14 +107,13 @@ model Size {
 
 model Product {
   id          String    @id @default(cuid())
+  image       String?
+  description String?
+  price       Float?
   quantity    Int?
-  price       Decimal?  @db.Decimal(10, 2)
   design      String?
   material    String?
-  img_url     String?
   name        String?   @unique
-  description String?
-  currency    String?
   created_at  DateTime  @default(now())
   updated_at  DateTime? @updatedAt
   size        Size[]
