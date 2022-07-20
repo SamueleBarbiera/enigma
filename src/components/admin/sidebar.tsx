@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, useState } from 'react'
+import { Fragment, ReactNode, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
     PhotographIcon,
@@ -12,7 +12,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Sidebar({ children }) {
+interface Props {
+    children?: ReactNode
+}
+
+export default function Sidebar({ children }: Props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const router = useRouter()
 
@@ -33,7 +37,7 @@ export default function Sidebar({ children }) {
                         </div>
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {navigation.map((item) => (
-                                <Link href={item.href}>
+                                <Link href={item.href} key={item.name}>
                                     <a
                                         key={item.name}
                                         className={classNames(

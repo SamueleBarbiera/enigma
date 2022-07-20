@@ -1,12 +1,8 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { MenuIcon, SearchIcon, ShoppingCartIcon, UserIcon, XIcon } from '@heroicons/react/outline'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { getSession, useSession } from 'next-auth/react'
-import AccessDenied from '@/pages/AccessDenied'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
 const products = [
     {
@@ -48,7 +44,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function RecapOrdini() {
+export default function RecapOrdini(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <>
             <Head>
@@ -196,10 +192,10 @@ export default function RecapOrdini() {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) =>{
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user.email === '') {
+    if (!session!.user && session!.user!.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

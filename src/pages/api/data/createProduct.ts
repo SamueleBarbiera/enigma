@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../content/lib/prisma'
+import prisma from '../../../content/lib/prisma'
 import { withValidation } from 'next-validations'
 import { z } from 'zod'
+import { Product } from '@prisma/client'
 
 const schema = z.object({
     image: z.string().nonempty(),
@@ -30,7 +31,7 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
         try {
             const { image, name, description, price } = req.body
 
-            const product = await prisma.product.create({
+            const product:Product[] = await prisma.product.create({
                 data: {
                     image,
                     name,

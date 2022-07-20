@@ -2,6 +2,7 @@ import { FcLock } from 'react-icons/fc'
 import { CgArrowDown } from 'react-icons/cg'
 import Head from 'next/head'
 import Link from 'next/link'
+
 function AccessDenied() {
     return (
         <>

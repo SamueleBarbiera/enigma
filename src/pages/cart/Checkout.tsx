@@ -1,4 +1,3 @@
-import AccessDenied from '@/pages/AccessDenied'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
 import { Disclosure } from '@headlessui/react'
@@ -467,7 +466,7 @@ export default Checkout
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session.user.email === '') {
+    if (!session!.user && session!.user!.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

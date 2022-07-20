@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, NextPage, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import useSWR from 'swr'
@@ -9,15 +9,13 @@ import { fetchGetJSON } from '../../content/utils/api-helpers'
 import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import AccessDenied from '@/pages/AccessDenied'
 import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 
-const RisultatoPagamento: NextPage = () => {
+const RisultatoPagamento: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
     const { data, error } = useSWR(() => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null), fetchGetJSON)
-    const { data: session, status } = useSession()
 
     useEffect(() => {
         if (data) {
@@ -71,7 +69,7 @@ export default RisultatoPagamento
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user  && session!.user.email === '') {
+    if (!session!.user  && session!.user!.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

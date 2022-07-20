@@ -1,47 +1,44 @@
-//import  Prisma  from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { Prisma } from '@prisma/client'
 import prisma from '../src/content/lib/prisma'
 
-// const arrPIANO1: object[] = []
-
-// for (let x = 0; x < 50; x++) {
-//     arrPIANO1[x] = { posto: x, piano: 1, parcheggio_stato: false }
-// }
-
-// const rfidData: Prisma.RfidsCreateInput[] = [
-//     {
-//         codice: '15725016189159',
-//         stato: false,
-//     },
-//     {
-//         codice: '21721418013750',
-//         stato: false,
-//     },
-//     {
-//         codice: '1921269426250',
-//         stato: false,
-//     },
-//     {
-//         codice: '1184298172146',
-//         stato: false,
-//     },
-// ]
-
-// const parcheggiData: Prisma.ParcheggiCreateInput[] = arrPIANO1
+const prodData: Prisma.ProductCreateInput[] = [
+    {
+        description: 'ue uajo bella sta descrizione',
+        design: 'bel design',
+        image: '',
+        name: 'vestito 1',
+        material: 'cotone',
+        price: 20,
+        quantity: 2,
+    },
+    {
+        description: 'ue uajo bella sta descrizione',
+        design: 'bel design',
+        image: '',
+        name: 'vestito 2',
+        material: 'cotone',
+        price: 6,
+        quantity: 3,
+    },
+    {
+        description: 'ue uajo bella sta descrizione',
+        design: 'bel design',
+        image: '',
+        name: 'vestito 3',
+        material: 'cotone',
+        price: 15,
+        quantity: 1,
+    },
+]
 
 async function main() {
     console.log('Start seeding ...')
-    // await prisma.parcheggi.deleteMany({})
-    // await prisma.rfids.deleteMany({})
-    // const parcheggi = await prisma.parcheggi.createMany({
-    //     data: parcheggiData,
-    // })
-    // const parcheggi2 = await prisma.parcheggi.createMany({
-    //     data: parcheggiData2,
-    // })
-    // const rfid = await prisma.rfids.createMany({
-    //     data: rfidData,
-    // })
-    // eslint-disable-next-line quotes
+    // await prisma.product.deleteMany({})
+    const products = await prisma.product.createMany({
+        data: prodData,
+    })
+    console.log('🚀 ~ file: seed.ts ~ line 44 ~ main ~ products', products)
     console.log('Seeding finished.')
 }
 

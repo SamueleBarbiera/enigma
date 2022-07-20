@@ -29,25 +29,16 @@ interface Props {
 
 const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: Props) => {
   const router = useRouter()
-
   const [disabled, setDisabled] = useState(false)
-  const [imageUrl, setImageUrl] = useState(initialValues?.image ?? '')
+  const [imageUrl, setImageUrl] = useState(initialValues?.image)
 
   const upload = async (image: unknown) => {
-    if (!image) return
-
     let toastId
     try {
       setDisabled(true)
       toastId = toast.loading('Uploading...')
-      const { data } = await fetch('/api/data/productsImage', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image }),
-      })
-      setImageUrl(data?.url)
+      const { data } = await axios.post('/api/data/productsImage', { image }),
+        setImageUrl(data?.url)
       toast.success('Successfully uploaded', { id: toastId })
     } catch (e) {
       toast.error('Unable to upload', { id: toastId })
@@ -75,12 +66,7 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
     }
   }
 
-  const { image, ...initialFormValues } = initialValues ?? {
-    image: '',
-    name: '',
-    description: '',
-    price: 0,
-  }
+  const { image, ...initialFormValues } = initialValues
 
   return (
     <div>
@@ -135,7 +121,7 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
         )}
       </Formik>
       <div className="mb-6 max-w-full">
-        <AddProductImage src={{ image }} alt={{ initialFormValues.name }} onChangePicture={upload} />
+        <AddProductImage initialValues={{ src: image, alt: initialFormValues.name }} onChangePicture={upload} />
       </div>
     </div>
   )

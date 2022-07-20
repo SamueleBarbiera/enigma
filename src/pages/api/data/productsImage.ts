@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid'
 import { decode } from 'base64-arraybuffer'
 import { createClient } from '@supabase/supabase-js'
-import absoluteUrl from 'next-absolute-url'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withValidation } from 'next-validations'
 import { z } from 'zod'

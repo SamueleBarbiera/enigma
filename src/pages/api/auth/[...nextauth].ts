@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable indent */
 /* eslint-disable import/no-anonymous-default-export */
-import NextAuth, { NextAuthOptions } from 'next-auth'
+import NextAuth from 'next-auth'
+import type { NextAuthOptions } from 'next-auth'
 import { AppProviders } from 'next-auth/providers'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prisma from '../../../content/lib/prisma'
+import axios from 'axios'
 
-const GOOGLE_AUTHORIZATION_URL: string =
+const GOOGLE_AUTHORIZATION_URL =
     'https://accounts.google.com/o/oauth2/v2/auth?' +
     new URLSearchParams({
         prompt: 'consent',
@@ -107,7 +109,7 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user, account }) {
             const isSignIn = user && account ? true : false
             if (isSignIn) {
-                const response = await fetch(
+                const response = await axios(
                     `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
                 )
                 const data = await response.json()
@@ -147,4 +149,4 @@ export const authOptions: NextAuthOptions = {
     debug: true,
 }
 
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions)
+export default NextAuth(authOptions)

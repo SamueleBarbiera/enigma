@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Footer from '../../components/layout/Footer'
 import Header from '../../components/layout/Header'
 import LoginForm from '../../components/auth/LoginForm'
 import Head from 'next/head'
-import { getProviders, getSession } from 'next-auth/react'
-import { InferGetServerSidePropsType,GetServerSideProps } from 'next'
+import { InferGetServerSidePropsType, GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { unstable_getServerSession } from 'next-auth/next'
+import authOptions from '../api/auth/[...nextauth]'
 
 export default function Login({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
@@ -19,8 +21,9 @@ export default function Login({ providers }: InferGetServerSidePropsType<typeof 
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const session = await getSession()
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+
     if (session) {
         return {
             redirect: { destination: '/' },
@@ -30,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
     return {
         props: {
-            providers: await getProviders(),
+            providers: session,
         },
     }
 }

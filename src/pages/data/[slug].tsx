@@ -11,6 +11,7 @@ import { Fragment } from 'react'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import axios from 'axios'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -81,8 +82,8 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                         {/* Image selector */}
                         <div className="mx-auto mt-6  w-full max-w-full sm:block lg:max-w-none">
                             <Tab.List className="grid grid-cols-4 gap-6">
-                                {products.image.data.map((image) => (
-                                    <Tab className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4">
+                                {products.image.map((image) => (
+                                    <Tab key={image.id} className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4">
                                         {({ selected }) => (
                                             <>
                                                 <span className="sr-only">{products.name}</span>
@@ -105,7 +106,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                         </div>
 
                         <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-                            {products.image.data.map((image) => (
+                            {products.image.map((image) => (
                                 <Tab.Panel key={image.id}>
                                     <img
                                         className="h-min w-min rounded-lg border-4 border-beige-600 object-cover object-center shadow-xl "
@@ -358,19 +359,19 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
-        const resRelated = await fetch(`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
-        const products:object[] = await resRelated.json()
-        const resProdCons = await fetch(
+        const resRelated = await axios.get`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
+        const products: object[] = await resRelated.data
+        const resProdCons = await axios.get
             `/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
         )
-        const productsConsigliati:object[] = await resProdCons.json()
-        console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
+const productsConsigliati: object[] = await resProdCons.data
+console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
 
-        return {
-            props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
-        }
+return {
+    props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
+}
     } catch (error) {
-        console.log('🚀 - [slug].tsx - line 259 - ERROR ', error)
-        return { notFound: true }
-    }
+    console.log('🚀 - [slug].tsx - line 259 - ERROR ', error)
+    return { notFound: true }
+}
 }

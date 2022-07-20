@@ -1,8 +1,15 @@
 /* eslint-disable no-control-regex */
 /* eslint-disable no-unused-vars */
 import { signIn } from 'next-auth/react'
+import { ReactNode } from 'react'
 
-export default function LoginForm({ providers }: unknown) {
+interface Props {
+    providers?: ReactNode
+    id: string,
+    name: string
+}
+
+export default function LoginForm({ providers }: Props) {
     return (
         <>
             <div className="flex h-screen flex-col justify-center bg-beige-400 px-6 py-4">
@@ -13,15 +20,15 @@ export default function LoginForm({ providers }: unknown) {
                         <div className="mt-0">
                             <div className="mt-0 grid grid-cols-2 gap-2">
                                 {providers &&
-                                    Object.values(providers).map((providers) => (
-                                        <div key={(providers ).name}>
+                                    Object.values(providers).map((providers: Props) => (
+                                        <div key={providers.name}>
                                             {(() => {
-                                                if ((providers ).name == 'Google') {
+                                                if (providers.name == 'Google') {
                                                     return (
                                                         <button
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn((providers ).id)
+                                                                signIn(providers.id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -31,12 +38,12 @@ export default function LoginForm({ providers }: unknown) {
                                                             </svg>
                                                         </button>
                                                     )
-                                                } else if ((providers ).name == 'Facebook') {
+                                                } else if ((providers).name == 'Facebook') {
                                                     return (
                                                         <button disabled
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn((providers ).id)
+                                                                signIn(providers.id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
