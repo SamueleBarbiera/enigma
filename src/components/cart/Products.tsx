@@ -1,7 +1,7 @@
-import { useShoppingCart, formatCurrencyString } from 'use-shopping-cart'
+import { formatCurrencyString } from 'use-shopping-cart'
 import {  ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
-import { Dialog, Disclosure, Menu, Popover, Tab, Transition } from '@headlessui/react'
+import { Dialog, Disclosure, Menu, Popover,  Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
 import Link from 'next/link'
 import useSWR from 'swr'
@@ -45,18 +45,17 @@ const Filtri = [
     },
 ]
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const Products = ({ products }: any) => {
+const Products = ({ products }) => {
     const [mobileFiltriOpen, setMobileFiltriOpen] = useState<boolean>(false)
     const [pageIndex, setPageIndex] = useState<number>(1)
     const [order, setOrder] = useState<string>('DESC')
-    const [date, setDate] = useState<string>(`${Date.now()}`)
 
     const { data, error, isValidating } = useSWR(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
+        `/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
         fetcher,
         {
             fallbackData: products,
@@ -269,7 +268,7 @@ const Products = ({ products }: any) => {
                         {/* Product grid */}
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
-                                {data.data.map((product: any) => (
+                                {data.map((product) => (
                                     <a className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                                             {isValidating ? (

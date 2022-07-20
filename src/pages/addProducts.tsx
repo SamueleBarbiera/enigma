@@ -1,9 +1,14 @@
-import Layout from "@/components/Layout";
-import ProductList from "@/components/ProductList";
-import axios from "axios";
+import Layout from '../components/Layout'
+import ProductList from '../components/ProductList'
 
-const addProducts = () => {
-  const createProduct = (data) => axios.post("/api/products", data);
+export default function addProducts(props) {
+  const createProduct = (data) => fetch('/api/data/createProduct', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
 
   return (
     <Layout>
@@ -20,7 +25,6 @@ const addProducts = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default addProducts;

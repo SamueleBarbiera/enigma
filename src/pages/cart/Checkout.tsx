@@ -6,6 +6,7 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
 const subtotal = '210.00'
 const discount = { code: 'ENIGMA', amount: '24.00' }
@@ -54,7 +55,7 @@ const products = [
     },
 ]
 
-function Checkout() {
+function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [hidden, setHidden] = useState(true)
 
     return (
@@ -253,7 +254,7 @@ function Checkout() {
                         >
                             <span className="sr-only">Pay with Google Pay</span>
                             <svg className="h-5 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 437 174">
-                                <g fill="none" fill-rule="nonzero">
+                                <g fill="none" fillRule="nonzero">
                                     <path
                                         fill="#5F6368"
                                         d="M207.2 84.6v50.8h-16.1V10h42.7c10.3-.2 20.2 3.7 27.7 10.9 7.5 6.7 11.7 16.4 11.5 26.4.2 10.1-4 19.8-11.5 26.6-7.5 7.1-16.7 10.7-27.6 10.7h-26.7zm0-59.2v43.8h27c6 .2 11.8-2.2 15.9-6.5 8.5-8.2 8.6-21.7.4-30.2l-.4-.4c-4.1-4.4-9.9-6.8-15.9-6.6l-27-.1zM310.1 46.8c11.9 0 21.3 3.2 28.2 9.5 6.9 6.4 10.3 15.1 10.3 26.2v52.8h-15.4v-11.9h-.7c-6.7 9.8-15.5 14.7-26.6 14.7-9.4 0-17.4-2.8-23.7-8.4-6.2-5.2-9.7-12.9-9.5-21 0-8.9 3.4-15.9 10.1-21.2 6.7-5.3 15.7-7.9 26.9-7.9 9.6 0 17.4 1.8 23.6 5.2v-3.7c0-5.5-2.4-10.7-6.6-14.2-4.3-3.8-9.8-5.9-15.5-5.9-9 0-16.1 3.8-21.4 11.4l-14.2-8.9c7.7-11.1 19.2-16.7 34.5-16.7zm-20.8 62.3c0 4.2 2 8.1 5.3 10.5 3.6 2.8 8 4.3 12.5 4.2 6.8 0 13.3-2.7 18.1-7.5 5.3-5 8-10.9 8-17.7-5-4-12-6-21-6-6.5 0-12 1.6-16.4 4.7-4.3 3.2-6.5 7.1-6.5 11.8zM437 49.6l-53.8 123.6h-16.6l20-43.2-35.4-80.3h17.5l25.5 61.6h.4l24.9-61.6z"
@@ -463,10 +464,10 @@ function Checkout() {
 
 export default Checkout
 
-export async function getServerSideProps(ctx: any) {
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user == {} && (session as any).user.email === '') {
+    if (!session!.user && session.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

@@ -26,14 +26,14 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 
 const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
-        let { image } = req.body
+        const { image } = req.body
 
         if (!image) {
             return res.status(500).json({ message: 'There is no image' })
         }
         try {
             const contentType = image.match(/data:(.*);base64/)?.[1]
-            const base64FileData = image.split('base64,')?.[1]
+            const base64FileData = image.split('base64,')[1]
             if (!contentType || !base64FileData) {
                 return res.status(500).json({ message: 'Image data not valid' })
             }

@@ -1,25 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { useSession } from 'next-auth/react'
-import { GetServerSidePropsContext } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { getSession } from 'next-auth/react'
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react'
 import {
-    CogIcon,
-    CollectionIcon,
     HeartIcon,
-    HomeIcon,
     MenuAlt2Icon,
-    PhotographIcon,
     PlusSmIcon as PlusSmIconOutline,
-    UserGroupIcon,
-    ViewGridIcon as ViewGridIconOutline,
-    XIcon,
 } from '@heroicons/react/outline'
-import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon, ViewGridIcon as ViewGridIconSolid, ViewListIcon } from '@heroicons/react/solid'
+import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/sidebar'
-import CreateProduct from '../../components/admin/createProduct'
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
@@ -61,7 +55,8 @@ const currentFile = {
     ],
 }
 
-export default function Page() {
+export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    console.log('🚀 ~ file: prodotti.tsx ~ line 71 ~ Page ~ session', session)
     const { status, data: session } = useSession()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -222,10 +217,10 @@ export default function Page() {
                                     <div>
                                         <h3 className="font-medium text-gray-900">Information</h3>
                                         <dl className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
-                                            {Object.keys((currentFile as any).information).map((key: any) => (
+                                            {Object.keys(currentFile.information).map((key) => (
                                                 <div key={key} className="flex justify-between py-3 text-sm font-medium">
                                                     <dt className="text-gray-500">{key}</dt>
-                                                    <dd className="text-gray-900">{(currentFile as any).information[key]}</dd>
+                                                    <dd className="text-gray-900">{currentFile.information[key]}</dd>
                                                 </div>
                                             ))}
                                         </dl>
@@ -294,11 +289,12 @@ export default function Page() {
     )
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const session = await getSession(context)
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await getSession(ctx)
     console.log('🚀 ~ file: prodotti.tsx ~ line 387 ~ getServerSideProps ~ session', session)
 
-    if (!session || (session as any).user?.role! !== 'ADMIN') {
+    if (!session || session.user?.role !== 'ADMIN') {
         return { redirect: { permanent: false, destination: '/' } }
     }
 

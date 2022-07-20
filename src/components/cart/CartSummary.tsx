@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/solid'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
 import { TrashIcon } from '@heroicons/react/outline'
@@ -6,17 +13,18 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 function CartSummary() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { addItem, removeItem, cartCount, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } = useShoppingCart()
-    const [products, setProducts] = useState<any>([])
+    const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<boolean>()
+    const [error, setError] = useState()
     const [cartEmpty, setCartEmpty] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
     const [PayShopChecked, setPayShopChecked] = useState<boolean>(true)
     const [RetirePkgShopChecked, setRetirePkgShopChecked] = useState<boolean>(true)
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
-    function toFixedIfNecessary(value: any, dp: number | undefined) {
+    function toFixedIfNecessary(value: unknown, dp: number | undefined) {
         return +parseFloat(value).toFixed(dp)
     }
 
@@ -25,7 +33,7 @@ function CartSummary() {
         setLoading(true)
         setErrorMessage('')
 
-        const response = await fetchPostJSON(`/api/checkout_sessions/cart`, { cartDetails }, { totalPrice })
+        const response = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, { totalPrice })
 
         if (response.statusCode > 399) {
             console.error(response.message)
@@ -49,14 +57,16 @@ function CartSummary() {
                     setError(false)
                     return products
                 }
-            } catch (err) {
-                setError(err)
-                console.log('🚀 ERROR FETCHING', err)
+            } catch (err: unknown) {
+                const typedError: string = err as Error
+                setError(typedError)
+                console.log('🚀 ERROR FETCHING', typedError)
             }
+
         }
         fetchData()
         setLoading(false)
-    }, [setProducts])
+    }, [products, setProducts])
     const cartDet = Object.entries(cartDetails).map((e) => e[1])
 
     return (
@@ -89,13 +99,13 @@ function CartSummary() {
                                         <div className="mt-8 xl:grid ">
                                             <div className="xl:grid">
                                                 <ul role="list" className="-my-6 xl:grid  xl:grid-cols-2 xl:gap-x-4 ">
-                                                    {cartDet.map((product: any) => (
+                                                    {cartDet.map((product) => (
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
                                                                     <img
                                                                         className="h-full w-full rounded-md object-cover object-center shadow-md"
-                                                                        src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
+                                                                        src={product.image}
                                                                         alt={'not found'}
                                                                     />
                                                                 </div>
@@ -141,7 +151,7 @@ function CartSummary() {
                                         <div className="mt-8 xl:grid ">
                                             <div className="xl:grid">
                                                 <ul role="list" className="-my-6 xl:grid  xl:grid-cols-1 xl:gap-x-4 ">
-                                                    {cartDet.map((product: any) => (
+                                                    {cartDet.map((product) => (
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">

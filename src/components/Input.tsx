@@ -1,11 +1,29 @@
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { useField } from 'formik';
-import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { useField } from 'formik'
+import { ExclamationCircleIcon } from '@heroicons/react/solid'
 
-const Input = ({ type = '', label = '', className = '', ...props }) => {
-  const [field, meta] = useField(props);
-  const error = meta?.touched && meta?.error;
+interface Props {
+  type: string,
+  label: string,
+  className: string,
+  placeholder: string,
+  disabled: object,
+  props: {
+    placeholder: string;
+    disabled: object;
+    rows: number;
+    min: string;
+  },
+  rows: number,
+  min: string
+}
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}
+
+const Input = ({ type = '', label = '', className = '', ...props }: Props) => {
+  const [field, meta] = useField(props)
+  const error = meta.touched && meta.error
 
   return (
     <div className={classNames(className, 'flex flex-col space-y-1')}>
@@ -50,18 +68,12 @@ const Input = ({ type = '', label = '', className = '', ...props }) => {
       </div>
 
       {error ? (
-        <p name="email" className="text-red-600 text-sm first-letter:uppercase">
+        <p name='email' className="text-red-600 text-sm first-letter:uppercase">
           {error}
         </p>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-Input.propTypes = {
-  type: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  className: PropTypes.string,
-};
-
-export default Input;
+export default Input

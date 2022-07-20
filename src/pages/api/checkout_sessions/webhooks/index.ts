@@ -33,7 +33,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown error'
             // On error, log and return the error message.
-            if (err! instanceof Error) console.log(err)
+            if (err instanceof Error) console.log(err)
             console.log(`❌ Error message: ${errorMessage}`)
             res.status(400).send(`Webhook Error: ${errorMessage}`)
             return
@@ -64,4 +64,4 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 }
 
-export default cors(webhookHandler as any)
+export default cors(webhookHandler)

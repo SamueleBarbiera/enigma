@@ -4,9 +4,9 @@ import { DotsVerticalIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
-import { getSession, useSession } from 'next-auth/react'
-import AccessDenied from '@/pages/AccessDenied'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
 const orders = [
     {
@@ -66,11 +66,11 @@ const orders = [
     },
 ]
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-function AcquistiEffettuati() {
+function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <>
             <Head>
@@ -224,10 +224,10 @@ function AcquistiEffettuati() {
 
 export default AcquistiEffettuati
 
-export async function getServerSideProps(ctx: any) {
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user == {} && (session as any).user.email === '') {
+    if (!session!.user && session!.user! == {} && session!.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

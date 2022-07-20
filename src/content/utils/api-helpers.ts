@@ -1,7 +1,7 @@
 export async function fetchGetJSON(url: string) {
     try {
-        const res = await fetch(url)
-        const data = await res.json()
+        const res: Response = await fetch(url)
+        const data: unknown = await res.json()
         return data
     } catch (err) {
         if (err instanceof Error) {
@@ -11,10 +11,10 @@ export async function fetchGetJSON(url: string) {
     }
 }
 
-export async function fetchPostJSON(url: string, data?: {}, amount?: any) {
+export async function fetchPostJSON(url: string, data: object = {}, amount?: number) {
     try {
         // Default options are marked with *
-        const response = await fetch(url, {
+        const res: Response = await fetch(url, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -24,10 +24,12 @@ export async function fetchPostJSON(url: string, data?: {}, amount?: any) {
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify({data, amount}), // body data type must match "Content-Type" header
+            body: JSON.stringify({ data, amount }), // body data type must match "Content-Type" header
         })
-        return await response.json()
+        const dataRes: unknown = await res.json()
+        return dataRes
     } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         console.log({ '❌ Payment failed ': err })
         if (err instanceof Error) {
             throw new Error(err.message)

@@ -4,8 +4,9 @@ import { CheckIcon } from '@heroicons/react/solid'
 import AccessDenied from '@/pages/AccessDenied'
 import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
-function CancelPagamento() {
+function CancelPagamento(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <>
             <Head>
@@ -29,10 +30,10 @@ function CancelPagamento() {
 
 export default CancelPagamento
 
-export async function getServerSideProps(ctx: any) {
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) =>{
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user == {} && (session as any).user.email === '') {
+    if (!session!.user && session!.user!.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

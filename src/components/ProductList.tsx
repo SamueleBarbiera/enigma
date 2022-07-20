@@ -1,33 +1,52 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import PropTypes from 'prop-types'
-import * as Yup from 'yup'
 import { toast } from 'react-hot-toast'
 import { Formik, Form } from 'formik'
 import Input from '../components/Input'
 import AddProductImage from '../components/AddProductImage'
 import axios from 'axios'
+import { z } from 'zod'
 
-const ProductSchema = Yup.object().shape({
-  name: Yup.string().trim().required(),
-  description: Yup.string().trim().required(),
-  price: Yup.number().positive().integer().min(1).required(),
+const ProductSchema = z.object({
+  name: z.string().max(20).nonempty(),
+  description: z.string().min(10).nonempty(),
+  price: z.number().nonnegative('Field is required not negative').gte(1),
 })
 
-const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }) => {
+interface Props {
+  text: string;
+  active: boolean;
+  initialValues: {
+    image: string,
+    name: string,
+    description: string,
+    price: number,
+  },
+  redirectPath: string,
+  buttonText: string,
+  onSubmit: Function,
+}
+
+const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: Props) => {
   const router = useRouter()
 
   const [disabled, setDisabled] = useState(false)
   const [imageUrl, setImageUrl] = useState(initialValues?.image ?? '')
 
-  const upload = async (image: any) => {
+  const upload = async (image: unknown) => {
     if (!image) return
 
     let toastId
     try {
       setDisabled(true)
       toastId = toast.loading('Uploading...')
-      const { data } = await axios.post('/api/productsImage', { image })
+      const { data } = await fetch('/api/data/productsImage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image }),
+      })
       setImageUrl(data?.url)
       toast.success('Successfully uploaded', { id: toastId })
     } catch (e) {
@@ -38,13 +57,13 @@ const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Su
     }
   }
 
-  const handleOnSubmit = async (values = null) => {
+  const handleOnSubmit = async (values: React.FormEvent<HTMLFormElement>) => {
     let toastId
     try {
       setDisabled(true)
       toastId = toast.loading('Submitting...')
       if (typeof onSubmit === 'function') {
-        await onSubmit({ ...values, image: imageUrl })
+        await onSubmit({ values, image: imageUrl })
       }
       toast.success('Successfully submitted', { id: toastId })
       if (redirectPath) {
@@ -75,7 +94,7 @@ const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Su
           <Form className="space-y-6">
             <div className="space-y-6">
               <Input
-                name="name"
+                data-data-name="name"
                 type="text"
                 label="Title"
                 placeholder="Entire your product name..."
@@ -83,7 +102,7 @@ const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Su
               />
 
               <Input
-                name="description"
+                data-name="description"
                 type="textarea"
                 label="Description"
                 placeholder="Enter your product description...."
@@ -92,7 +111,7 @@ const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Su
               />
 
               <Input
-                name="price"
+                data-name="price"
                 type="number"
                 min="0"
                 label="Price of the product..."
@@ -116,22 +135,12 @@ const ProductList = ({ initialValues = null, redirectPath = '', buttonText = 'Su
         )}
       </Formik>
       <div className="mb-6 max-w-full">
-        <AddProductImage initialImage={{ src: image, alt: initialFormValues.name }} onChangePicture={upload} />
+        <AddProductImage src={{ image }} alt={{ initialFormValues.name }} onChangePicture={upload} />
       </div>
     </div>
   )
 }
 
-ProductList.propTypes = {
-  initialValues: PropTypes.shape({
-    image: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    price: PropTypes.number,
-  }),
-  redirectPath: PropTypes.string,
-  buttonText: PropTypes.string,
-  onSubmit: PropTypes.func,
-}
+
 
 export default ProductList

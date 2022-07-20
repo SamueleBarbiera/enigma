@@ -1,6 +1,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import PropTypes from 'prop-types'
+
+interface Props {
+  id: string,
+  image: string,
+  name: string,
+  description: string,
+  price: number,
+  onClickFavorite: Function,
+}
 
 const Card = ({
   id = '',
@@ -8,7 +16,7 @@ const Card = ({
   name = '',
   price = 0,
   onClickFavorite = () => null,
-}) => (
+}: Props) => (
   <Link href={`/products/${id}`}>
     <a className="block w-full p-5">
       <div className="card card-compact w-full bg-neutral shadow-xl">
@@ -56,14 +64,5 @@ const Card = ({
     </a>
   </Link>
 )
-
-Card.propTypes = {
-  id: PropTypes.string.isRequired,
-  image: PropTypes.string,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  price: PropTypes.number,
-  onClickFavorite: PropTypes.func,
-}
 
 export default Card

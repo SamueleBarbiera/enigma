@@ -10,13 +10,14 @@ import { formatCurrencyString } from 'use-shopping-cart'
 import { Fragment } from 'react'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
+import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductPage(props: any) {
-    const products = props.productsData[0]
+export default function ProductPage(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const products: InferGetServerSidePropsType<typeof getServerSideProps> = props.productsData[0]
     console.log('🚀 - file: [slug].tsx - line 22 - ProductPage - products', products)
     const productsConsigliati = props.productsConsigliati[0]
     console.log('🚀 - file: [slug].tsx - line 24 - ProductPage - productsConsigliati', props.productsConsigliati[0])
@@ -24,7 +25,7 @@ export default function ProductPage(props: any) {
     delete products.dettagli[0].id
     delete products.dettagli[0].__component
 
-    let colorsAvailable: any = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
+    let colorsAvailable = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
     colorsAvailable = colorsAvailable.map(function (currentValue: string) {
         if (currentValue === 'white' || currentValue === 'black') {
             return 'bg-' + currentValue
@@ -32,14 +33,14 @@ export default function ProductPage(props: any) {
             return 'bg-' + currentValue + '-200'
         }
     })
-    let sizesAvailable: any = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === true)
-    let sizesNOTAvailable: any = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === false)
+    const sizesAvailable = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === true)
+    const sizesNOTAvailable = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === false)
     const router = useRouter()
     const [selectedColor, setSelectedColor] = useState<any>(colorsAvailable)
     console.log('🚀 - file: [slug].tsx - line 39 - ProductPage - selectedColor', selectedColor)
     const [selectedSize, setSelectedSize] = useState<any>(sizesAvailable)
     console.log('🚀 - file: [slug].tsx - line 41 - ProductPage - selectedSize', selectedSize)
-    const notify = (products: any) => {
+    const notify = (products) => {
         toast.success(
             <div key={products.id}>
                 <div className="ml-3 font-semibold text-green-900">{products} </div>
@@ -47,7 +48,7 @@ export default function ProductPage(props: any) {
             </div>,
             {
                 icon: <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
-                position: "top-center",
+                position: 'top-center',
                 duration: 1500
             })
     }
@@ -80,7 +81,7 @@ export default function ProductPage(props: any) {
                         {/* Image selector */}
                         <div className="mx-auto mt-6  w-full max-w-full sm:block lg:max-w-none">
                             <Tab.List className="grid grid-cols-4 gap-6">
-                                {products.image.data.map((image: any) => (
+                                {products.image.data.map((image) => (
                                     <Tab className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4">
                                         {({ selected }) => (
                                             <>
@@ -104,7 +105,7 @@ export default function ProductPage(props: any) {
                         </div>
 
                         <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-                            {products.image.data.map((image: any) => (
+                            {products.image.data.map((image) => (
                                 <Tab.Panel key={image.id}>
                                     <img
                                         className="h-min w-min rounded-lg border-4 border-beige-600 object-cover object-center shadow-xl "
@@ -142,13 +143,13 @@ export default function ProductPage(props: any) {
                                 <h3 className="text-sm text-beige-900">Color</h3>
                                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
                                     <div className="space-3 grid grid-cols-3 items-center gap-0 smd:grid-cols-4  md:grid-cols-6 xl:grid-cols-12 ">
-                                        {colorsAvailable.map((colorsAvailable: any) => (
+                                        {colorsAvailable.map((colorsAvailable) => (
                                             <RadioGroup.Option
                                                 key={colorsAvailable}
                                                 value={colorsAvailable}
                                                 className={({ active, checked }) =>
                                                     classNames(
-                                                        `w-min border shadow-lg ring-beige-900`,
+                                                        'w-min border shadow-lg ring-beige-900',
                                                         active && checked ? 'ring-1 ring-offset-1' : '',
                                                         !active && checked ? 'ring-1' : '',
                                                         'relative m-2 flex  cursor-pointer items-center justify-center rounded-full  focus:outline-none'
@@ -169,7 +170,7 @@ export default function ProductPage(props: any) {
 
                                 <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                                     <div className="m-2 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                                        {sizesAvailable.map((sizesAvailable: any) => (
+                                        {sizesAvailable.map((sizesAvailable) => (
                                             <RadioGroup.Option
                                                 key={sizesAvailable}
                                                 value={sizesAvailable}
@@ -199,7 +200,7 @@ export default function ProductPage(props: any) {
                                                 )}
                                             </RadioGroup.Option>
                                         ))}
-                                        {sizesNOTAvailable.map((sizesNOTAvailable: any) => (
+                                        {sizesNOTAvailable.map((sizesNOTAvailable) => (
                                             <RadioGroup.Option
                                                 key={sizesNOTAvailable}
                                                 value={sizesNOTAvailable}
@@ -354,14 +355,15 @@ export default function ProductPage(props: any) {
     )
 }
 
-export const getServerSideProps = async (ctx: any) => {
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
-        const resRelated: any = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
-        const products: any = await resRelated.data.data
-        const resProdCons: any = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
+        const resRelated = await fetch(`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
+        const products:object[] = await resRelated.json()
+        const resProdCons = await fetch(
+            `/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
         )
-        const productsConsigliati: any = await resProdCons.data.data
+        const productsConsigliati:object[] = await resProdCons.json()
         console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
 
         return {

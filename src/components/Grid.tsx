@@ -1,13 +1,21 @@
-import PropTypes from 'prop-types'
 import Card from '../components/Card'
 import { ExclamationIcon } from '@heroicons/react/outline'
 
-const Grid = ({ products = [] }) => {
-  const isEmpty = products.length === 0
+interface Props {
+  id: string,
+  image: string | null,
+  description: string | null,
+  price: number | null,
+  quantity: number | null,
+  design: string | null,
+  material: string | null,
+  name: string | null,
+  created_at: Date,
+  updated_at: Date | null
+}
 
-  const toggleFavorite = async (id: any) => {
-    // TODO: Add/remove product from the authenticated user's favorites
-  }
+const Grid = ({ products }: Props[]) => {
+  const isEmpty = products.length === 0
 
   return isEmpty ? (
     <p className="inline-flex max-w-max items-center space-x-1 rounded-md bg-amber-100 px-4 py-2 text-purple-700">
@@ -16,15 +24,11 @@ const Grid = ({ products = [] }) => {
     </p>
   ) : (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {products.map((product: any) => (
-        <Card key={product.id} {...product} onClickFavorite={toggleFavorite} />
+      {products.map((product: Props) => (
+        <Card key={product.id} {...product} />
       ))}
     </div>
   )
-}
-
-Grid.propTypes = {
-  products: PropTypes.array,
 }
 
 export default Grid

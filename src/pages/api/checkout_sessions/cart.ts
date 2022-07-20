@@ -8,14 +8,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const amount: number = Number((req.body.amount.totalPrice * 100).toString().slice(0, 6))
-    const cartdet: any = Object.entries(req.body.data.cartDetails).map((e) => e[1])
-    // let img
-    // {
-    //     cartdet.map((image: any) => (img = image.image.data.map((image: any) => `${process.env.NEXT_PUBLIC_API_URL}${image.url}`)))
-    // }
-    // console.log('🚀 - file: cart.ts - line 57 - handler - img', img)
-
+    const amount = Number((req.body.amount.totalPrice * 100).toString().slice(0, 6))
+    const cartdet = Object.entries(req.body.data.cartDetails).map((e) => e[1])
+    const reqHeadersOrigin: string = req.headers.origin
     if (req.method === 'POST') {
         try {
             // Create Checkout Sessions from body params.
@@ -28,15 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 },
                 line_items: [
                     {
-                        // quantity: 1,
-                        // price_data: {
-                        //     currency: 'EUR',
-                        //     unit_amount: amount,
-                        //     product_data: {
-                        //         name: 'Costo totale',
-                        //         images: img,
-                        //     },
-                        // },
                         name: 'Costo totale',
                         price: cartdet.id,
                         currency: 'EUR',
@@ -45,13 +31,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 ],
                 mode: 'payment',
-                success_url: `${req.headers.origin}/RisultatoPagamento?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${req.headers.origin}/CancelPagamento`,
+                success_url: `${reqHeadersOrigin}/RisultatoPagamento?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${reqHeadersOrigin}/CancelPagamento`,
             }
             //console.log('🚀 - file: cart.ts - line 48 - handler - params', params)
             const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params)
             res.status(200).json(checkoutSession)
-        } catch (err) {
+        } catch (err:unknown) {
             console.log('❌ Payment failed: ', err)
             res.status(500).json({ statusCode: 500, message: err })
         }

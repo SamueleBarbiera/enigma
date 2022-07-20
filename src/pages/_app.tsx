@@ -1,21 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import '../styles/globals.css'
 import * as config from '../content/config'
 import { CartProvider } from 'use-shopping-cart'
 import NextNProgress from 'nextjs-progressbar'
 import { SessionProvider } from 'next-auth/react'
-import { AppType } from 'next/dist/shared/lib/utils'
 import { Toaster } from 'react-hot-toast'
+import { AppProps } from 'next/app'
 
-export const myLoader = ({ src, width, quality }: any) => {
-    return `${src}?w=${width}&q=${quality || 50}`
-}
-
-const MyApp: AppType = ({ Component, pageProps: { session, ...pageProps } }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
         <SessionProvider session={pageProps.session}>
             <CartProvider
                 cartMode="checkout-session"
-                stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string}
+                stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
                 currency={config.CURRENCY}
             >
                 <NextNProgress
@@ -26,7 +24,6 @@ const MyApp: AppType = ({ Component, pageProps: { session, ...pageProps } }) => 
                     height={3}
                     showOnShallow={true}
                 />
-                <ToastContainer />
                 <Toaster />
                 <Component {...pageProps} />
             </CartProvider>

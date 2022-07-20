@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
+        "allowJs": false,
+        "skipLibCheck": false,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noEmit": true,
@@ -33,11 +33,11 @@
         "useUnknownInCatchVariables": false,
         "baseUrl": ".",
         "paths": {
-            "@/components/*": ["./components/*"],
-            "@/pages/*": ["./pages/*"]
+            "@/components/*": ["./src/components/*"],
+            "@/pages/*": ["./src/pages/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/map/Map.tsx", "src/pages/index.tsx"],
+    "include": ["next-env.d.ts", "types/**/*.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
     "ts-node": {
         "compilerOptions": {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import confetti from 'canvas-confetti'
 
 export const shootFireworks = () => {
@@ -9,7 +10,7 @@ export const shootFireworks = () => {
         return Math.random() * (max - min) + min
     }
 
-    const interval:any = setInterval(function () {
+    const interval: NodeJS.Timer = setInterval(function () {
         const timeLeft = animationEnd - Date.now()
 
         if (timeLeft <= 0) {
@@ -17,6 +18,7 @@ export const shootFireworks = () => {
         }
 
         const particleCount = 50 * (timeLeft / duration)
+
         // since particles fall down, start a bit higher than random
         confetti(
             Object.assign({}, defaults, {

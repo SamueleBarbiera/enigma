@@ -1,12 +1,9 @@
 import { Fragment, useState } from 'react'
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import PropTypes from 'prop-types'
 import SigninPopupModal from './SigninPopupModal'
 import { Menu, Transition } from '@headlessui/react'
-
 import { HeartIcon, HomeIcon, LogoutIcon, PlusIcon, UserIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
@@ -33,16 +30,16 @@ const menuItems = [
   },
 ]
 
-const Layout = ({ children = null }) => {
-  const router = useRouter()
+interface Props {
+  children: unknown[Node, Function],
+}
 
-  const [showModal, setShowModal] = useState(false)
-
+const Layout = ({ children }: Props) => {
+  const [showModal, setShowModal] = useState<boolean>(false)
   const user = null
   const isLoadingUser = false
-
   const openModal = () => setShowModal(true)
-  const closeModal = () => setShowModal(false)
+  const closeModal: Function = () => setShowModal(false)
 
   return (
     <>
@@ -76,10 +73,10 @@ const Layout = ({ children = null }) => {
                   <Menu as="div" className="relative z-50">
                     <Menu.Button className="group flex items-center space-x-px">
                       <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                        {(user as any)?.image ? (
+                        {user?.image ? (
                           <Image
-                            src={(user as any)?.image}
-                            alt={(user as any)?.name || 'Avatar'}
+                            src={user?.image}
+                            alt={user?.name}
                             layout="fill"
                           />
                         ) : (
@@ -100,10 +97,10 @@ const Layout = ({ children = null }) => {
                       <Menu.Items className="absolute right-0 mt-1 w-72 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="mb-2 flex items-center space-x-2 py-4 px-4">
                           <div className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                            {(user as any)?.image ? (
+                            {user?.image ? (
                               <Image
-                                src={(user as any)?.image}
-                                alt={(user as any)?.name || 'Avatar'}
+                                src={user?.image}
+                                alt={user?.name}
                                 layout="fill"
                               />
                             ) : (
@@ -111,8 +108,8 @@ const Layout = ({ children = null }) => {
                             )}
                           </div>
                           <div className="flex flex-col truncate">
-                            <span>{(user as any)?.name}</span>
-                            <span className="text-sm text-gray-500">{(user as any)?.email}</span>
+                            <span>{user?.name}</span>
+                            <span className="text-sm text-gray-500">{user?.email}</span>
                           </div>
                         </div>
                         <div className="py-2">
@@ -166,10 +163,6 @@ const Layout = ({ children = null }) => {
       </div>
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 }
 
 export default Layout

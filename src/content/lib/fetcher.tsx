@@ -1,10 +1,5 @@
-export async function fetcher(url: string, options = {}) {
-    let res
-    if (!options) {
-        res = await fetch(url.toString())
-    } else {
-        res = await fetch(url.toString(), options)
-    }
-    const data = await res.json()
+export async function fetcher(url: RequestInfo, options: object = {}) {
+    const res: Response = await fetch(url, options)
+    const data: unknown = await res.json()
     return data
 }

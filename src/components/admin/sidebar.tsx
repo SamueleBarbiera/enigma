@@ -8,10 +8,11 @@ import {
     XIcon,
 } from '@heroicons/react/outline'
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
-export default function Sidebar({ children }: any) {
+
+export default function Sidebar({ children }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const router = useRouter()
 

@@ -1,29 +1,27 @@
 /* eslint-disable no-control-regex */
 /* eslint-disable no-unused-vars */
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
-export default function LoginForm({ providers }: any) {
-    const {data:session} = useSession()
-
+export default function LoginForm({ providers }: unknown) {
     return (
         <>
             <div className="flex h-screen flex-col justify-center bg-beige-400 px-6 py-4">
                 <div className=" sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-2xl bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-                       
-                                <h1 className='font-semibold text-4xl justify-center align-center mx-auto'>Accedi</h1>
+
+                        <h1 className='font-semibold text-4xl justify-center align-center mx-auto'>Accedi</h1>
                         <div className="mt-0">
                             <div className="mt-0 grid grid-cols-2 gap-2">
                                 {providers &&
                                     Object.values(providers).map((providers) => (
-                                        <div key={(providers as any).name}>
+                                        <div key={(providers ).name}>
                                             {(() => {
-                                                if ((providers as any).name == 'Google') {
+                                                if ((providers ).name == 'Google') {
                                                     return (
                                                         <button
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn((providers as any).id)
+                                                                signIn((providers ).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
@@ -33,12 +31,12 @@ export default function LoginForm({ providers }: any) {
                                                             </svg>
                                                         </button>
                                                     )
-                                                } else if ((providers as any).name == 'Facebook') {
+                                                } else if ((providers ).name == 'Facebook') {
                                                     return (
                                                         <button disabled
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
-                                                                signIn((providers as any).id)
+                                                                signIn((providers ).id)
                                                             }}
                                                         >
                                                             <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">

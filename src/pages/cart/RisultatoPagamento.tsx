@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import useSWR from 'swr'
@@ -17,7 +17,7 @@ const RisultatoPagamento: NextPage = () => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
     const { data, error } = useSWR(() => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null), fetchGetJSON)
-    const {data:session, status} = useSession()
+    const { data: session, status } = useSession()
 
     useEffect(() => {
         if (data) {
@@ -68,10 +68,10 @@ const RisultatoPagamento: NextPage = () => {
 }
 export default RisultatoPagamento
 
-export async function getServerSideProps(ctx: any) {
+export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user == {} && (session as any).user.email === '') {
+    if (!session!.user  && session!.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

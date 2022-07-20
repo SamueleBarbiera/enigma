@@ -1,13 +1,12 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
+
 /* eslint-disable no-unused-vars */
-import { ChartBarIcon, CursorClickIcon, RefreshIcon, ShieldCheckIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { RefreshIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
-import { MdOutlineShoppingBag, MdOutlineSell } from 'react-icons/md'
+import { MdOutlineShoppingBag } from 'react-icons/md'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { Fragment, useState, useEffect } from 'react'
-import { myLoader } from '../../pages/_app'
-import { BiTrendingUp, BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
+import { Fragment, useState } from 'react'
+import { BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart'
 import CartSummary from '../cart/CartSummary'
@@ -19,12 +18,13 @@ const navigation = {
     ],
 }
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
+
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const {data:session, status} = useSession()
+    const { data: session, status } = useSession()
     const { cartCount } = useShoppingCart()
 
     return (
@@ -103,9 +103,9 @@ export default function Header() {
                                             {/* Flyout menus */}
                                             <Popover.Group className="inset-x-0 bottom-0 px-4">
                                                 <div className="flex h-full items-center justify-between space-x-8">
-                                                    <a key={navigation?.pages[1]?.name} href={navigation?.pages[1]?.href} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
-                                                        <p className="items-start">{navigation?.pages[1]?.name} </p>
-                                                        <p className="items-end">{navigation?.pages[1]?.icon}</p>
+                                                    <a key={navigation.pages[1]?.name} href={navigation.pages[1]?.href} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
+                                                        <p className="items-start">{navigation.pages[1]?.name} </p>
+                                                        <p className="items-end">{navigation.pages[1]?.icon}</p>
                                                     </a>
                                                 </div>
                                             </Popover.Group>
@@ -129,7 +129,7 @@ export default function Header() {
                                                 {session ? (
                                                     <div className="mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
-                                                            {({ open }: any) => (
+                                                            {({ open }) => (
                                                                 <>
                                                                     <Popover.Button
                                                                         className={classNames(
@@ -155,10 +155,10 @@ export default function Header() {
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
-                                                                                        <img src={session!.user!.image! as any} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
+                                                                                        <img src={session.user!.image!} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
                                                                                     </div>
-                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session!.user!.name}</p>
-                                                                                    <p>{session!.user!.email}</p>
+                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session.user!.name}</p>
+                                                                                    <p>{session.user!.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                                         onClick={() => signOut({ redirect: true })}
@@ -173,7 +173,7 @@ export default function Header() {
                                                             )}
                                                         </Popover>
                                                     </div>
-                                                ) : status==='loading' ? (
+                                                ) : status === 'loading' ? (
                                                     <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
                                                     <button
@@ -186,7 +186,7 @@ export default function Header() {
                                                 {/* Cart */}
                                                 <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
                                                     <Popover className="relative">
-                                                        {({ open }: any) => (
+                                                        {({ open }) => (
                                                             <>
                                                                 <Popover.Button
                                                                     className={classNames(

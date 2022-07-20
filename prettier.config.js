@@ -2,6 +2,7 @@ module.exports = {
     semi: false,
     singleQuote: true,
     printWidth: 120,
-    arrowParens: 'always',
+    arrowParens:
+        'always',
     tabWidth: 4,
 }
