@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer'
 import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import Image from 'next/image'
 
 const products = [
     {
@@ -75,7 +76,7 @@ export default function RecapOrdini(props: InferGetServerSidePropsType<typeof ge
                                     <div className="gap-y-12 py-6 px-4 smd:px-6 md:gap-x-8 xmd:grid xmd:grid-cols-12 xmd:p-8">
                                         <div className="smd:flex xmd:col-span-7">
                                             <div className="aspect-w-1 aspect-h-1 w-full flex-shrink-0 overflow-hidden rounded-lg smd:aspect-none smd:h-40 smd:w-40">
-                                                <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center smd:h-full smd:w-full" />
+                                                <Image src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center smd:h-full smd:w-full" />
                                             </div>
 
                                             <div className="mt-6 smd:mt-0 smd:ml-6">

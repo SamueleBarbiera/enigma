@@ -6,6 +6,7 @@ import { useState, Fragment } from 'react'
 import Link from 'next/link'
 import useSWR from 'swr'
 import { fetcher } from '../../content/lib/fetcher'
+import Image from 'next/image'
 
 const Filtri = [
     {
@@ -287,15 +288,15 @@ const Products = ({ products }) => {
                                                 </div>
                                             ) : (
                                                 <Link href={`/Prodotti/${product.slug}`} key={product.slug}>
-                                                    <img
+                                                    <Image
                                                         className="grid h-auto w-full rounded-xl border shadow-md"
                                                         src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
                                                         alt={'not found'}
                                                     />
                                                 </Link>
                                             )}
-                                            {/* {product.image.data.map((image: any) => (
-                                                    <img className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
+                                            {/* {product.image.data.map((image) => (
+                                                    <Image className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
                                                 ))} 
                                             */}
                                         </div>

@@ -6,6 +6,7 @@ import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import Image from 'next/image'
 
 const subtotal = '210.00'
 const discount = { code: 'ENIGMA', amount: '24.00' }
@@ -84,7 +85,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                                     <ul role="list" className="block overflow-y-auto px-6">
                                         {products.map((product) => (
                                             <li key={product.id} className="flex space-x-6 py-6">
-                                                <img src={product.imageSrc} alt={product.imageAlt} className="h-40 w-40 flex-none rounded-md bg-beige-200 object-cover object-center" />
+                                                <Image src={product.imageSrc} alt={product.imageAlt} className="h-40 w-40 flex-none rounded-md bg-beige-200 object-cover object-center" />
                                                 <div className="flex flex-col justify-between space-y-4">
                                                     <div className="space-y-1 text-sm font-medium">
                                                         <h3 className="text-beige-900">{product.name}</h3>
@@ -158,7 +159,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                     <ul role="list" className="flex-auto  overflow-y-auto px-6">
                         {products.map((product) => (
                             <li key={product.id} className="flex space-x-6 py-6">
-                                <img src={product.imageSrc} alt={product.imageAlt} className="h-40 w-40 flex-none rounded-md bg-beige-200 object-cover object-center" />
+                                <Image src={product.imageSrc} alt={product.imageAlt} className="h-40 w-40 flex-none rounded-md bg-beige-200 object-cover object-center" />
                                 <div className="flex flex-col justify-between space-y-4">
                                     <div className="space-y-1 text-sm font-medium">
                                         <h3 className="text-beige-900">{product.name}</h3>
@@ -243,7 +244,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                             <span className="sr-only">Pay with Satispay</span>
 
                             <a className="h-5 w-auto">
-                                <img src={'./Logo_Satispay.png'} className="h-5 w-auto" />
+                                <Image src={'./Logo_Satispay.png'} className="h-5 w-auto" />
                             </a>
                         </button>
 
@@ -444,7 +445,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
             </main>
             <section>
                 <div className="product">
-                    <img src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
+                    <Image src="https://i.imgur.com/EHyR2nP.png" alt="The cover of Stubborn Attachments" />
                     <div className="description">
                         <h3>Stubborn Attachments</h3>
                         <h5>$20.00</h5>

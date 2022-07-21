@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
 
 export default function addProducts() {
-  const createProduct = (data: AxiosRequestConfig<unknown> | undefined) => axios.get('/api/data/createProduct', data),
+  const createProduct = (data: AxiosRequestConfig<unknown> | undefined) => axios.get('/api/data/createProduct', data)
 
   return (
     <Layout>
@@ -15,12 +15,7 @@ export default function addProducts() {
           <ProductList
             buttonText="Add Product"
             redirectPath="/products"
-            onSubmit={createProduct} text={''} active={false} initialValues={{
-              image: '',
-              name: '',
-              description: '',
-              price: 0
-            }}          />
+            onSubmit={createProduct} />
         </div>
       </div>
     </Layout>

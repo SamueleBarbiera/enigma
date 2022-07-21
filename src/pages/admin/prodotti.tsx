@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/outline'
 import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/sidebar'
+import Image from 'next/image'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -57,12 +58,7 @@ const currentFile = {
 
 export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
     console.log('🚀 ~ file: prodotti.tsx ~ line 71 ~ Page ~ session', session)
-    const { status, data: session } = useSession()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-    if (status === 'loading') {
-        return 'Loading...'
-    }
 
     return (
         <>
@@ -116,7 +112,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                             <div>
                                                 <Menu.Button className="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2">
                                                     <span className="sr-only">Open user menu</span>
-                                                    <img
+                                                    <Image
                                                         className="h-8 w-8 rounded-full"
                                                         src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
                                                         alt=""
@@ -176,7 +172,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                             'group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100'
                                                         )}
                                                     >
-                                                        <img src={file.source} alt="" className={classNames(file.current ? '' : 'group-hover:opacity-75', 'pointer-events-none object-cover')} />
+                                                        <Image src={file.source} alt="" className={classNames(file.current ? '' : 'group-hover:opacity-75', 'pointer-events-none object-cover')} />
                                                         <button type="button" className="absolute inset-0 focus:outline-none">
                                                             <span className="sr-only">View details for {file.name}</span>
                                                         </button>
@@ -195,7 +191,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                 <div className="space-y-6 pb-16">
                                     <div>
                                         <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">
-                                            <img src={currentFile.source} alt="" className="object-cover" />
+                                            <Image src={currentFile.source} alt="" className="object-cover" />
                                         </div>
                                         <div className="mt-4 flex items-start justify-between">
                                             <div>
@@ -244,7 +240,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                             {currentFile.sharedWith.map((person) => (
                                                 <li key={person.id} className="flex items-center justify-between py-3">
                                                     <div className="flex items-center">
-                                                        <img src={person.imageUrl} alt="" className="h-8 w-8 rounded-full" />
+                                                        <Image src={person.imageUrl} alt="" className="h-8 w-8 rounded-full" />
                                                         <p className="ml-4 text-sm font-medium text-gray-900">{person.name}</p>
                                                     </div>
                                                     <button
@@ -291,7 +287,8 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
 
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+
     console.log('🚀 ~ file: prodotti.tsx ~ line 387 ~ getServerSideProps ~ session', session)
 
     if (!session || session.user?.role !== 'ADMIN') {

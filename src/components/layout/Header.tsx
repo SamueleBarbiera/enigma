@@ -155,7 +155,7 @@ export default function Header() {
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
-                                                                                        <img src={session.user!.image!} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
+                                                                                        <Image src={session.user!.image!} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
                                                                                     </div>
                                                                                     <p className="font-semibold text-beige-900 contrast-150">{session.user!.name}</p>
                                                                                     <p>{session.user!.email}</p>

@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header'
 import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import Image from 'next/image'
 
 const orders = [
     {
@@ -167,7 +168,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                 <li key={product.id} className="p-6">
                                                     <div className="flex items-center">
                                                         <div className="mr-4 -ml-3 h-32 w-32 flex-shrink-0 overflow-hidden rounded-xl bg-beige-100 sm:ml-2">
-                                                            <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
+                                                            <Image src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
                                                         </div>
                                                         <div className="ml-4 flex-1 text-sm">
                                                             <div className="font-medium text-beige-900 smd:flex smd:justify-between">

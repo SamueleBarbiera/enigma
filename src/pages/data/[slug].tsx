@@ -11,20 +11,19 @@ import { Fragment } from 'react'
 import { toast } from 'react-hot-toast'
 import Link from 'next/link'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
+import Image from 'next/image'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 export default function ProductPage(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    console.log('🚀 - file: [slug].tsx - line 22 - ProductPage - products', props)
     const products: InferGetServerSidePropsType<typeof getServerSideProps> = props.productsData[0]
-    console.log('🚀 - file: [slug].tsx - line 22 - ProductPage - products', products)
     const productsConsigliati = props.productsConsigliati[0]
-    console.log('🚀 - file: [slug].tsx - line 24 - ProductPage - productsConsigliati', props.productsConsigliati[0])
     const { addItem } = useShoppingCart()
-    delete products.dettagli[0].id
-    delete products.dettagli[0].__component
+    
 
     let colorsAvailable = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
     colorsAvailable = colorsAvailable.map(function (currentValue: string) {
@@ -37,9 +36,9 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
     const sizesAvailable = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === true)
     const sizesNOTAvailable = Object.keys(products.dettagli[1]).filter((k) => products.dettagli[1][k] === false)
     const router = useRouter()
-    const [selectedColor, setSelectedColor] = useState<any>(colorsAvailable)
+    const [selectedColor, setSelectedColor] = useState(colorsAvailable)
     console.log('🚀 - file: [slug].tsx - line 39 - ProductPage - selectedColor', selectedColor)
-    const [selectedSize, setSelectedSize] = useState<any>(sizesAvailable)
+    const [selectedSize, setSelectedSize] = useState(sizesAvailable)
     console.log('🚀 - file: [slug].tsx - line 41 - ProductPage - selectedSize', selectedSize)
     const notify = (products) => {
         toast.success(
@@ -88,7 +87,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                                             <>
                                                 <span className="sr-only">{products.name}</span>
                                                 <span className="absolute inset-0 overflow-hidden rounded-md">
-                                                    <img
+                                                    <Image
                                                         className="h-full w-full rounded-lg object-cover object-center shadow-xl"
                                                         src={process.env.NEXT_PUBLIC_API_URL + '' + image.url}
                                                         alt={'not found'}
@@ -108,7 +107,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                         <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
                             {products.image.map((image) => (
                                 <Tab.Panel key={image.id}>
-                                    <img
+                                    <Image
                                         className="h-min w-min rounded-lg border-4 border-beige-600 object-cover object-center shadow-xl "
                                         src={process.env.NEXT_PUBLIC_API_URL + '' + image.url}
                                         alt={'not found'}
@@ -328,7 +327,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                     <a className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                             <Link href={`/Prodotti/${productsConsigliati.slug}`} key={productsConsigliati.slug}>
-                                <img className="grid h-auto w-full rounded-xl border shadow-md" src={process.env.NEXT_PUBLIC_API_URL + '' + productsConsigliati.image.data[0].url} alt={'not found'} />
+                                <Image className="grid h-auto w-full rounded-xl border shadow-md" src={process.env.NEXT_PUBLIC_API_URL + '' + productsConsigliati.image.data[0].url} alt={'not found'} />
                             </Link>
                         </div>
 
@@ -359,19 +358,19 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
-        const resRelated = await axios.get`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
+        const resRelated: AxiosResponse = await axios.get(`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
         const products: object[] = await resRelated.data
-        const resProdCons = await axios.get
+        const resProdCons: AxiosResponse = await axios.get(
             `/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
         )
-const productsConsigliati: object[] = await resProdCons.data
-console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
+        const productsConsigliati: object[] = await resProdCons.data
+        console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
 
-return {
-    props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
-}
+        return {
+            props: { productsData: products, productsConsigliati: productsConsigliati, revalidate: 1 }, // Next.js will attempt to re-generate the page, When a request comes in,At most once every second
+        }
     } catch (error) {
-    console.log('🚀 - [slug].tsx - line 259 - ERROR ', error)
-    return { notFound: true }
-}
+        console.log('🚀 - [slug].tsx - line 259 - ERROR ', error)
+        return { notFound: true }
+    }
 }

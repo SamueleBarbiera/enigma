@@ -18,6 +18,7 @@ import {
     SearchIcon,
 } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import Image from 'next/image'
 
 const user = {
     name: 'Whitney Francis',
@@ -71,7 +72,7 @@ export default function Contact() {
                                 <div className="relative flex h-16 items-center justify-between border-b border-gray-200">
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0">
-                                            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=violet&shade=500" alt="Workflow" />
+                                            <Image className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=violet&shade=500" alt="Workflow" />
                                         </div>
 
                                         {/* Links section */}
@@ -135,7 +136,7 @@ export default function Contact() {
                                                 <div>
                                                     <Menu.Button className="flex rounded-full bg-gray-50 text-sm text-white focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                                                         <span className="sr-only">Open user menu</span>
-                                                        <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                                                        <Image className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
                                                     </Menu.Button>
                                                 </div>
                                                 <Transition
@@ -182,7 +183,7 @@ export default function Contact() {
                                 <div className="border-t border-gray-200 pt-4 pb-3">
                                     <div className="flex items-center px-5">
                                         <div className="flex-shrink-0">
-                                            <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                                            <Image className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
                                         </div>
                                         <div className="ml-3">
                                             <div className="text-base font-medium text-gray-800">{user.name}</div>
@@ -228,7 +229,7 @@ export default function Contact() {
                                         <div className="flex items-center py-5 px-4 sm:py-6 sm:px-0">
                                             <div className="flex min-w-0 flex-1 items-center">
                                                 <div className="flex-shrink-0">
-                                                    <img className="h-12 w-12 rounded-full group-hover:opacity-75" src={candidate.imageUrl} alt="" />
+                                                    <Image className="h-12 w-12 rounded-full group-hover:opacity-75" src={candidate.imageUrl} alt="" />
                                                 </div>
                                                 <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                                     <div>
