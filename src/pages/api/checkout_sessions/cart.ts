@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             //console.log('🚀 - file: cart.ts - line 48 - handler - params', params)
             const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params)
             res.status(200).json(checkoutSession)
-        } catch (err:unknown) {
+        } catch (err: unknown) {
             console.log('❌ Payment failed: ', err)
             res.status(500).json({ statusCode: 500, message: err })
         }

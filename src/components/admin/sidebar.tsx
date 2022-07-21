@@ -2,11 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactNode, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import {
-    PhotographIcon,
-    UserGroupIcon,
-    XIcon,
-} from '@heroicons/react/outline'
+import { PhotographIcon, UserGroupIcon, XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 
 function classNames(...classes: string[]) {

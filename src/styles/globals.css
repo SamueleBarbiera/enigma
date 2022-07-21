@@ -7,9 +7,8 @@ html,
 body {
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-    @apply overflow-x-hidden transition ease-in-out duration-200 ;
+    @apply overflow-x-hidden transition duration-200 ease-in-out;
     scrollbar-width: thin;
-
 }
 
 .instructions {
@@ -38,27 +37,27 @@ body {
 }
 
 .notificationWrapper {
-  @apply flex flex-row items-center justify-between w-96 bg-gray-900 px-4 py-6 text-white shadow-2xl hover:shadow-none transform-gpu translate-y-0 hover:translate-y-1 rounded-xl relative transition-all duration-500 ease-in-out;
-} 
+    @apply relative flex w-96 translate-y-0 transform-gpu flex-row items-center justify-between rounded-xl bg-gray-900 px-4 py-6 text-white shadow-2xl transition-all duration-500 ease-in-out hover:translate-y-1 hover:shadow-none;
+}
 
 .iconWrapper {
-  @apply text-xl;
+    @apply text-xl;
 }
 
 .contentWrapper {
-  @apply flex flex-col items-start justify-center ml-4 cursor-default;
+    @apply ml-4 flex cursor-default flex-col items-start justify-center;
 }
 
 .contentWrapper h1 {
-  @apply text-base text-gray-200 font-semibold leading-none tracking-wider;
+    @apply text-base font-semibold leading-none tracking-wider text-gray-200;
 }
 
 .contentWrapper p {
-  @apply text-sm text-gray-400 mt-2 leading-relaxed tracking-wider;
+    @apply mt-2 text-sm leading-relaxed tracking-wider text-gray-400;
 }
 
 .closeIcon {
-  @apply absolute top-2 right-2 cursor-pointer text-lg;
+    @apply absolute top-2 right-2 cursor-pointer text-lg;
 }
 
 input[type='text'],
@@ -82,14 +81,14 @@ label {
 }
 
 .errmsg {
-    @apply bg-red-200  text-red-700 transition ease-in-out duration-200 rounded-lg font-medium mb-4 p-3;
+    @apply mb-4  rounded-lg bg-red-200 p-3 font-medium text-red-700 transition duration-200 ease-in-out;
 }
 button:disabled,
 button[disabled] {
     border: 0px solid #999999;
     background-color: #cccccc;
     color: #666666;
-    @apply hover:bg-gray-300 transition ease-in-out duration-200 hover:cursor-not-allowed;
+    @apply transition duration-200 ease-in-out hover:cursor-not-allowed hover:bg-gray-300;
 }
 .line {
     display: inline-block;

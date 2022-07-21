@@ -245,7 +245,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                             <span className="sr-only">Pay with Satispay</span>
 
                             <div className="h-5 w-auto">
-                                <Image alt='' src={'./Logo_Satispay.png'} className="h-5 w-auto" />
+                                <Image alt="" src={'./Logo_Satispay.png'} className="h-5 w-auto" />
                             </div>
                         </button>
 
@@ -468,7 +468,7 @@ export default Checkout
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user!.email === '') {
+    if (!session!.user && session!.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

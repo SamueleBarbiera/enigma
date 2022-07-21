@@ -23,12 +23,17 @@ function CartSummary() {
         return +parseFloat(value).toFixed(dp)
     }
 
+    interface ResFetch extends Response {
+        id: string
+    }
+
     const handleCheckout: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault()
         setLoading(true)
         setErrorMessage('')
 
-        const response: Response = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, { totalPrice })
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const response: ResFetch = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, { totalPrice })
 
         if (response.status > 399) {
             console.error(response.statusText)
@@ -37,7 +42,8 @@ function CartSummary() {
             return
         }
 
-        redirectToCheckout({ sessionId: response.id })
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        redirectToCheckout(response.id)
     }
 
     useEffect(() => {
@@ -56,7 +62,6 @@ function CartSummary() {
                 setError(err)
                 console.log('🚀 ERROR FETCHING', err)
             }
-
         }
         fetchData()
         setLoading(false)
@@ -96,11 +101,7 @@ function CartSummary() {
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
-                                                                    <Image
-                                                                        className="h-full w-full rounded-md object-cover object-center shadow-md"
-                                                                        src={product.image}
-                                                                        alt={'not found'}
-                                                                    />
+                                                                    <Image className="h-full w-full rounded-md object-cover object-center shadow-md" src={product.image} alt={'not found'} />
                                                                 </div>
                                                             </Link>
                                                             <div className="ml-4 flex flex-1 flex-col">
@@ -148,11 +149,7 @@ function CartSummary() {
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
-                                                                    <Image
-                                                                        className="h-full w-full rounded-md object-cover object-center shadow-md"
-                                                                        src={product.image}
-                                                                        alt={'not found'}
-                                                                    />
+                                                                    <Image className="h-full w-full rounded-md object-cover object-center shadow-md" src={product.image} alt={'not found'} />
                                                                 </div>
                                                             </Link>
                                                             <div className="ml-4 flex flex-1 flex-col">
@@ -236,7 +233,7 @@ function CartSummary() {
                                             <input
                                                 onChange={(_e) => setPayShopChecked(!PayShopChecked)}
                                                 type="checkbox"
-                                                className="transiction border-2 rounded border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                                className="transiction rounded border-2 border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
                                             />
                                             <span className="ml-4">Pagerò al negozio fisico</span>
                                         </label>
@@ -244,7 +241,7 @@ function CartSummary() {
                                             <input
                                                 onChange={(_e) => setRetirePkgShopChecked(!RetirePkgShopChecked)}
                                                 type="checkbox"
-                                                className="transiction border-2 rounded border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
+                                                className="transiction rounded border-2 border-beige-500 text-beige-400 duration-100 ease-in-out focus:ring-beige-600 "
                                             />
                                             <span className="ml-4">Ritirerò il pacco al negozio fisico</span>
                                         </label>

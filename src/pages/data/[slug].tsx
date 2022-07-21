@@ -24,7 +24,6 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
     const productsConsigliati = props.productsConsigliati[0]
     const { addItem } = useShoppingCart()
 
-
     let colorsAvailable = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
     colorsAvailable = colorsAvailable.map(function (currentValue: string) {
         if (currentValue === 'white' || currentValue === 'black') {
@@ -49,8 +48,9 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
             {
                 icon: <CheckCircleIcon className="h-7 w-7 flex-shrink-0 text-green-500" aria-hidden="true" />,
                 position: 'top-center',
-                duration: 1500
-            })
+                duration: 1500,
+            }
+        )
     }
 
     return router.isFallback ? (
@@ -82,7 +82,10 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                         <div className="mx-auto mt-6  w-full max-w-full sm:block lg:max-w-none">
                             <Tab.List className="grid grid-cols-4 gap-6">
                                 {products.image.map((image) => (
-                                    <Tab key={image.id} className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4">
+                                    <Tab
+                                        key={image.id}
+                                        className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                                    >
                                         {({ selected }) => (
                                             <>
                                                 <span className="sr-only">{products.name}</span>
@@ -259,7 +262,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                                         </span>
                                     </Disclosure.Button>
                                 </h3>
-                                <Disclosure.Panel as="div" className="prose prose-sm duraiton-200 pb-6 transition ease-in-out">
+                                <Disclosure.Panel as="div" className="prose-sm duraiton-200 prose pb-6 transition ease-in-out">
                                     <p className="text-md font-normal tracking-tight text-beige-700" key={products.descrizione}>
                                         {products.descrizione}
                                     </p>
@@ -355,14 +358,11 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
     )
 }
 
-
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
         const resRelated: AxiosResponse = await axios.get(`/api/variantetaglias?populate=*&filters[slug][$eq]=${ctx.params.slug}`)
         const products: object[] = await resRelated.data
-        const resProdCons: AxiosResponse = await axios.get(
-            `/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`
-        )
+        const resProdCons: AxiosResponse = await axios.get(`/api/variantetaglias?populate=*&filters[categoria][name][$eq]=${products[0].categoria.data.name}&pagination[page]=1&pagination[pageSize]=4`)
         const productsConsigliati: object[] = await resProdCons.data
         console.log('🚀 - file: [slug].tsx - line 370 - getServerSideProps - resProdCons.data', resProdCons.data)
 

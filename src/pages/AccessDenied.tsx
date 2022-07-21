@@ -7,7 +7,7 @@ function AccessDenied() {
     return (
         <>
             <Head>
-                <title>🔐 403  🔐</title>
+                <title>🔐 403 🔐</title>
                 <link rel="icon" href="/question-solid.svg" />
                 <meta charSet="utf-8" className="next-head" />
             </Head>

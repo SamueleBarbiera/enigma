@@ -31,7 +31,7 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
         try {
             const { image, name, description, price } = req.body
 
-            const product:Product[] = await prisma.product.create({
+            const product: Product[] = await prisma.product.create({
                 data: {
                     image,
                     name,

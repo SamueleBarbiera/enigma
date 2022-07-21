@@ -141,7 +141,10 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                         <div className="py-1">
                                                             <Menu.Item>
                                                                 {({ active }) => (
-                                                                    <Link href={order.href} className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}>
+                                                                    <Link
+                                                                        href={order.href}
+                                                                        className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
+                                                                    >
                                                                         View
                                                                     </Link>
                                                                 )}
@@ -229,7 +232,7 @@ export default AcquistiEffettuati
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user!.email === '') {
+    if (!session!.user && session!.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

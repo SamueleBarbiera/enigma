@@ -5,7 +5,7 @@ export async function fetchGetJSON(url: string) {
         const res: AxiosResponse = await axios.get(url)
         const data: unknown = await res.data
         return data
-    } catch (err:AxiosError) {
+    } catch (err: AxiosError) {
         if (err instanceof Error) {
             throw new Error(err.message)
         }
@@ -13,7 +13,7 @@ export async function fetchGetJSON(url: string) {
     }
 }
 
-export async function fetchPostJSON(url: string, data: object = {}, amount?: number | undefined) {
+export async function fetchPostJSON(url: string, data: object = {}, amount?: number) {
     try {
         // Default options are marked with *
         const res: Response = await fetch(url, {
@@ -28,7 +28,7 @@ export async function fetchPostJSON(url: string, data: object = {}, amount?: num
             referrerPolicy: 'no-referrer', // no-referrer, *client
             body: JSON.stringify({ data, amount }), // body data type must match "Content-Type" header
         })
-        
+
         return res.json()
     } catch (err) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

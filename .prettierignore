@@ -1,3 +1,7 @@
 .cache
 package-lock.json
 node_modules/
+.next/
+next/
+ui/
+thunder-tests/

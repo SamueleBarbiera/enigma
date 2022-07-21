@@ -7,7 +7,6 @@ import Head from 'next/head'
 import prisma from 'src/content/lib/prisma'
 import { Product } from '@prisma/client'
 
-
 const Prodotti = ({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     return (
         <>
@@ -27,12 +26,11 @@ export default Prodotti
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
-    console.log('🚀 - file: index.tsx - line 28 - getServerSideProps - session', session!.user!.email)
+    console.log('🚀 - file: index.tsx - line 28 - getServerSideProps - session', session!.user.email)
 
     const products: Product[] = await prisma.product.findMany()
     return {
         props: { products: products },
         redirect: false,
     }
-
 }

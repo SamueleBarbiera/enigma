@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio'), require("daisyui")],
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio'), require('daisyui')],
     content: ['./src/**/*.{js,ts,jsx,tsx}'],
     daisyui: {
         fontFamily: {
-          poppins: ["Poppins", "sans-serif"],
+            poppins: ['Poppins', 'sans-serif'],
         },
-      },
+    },
     theme: {
         container: {
             center: true,

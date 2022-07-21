@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable no-control-regex */
-/* eslint-disable no-unused-vars */
+
 import { signIn } from 'next-auth/react'
 import { ReactNode } from 'react'
 
 interface Props {
     providers?: ReactNode
-    id: string,
+    id: string
     name: string
 }
 
@@ -15,8 +16,7 @@ export default function LoginForm({ providers }: Props) {
             <div className="flex h-screen flex-col justify-center bg-beige-400 px-6 py-4">
                 <div className=" sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="rounded-2xl bg-beige-100 py-8 px-[1.9rem] shadow-lg  sm:py-10">
-
-                        <h1 className='font-semibold text-4xl justify-center align-center mx-auto'>Accedi</h1>
+                        <h1 className="align-center mx-auto justify-center text-4xl font-semibold">Accedi</h1>
                         <div className="mt-0">
                             <div className="mt-0 grid grid-cols-2 gap-2">
                                 {providers &&
@@ -38,9 +38,10 @@ export default function LoginForm({ providers }: Props) {
                                                             </svg>
                                                         </button>
                                                     )
-                                                } else if ((providers).name == 'Facebook') {
+                                                } else if (providers.name == 'Facebook') {
                                                     return (
-                                                        <button disabled
+                                                        <button
+                                                            disabled
                                                             className="text-medium inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                             onClick={() => {
                                                                 signIn(providers.id)

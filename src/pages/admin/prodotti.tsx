@@ -1,19 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-import { useSession } from 'next-auth/react'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
-import { getSession } from 'next-auth/react'
-import { Fragment, useState } from 'react'
+import { Fragment, Key, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import {
-    HeartIcon,
-    MenuAlt2Icon,
-    PlusSmIcon as PlusSmIconOutline,
-} from '@heroicons/react/outline'
+import { HeartIcon, MenuAlt2Icon, PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
 import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/sidebar'
 import Image from 'next/image'
 import Link from 'next/link'
+import { unstable_getServerSession } from 'next-auth/next'
+import { authOptions } from '../api/auth/[...nextauth]'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -30,31 +25,35 @@ const files = [
         source: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
         current: true,
     },
-    // More files...
 ]
-const currentFile = {
-    name: 'IMG_4985.HEIC',
-    size: '3.9 MB',
-    source: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    information: {
-        'Uploaded by': 'Marie Culver',
-        Created: 'June 8, 2020',
-        'Last modified': 'June 8, 2020',
-        Dimensions: '4032 x 3024',
-        Resolution: '72 x 72',
+
+const currentFile: CntFile[] = [
+    {
+        id: 'ccsdv9v0sdvv9ds0vb9dsv',
+        name: 'IMG_4985.HEIC',
+        size: '3.9 MB',
+        source: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
+        dimensions: '4032 x 3024',
+        resolution: '72 x 72',
     },
-    sharedWith: [
-        {
-            id: 1,
-            name: 'Aimee Douglas',
-            imageUrl: 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=1024&h=1024&q=80',
-        },
-        {
-            id: 2,
-            name: 'Andrea McMillan',
-            imageUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=oilqXxSqey&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    ],
+
+    {
+        id: 'ascasasascqcw21ec',
+        name: 'IMG_4985.HEIC',
+        size: '3.9 MB',
+        source: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
+        dimensions: '4032 x 3024',
+        resolution: '72 x 72',
+    },
+]
+
+interface CntFile {
+    id: string
+    name: string
+    size: string
+    source: string
+    dimensions: string
+    resolution: string
 }
 
 export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -132,7 +131,8 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                 <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                     {userNavigation.map((item) => (
                                                         <Menu.Item key={item.name}>
-                                                            {({ active }) => (
+                                                            {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
+                                                            {({ active }: any) => (
                                                                 <Link href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
                                                                     {item.name}
                                                                 </Link>
@@ -159,7 +159,6 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                         <div className="flex flex-1 items-stretch overflow-hidden">
                             <main className="flex-1 overflow-y-auto">
                                 <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
-
                                     {/* Gallery */}
                                     <section className="mt-8 pb-16" aria-labelledby="gallery-heading">
                                         <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -188,36 +187,39 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                             </main>
 
                             {/* Details sidebar */}
-                            <Linkside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white p-8 lg:block">
+                            <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white p-8 lg:block">
                                 <div className="space-y-6 pb-16">
-                                    <div>
-                                        <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">
-                                            <Image src={currentFile.source} alt="" className="object-cover" />
-                                        </div>
-                                        <div className="mt-4 flex items-start justify-between">
-                                            <div>
-                                                <h2 className="text-lg font-medium text-gray-900">
-                                                    <span className="sr-only">Details for </span>
-                                                    {currentFile.name}
-                                                </h2>
-                                                <p className="text-sm font-medium text-gray-500">{currentFile.size}</p>
+                                    {currentFile.map((info) => (
+                                        <div key={info.id}>
+                                            <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">
+                                                <Image src={info.source} alt="" className="object-cover" />
                                             </div>
-                                            <button
-                                                type="button"
-                                                className="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-beige-500"
-                                            >
-                                                <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                                                <span className="sr-only">Favorite</span>
-                                            </button>
+                                            <div className="mt-4 flex items-start justify-between">
+                                                <div>
+                                                    <h2 className="text-lg font-medium text-gray-900">
+                                                        <span className="sr-only">Details for </span>
+                                                        {info.name}
+                                                    </h2>
+                                                    <p className="text-sm font-medium text-gray-500">{info.size}</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="ml-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-beige-500"
+                                                >
+                                                    <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                                                    <span className="sr-only">Favorite</span>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    ))}
                                     <div>
                                         <h3 className="font-medium text-gray-900">Information</h3>
                                         <dl className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
-                                            {Object.keys(currentFile.information).map((key) => (
-                                                <div key={key} className="flex justify-between py-3 text-sm font-medium">
-                                                    <dt className="text-gray-500">{key}</dt>
-                                                    <dd className="text-gray-900">{currentFile.information[key]}</dd>
+                                            {currentFile.map((info) => (
+                                                <div key={info.id} className="flex justify-between py-3 text-sm font-medium">
+                                                    <dt className="text-gray-500">{info.id}</dt>
+                                                    <dd className="text-gray-900">{info.dimensions}</dd>
+                                                    <dd className="text-gray-900">{info.resolution}</dd>
                                                 </div>
                                             ))}
                                         </dl>
@@ -235,40 +237,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                             </button>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h3 className="font-medium text-gray-900">Shared with</h3>
-                                        <ul role="list" className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
-                                            {currentFile.sharedWith.map((person) => (
-                                                <li key={person.id} className="flex items-center justify-between py-3">
-                                                    <div className="flex items-center">
-                                                        <Image src={person.imageUrl} alt="" className="h-8 w-8 rounded-full" />
-                                                        <p className="ml-4 text-sm font-medium text-gray-900">{person.name}</p>
-                                                    </div>
-                                                    <button
-                                                        type="button"
-                                                        className="ml-6 rounded-md bg-white text-sm font-medium text-beige-600 hover:text-beige-500 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
-                                                    >
-                                                        Remove<span className="sr-only"> {person.name}</span>
-                                                    </button>
-                                                </li>
-                                            ))}
-                                            <li className="flex items-center justify-between py-2">
-                                                <button type="button" className="group -ml-1 flex items-center rounded-md bg-white p-1 focus:outline-none focus:ring-2 focus:ring-beige-500">
-                                                    <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
-                                                        <PlusSmIconSolid className="h-5 w-5" aria-hidden="true" />
-                                                    </span>
-                                                    <span className="ml-4 text-sm font-medium text-beige-600 group-hover:text-beige-500">Share</span>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
                                     <div className="flex">
-                                        <button
-                                            type="button"
-                                            className="flex-1 rounded-md border border-transparent bg-beige-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-beige-700 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
-                                        >
-                                            Download
-                                        </button>
                                         <button
                                             type="button"
                                             className="ml-3 flex-1 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-beige-500 focus:ring-offset-2"
@@ -286,13 +255,12 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
     )
 }
 
-
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
     console.log('🚀 ~ file: prodotti.tsx ~ line 387 ~ getServerSideProps ~ session', session)
 
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || session.user.role !== 'ADMIN') {
         return { redirect: { permanent: false, destination: '/' } }
     }
 

@@ -39,12 +39,10 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
             const fileName = nanoid()
             const ext = contentType.split('/')[1]
             const path = `${fileName}.${ext}`
-            const { data, error: uploadError } = await supabase.storage
-                .from(process.env.SUPABASE_STORAGE_BUCKET!)
-                .upload(path, decode(base64FileData), {
-                    contentType,
-                    upsert: true,
-                })
+            const { data, error: uploadError } = await supabase.storage.from(process.env.SUPABASE_STORAGE_BUCKET!).upload(path, decode(base64FileData), {
+                contentType,
+                upsert: true,
+            })
             if (uploadError) {
                 console.log(uploadError)
                 throw new Error('Image upload Failed!!')

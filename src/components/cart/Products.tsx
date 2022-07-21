@@ -1,5 +1,5 @@
 import { formatCurrencyString } from 'use-shopping-cart'
-import { ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
+import { ExclamationCircleIcon, RefreshIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
 import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
@@ -50,18 +50,33 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const Products = ({ products }) => {
+interface Product {
+    id: string
+    image: string
+    price: number
+    name: string | null
+    description: string | null
+    quantity: number | null
+    design: string | null
+    material: string | null
+    created_at: Date
+    updated_at: Date | null
+}
+
+interface ProductsProps {
+    products: Product[]
+}
+
+const Products = ({ products }: ProductsProps) => {
     const [mobileFiltriOpen, setMobileFiltriOpen] = useState<boolean>(false)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageIndex, setPageIndex] = useState<number>(1)
     const [order, setOrder] = useState<string>('DESC')
 
-    const { data, error, isValidating } = useSWR(
-        `/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
-        fetcher,
-        {
-            fallbackData: products,
-        }
-    )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { data, error, isValidating } = useSWR(`/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`, fetcher, {
+        fallbackData: products,
+    })
     console.log('🚀 Products.tsx - line 76 - fetchData', data)
 
     return (
@@ -269,10 +284,10 @@ const Products = ({ products }) => {
                         {/* Product grid */}
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
-                                {data.map((product) => (
-                                    <div className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
+                                {products.map((product: Product) => (
+                                    <div key={product.id} className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
-                                            {isValidating ? (
+                                            {/* {isValidating ? (
                                                 <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
                                                     <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
                                                         <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
@@ -286,16 +301,12 @@ const Products = ({ products }) => {
                                                         <p className="m-2 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine!</p>
                                                     </div>
                                                 </div>
-                                            ) : (
-                                                <Link href={`/Prodotti/${product.slug}`} key={product.slug}>
-                                                    <Image
-                                                        className="grid h-auto w-full rounded-xl border shadow-md"
-                                                        src={product.image}
-                                                        alt={'not found'}
-                                                    />
-                                                </Link>
-                                            )}
-                                            {/* {product.image.data.map((image) => (
+                                            ) : ( */}
+                                            <Link href={`/Prodotti/${product.id}`} key={product.id}>
+                                                <Image className="grid h-auto w-full rounded-xl border shadow-md" src={product.image} alt={'not found'} />
+                                            </Link>
+                                            {/*)}
+                                             {product.image.data.map((image) => (
                                                     <Image className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
                                                 ))} 
                                             */}
@@ -322,7 +333,7 @@ const Products = ({ products }) => {
                         </div>
 
                         {/* Pagination */}
-                        <div className="flex flex-col items-end  space-x-2 px-6">
+                        {/* <div className="flex flex-col items-end  space-x-2 px-6">
                             <div className="flex sm:flex-1 sm:items-center sm:justify-center">
                                 <nav className="relative z-0 inline-flex -space-x-px  shadow-lg" aria-label="Pagination">
                                     <button
@@ -369,7 +380,7 @@ const Products = ({ products }) => {
                                     ASC
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                     </main>
                 </div>
             )}

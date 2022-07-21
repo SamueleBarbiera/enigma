@@ -109,15 +109,10 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user, account }) {
             const isSignIn = user && account ? true : false
             if (isSignIn) {
-                const response = await axios(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
-                )
+                const response = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`)
                 const data = await response.json()
                 console.log('🚀 - file: [...nextauth].ts - line 127 - jwt - data', data)
-                ;(token.access_token = account.access_token),
-                    (token.accessTokenExpires = account.expires_in!),
-                    (token.refreshToken = account.refresh_token),
-                    (token.jwt = data.jwt)
+                ;(token.access_token = account.access_token), (token.accessTokenExpires = account.expires_in!), (token.refreshToken = account.refresh_token), (token.jwt = data.jwt)
                 token.access_token = account.access_token
                 token.id = data.user.id
                 console.log(data, token)
@@ -129,11 +124,7 @@ export const authOptions: NextAuthOptions = {
             }
 
             // Access token has expired, try to update it
-            return await refreshAccessToken(
-                token,
-                String(process.env.GOOGLE_CLIENT_ID),
-                String(process.env.GOOGLE_CLIENT_SECRET)
-            )
+            return await refreshAccessToken(token, String(process.env.GOOGLE_CLIENT_ID), String(process.env.GOOGLE_CLIENT_SECRET))
         },
         async redirect({ url, baseUrl }) {
             // Allows relative callback URLs

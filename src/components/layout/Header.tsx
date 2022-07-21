@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-/* eslint-disable no-unused-vars */
 import { RefreshIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
@@ -11,12 +11,19 @@ import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart'
 import CartSummary from '../cart/CartSummary'
 import Link from 'next/link'
-import { Url } from 'url'
 
 const navigation = {
     pages: [
-        { name: 'Home', href: '/', icon: <BiHomeAlt className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
-        { name: 'Prodotti', href: '/Prodotti', icon: <BiBarcodeReader className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" /> },
+        {
+            name: 'Home',
+            href: '/',
+            icon: <BiHomeAlt className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />,
+        },
+        {
+            name: 'Prodotti',
+            href: '/Prodotti',
+            icon: <BiBarcodeReader className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />,
+        },
     ],
 }
 
@@ -27,8 +34,9 @@ function classNames(...classes: string[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const { data: session, status } = useSession()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { cartCount } = useShoppingCart()
-    const navigationUrl: Url = navigation.pages[1]?.href
+
     return (
         <>
             {/* Mobile menu */}
@@ -97,7 +105,7 @@ export default function Header() {
                                         {/* Logo (lg+) */}
                                         <div className="hidden md:flex md:flex-1 lg:items-center">
                                             <Link href="/" className="flex-shrink-0">
-                                                <Image width={16} height={32} loader={myLoader} src={'/domanda.png'} alt="" />
+                                                <Image width={16} height={32} src={'/domanda.png'} alt="" />
                                             </Link>
                                         </div>
 
@@ -105,10 +113,10 @@ export default function Header() {
                                             {/* Flyout menus */}
                                             <Popover.Group className="inset-x-0 bottom-0 px-4">
                                                 <div className="flex h-full items-center justify-between space-x-8">
-                                                    <Link href={navigationUrl} key={navigation.pages[1]?.name}className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
+                                                    <a href={navigation.pages[1]?.href} key={navigation.pages[1]?.name} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
                                                         <p className="items-start">{navigation.pages[1]?.name} </p>
                                                         <p className="items-end">{navigation.pages[1]?.icon}</p>
-                                                    </Link>
+                                                    </a>
                                                 </div>
                                             </Popover.Group>
                                         </div>
@@ -122,7 +130,7 @@ export default function Header() {
 
                                         {/* Logo (lg-) */}
                                         <Link href="#" className="hidden">
-                                            <Image width={2} height={36} loader={myLoader} src={'/domanda.png'} alt="" />
+                                            <Image width={2} height={36} src={'/domanda.png'} alt="" />
                                         </Link>
 
                                         <div className="flex flex-1 items-center justify-end">
@@ -131,7 +139,7 @@ export default function Header() {
                                                 {session ? (
                                                     <div className="mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
-                                                            {({ open }) => (
+                                                            {({ open }: any) => (
                                                                 <>
                                                                     <Popover.Button
                                                                         className={classNames(
@@ -157,10 +165,10 @@ export default function Header() {
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
-                                                                                        <Image src={session.user!.image!} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
+                                                                                        <Image src={session.user.image!} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
                                                                                     </div>
-                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session.user!.name}</p>
-                                                                                    <p>{session.user!.email}</p>
+                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session.user.name}</p>
+                                                                                    <p>{session.user.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                                         onClick={() => signOut({ redirect: true })}
@@ -188,7 +196,7 @@ export default function Header() {
                                                 {/* Cart */}
                                                 <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
                                                     <Popover className="relative">
-                                                        {({ open }) => (
+                                                        {({ open }: any) => (
                                                             <>
                                                                 <Popover.Button
                                                                     className={classNames(

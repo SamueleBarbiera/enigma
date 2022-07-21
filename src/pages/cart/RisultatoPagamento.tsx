@@ -70,7 +70,7 @@ export default RisultatoPagamento
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user && session!.user!.email === '') {
+    if (!session!.user && session!.user.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }
