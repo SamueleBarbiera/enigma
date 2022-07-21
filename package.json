@@ -4,6 +4,18 @@
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
     },
+    "lint-staged": {
+        "*.ts,*.tsx": [
+            "eslint",
+            "prettier --write",
+            "eslint --fix"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
     "scripts": {
         "dev": "next dev",
         "db-dev": "run-s dev:*",
