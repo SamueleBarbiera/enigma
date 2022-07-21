@@ -32,7 +32,7 @@
         "_dev:4-db-migrate": "prisma migrate dev",
         "db-dev-nuke": "rm -rf prisma/*.db**",
         "studio": "prisma studio",
-        "pre-commit": "next lint --fix && git add -A ."
+        "pre-commit": "git add -A . && lint-staged && next lint --fix "
     },
     "dependencies": {
         "@headlessui/react": "^1.6.5",
