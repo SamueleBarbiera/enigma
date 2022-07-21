@@ -10,6 +10,8 @@ import { BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart'
 import CartSummary from '../cart/CartSummary'
+import Link from 'next/link'
+import { Url } from 'url'
 
 const navigation = {
     pages: [
@@ -26,7 +28,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const { data: session, status } = useSession()
     const { cartCount } = useShoppingCart()
-
+    const navigationUrl: Url = navigation.pages[1]?.href
     return (
         <>
             {/* Mobile menu */}
@@ -63,7 +65,7 @@ export default function Header() {
                             <div className="space-y-6 py-6 px-6">
                                 {navigation.pages.map((page) => (
                                     <div key={page.name} className="flow-root">
-                                        <a href={page.href} className="-m-2 mb-1 block justify-between rounded-lg bg-beige-200 p-2 font-medium text-beige-900">
+                                        <Link href={page.href} className="-m-2 mb-1 block justify-between rounded-lg bg-beige-200 p-2 font-medium text-beige-900">
                                             <div className="flex flex-1 flex-col">
                                                 <div>
                                                     <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
@@ -72,7 +74,7 @@ export default function Header() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
@@ -94,19 +96,19 @@ export default function Header() {
                                     <div className="flex h-16 items-center justify-between">
                                         {/* Logo (lg+) */}
                                         <div className="hidden md:flex md:flex-1 lg:items-center">
-                                            <a href="/" className="flex-shrink-0">
+                                            <Link href="/" className="flex-shrink-0">
                                                 <Image width={16} height={32} loader={myLoader} src={'/domanda.png'} alt="" />
-                                            </a>
+                                            </Link>
                                         </div>
 
                                         <div className="hidden h-full md:flex">
                                             {/* Flyout menus */}
                                             <Popover.Group className="inset-x-0 bottom-0 px-4">
                                                 <div className="flex h-full items-center justify-between space-x-8">
-                                                    <a key={navigation.pages[1]?.name} href={navigation.pages[1]?.href} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
+                                                    <Link href={navigationUrl} key={navigation.pages[1]?.name}className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
                                                         <p className="items-start">{navigation.pages[1]?.name} </p>
                                                         <p className="items-end">{navigation.pages[1]?.icon}</p>
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </Popover.Group>
                                         </div>
@@ -119,9 +121,9 @@ export default function Header() {
                                         </div>
 
                                         {/* Logo (lg-) */}
-                                        <a href="#" className="hidden">
+                                        <Link href="#" className="hidden">
                                             <Image width={2} height={36} loader={myLoader} src={'/domanda.png'} alt="" />
-                                        </a>
+                                        </Link>
 
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="-mr-12 flex items-center">
@@ -137,9 +139,9 @@ export default function Header() {
                                                                             'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                         )}
                                                                     >
-                                                                        <a href="#" className="group -m-2 flex items-center p-2">
+                                                                        <Link href="#" className="group -m-2 flex items-center p-2">
                                                                             <FaRegUser className="h-5 w-5" aria-hidden="true" />
-                                                                        </a>
+                                                                        </Link>
                                                                     </Popover.Button>
 
                                                                     <Transition
@@ -194,10 +196,10 @@ export default function Header() {
                                                                         'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                     )}
                                                                 >
-                                                                    <a href="#" className="group -m-2 flex items-center p-2">
+                                                                    <Link href="#" className="group -m-2 flex items-center p-2">
                                                                         <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
                                                                         <span className="ml-2 text-sm font-medium text-beige-900">{cartCount}</span>
-                                                                    </a>
+                                                                    </Link>
                                                                 </Popover.Button>
 
                                                                 <Transition

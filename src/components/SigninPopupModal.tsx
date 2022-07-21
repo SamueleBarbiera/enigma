@@ -3,11 +3,11 @@
 import { Fragment, useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { Dialog, Transition } from '@headlessui/react'
-import { MailOpenIcon, XIcon,  } from '@heroicons/react/outline'
+import { MailOpenIcon, XIcon, } from '@heroicons/react/outline'
 
 interface Props {
   show: boolean,
-  onClose: Function,
+  onClose: unknown,
 }
 
 const SigninPopupModal = ({ show = false, onClose = () => null }: Props) => {
@@ -78,14 +78,6 @@ const SigninPopupModal = ({ show = false, onClose = () => null }: Props) => {
               <div className="py-12">
                 <div className="px-4 sm:px-12">
                   <div className="flex justify-center">
-                    <a className="flex items-center space-x-1">
-                      <span className="text-2xl font-semibold tracking-wide text-gray-400">
-                        <span className="text-3xl text-success">S</span>
-                        upabase
-                        <span className="text-3xl text-success">E</span>
-                        commerce
-                      </span>
-                    </a>
                   </div>
                   <Dialog.Title as="h3" className="mt-6 text-center text-lg font-bold sm:text-2xl">
                     {showSignIn ? 'Welcome back!' : 'Create an account'}

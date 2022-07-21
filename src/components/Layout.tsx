@@ -54,18 +54,18 @@ const Layout = ({ children }: Props) => {
           <div className="container mx-auto h-full">
             <div className="flex h-full items-center justify-between space-x-5 px-5">
               <Link href="/">
-                <a className="flex items-center space-x-1">
+                <div className="flex items-center space-x-1">
                   <span className="text-2xl font-semibold tracking-wide text-white">
                     <span className="text-3xl text-success">S</span>upabase
                     <span className="text-3xl text-success">E</span>commerce
                   </span>
-                </a>
+                </div>
               </Link>
               <div className="flex items-center space-x-4">
                 <Link href="/addProducts">
-                  <a className="focus:ring-primaryfocus:ring-opacity-50 ml-4 rounded-md bg-info px-4 py-5 font-semibold text-primary transition hover:bg-primary hover:text-info  focus:outline-none focus:ring-4">
+                  <div className="focus:ring-primaryfocus:ring-opacity-50 ml-4 rounded-md bg-info px-4 py-5 font-semibold text-primary transition hover:bg-primary hover:text-info  focus:outline-none focus:ring-4">
                     Add product !
-                  </a>
+                  </div>
                 </Link>
                 {isLoadingUser ? (
                   <div className="h-8 w-[75px] animate-pulse rounded-md bg-gray-200" />
@@ -121,10 +121,10 @@ const Layout = ({ children }: Props) => {
                               <Menu.Item>
                                 {href ? (
                                   <Link href={href}>
-                                    <a className="flex items-center space-x-2 rounded-md py-2 px-4 hover:bg-gray-100">
+                                    <div className="flex items-center space-x-2 rounded-md py-2 px-4 hover:bg-gray-100">
                                       <Icon className="h-5 w-5 shrink-0 text-gray-500" />
                                       <span>{label}</span>
-                                    </a>
+                                    </div>
                                   </Link>
                                 ) : (
                                   <button

@@ -52,8 +52,10 @@ yarn-error.log*
 
 # vercel
 .vercel
-.eslintrc.cjs
+.eslintrc
 prettier.config.js
 tailwind.config.js
+next.config.js
+postcss.config.js
 
 **/debug.log

@@ -1,7 +1,7 @@
 import { formatCurrencyString } from 'use-shopping-cart'
-import {  ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
+import { ExclamationCircleIcon, RefreshIcon, ChevronDownIcon, ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
-import { Dialog, Disclosure, Menu, Popover,  Transition } from '@headlessui/react'
+import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
 import Link from 'next/link'
 import useSWR from 'swr'
@@ -188,20 +188,20 @@ const Products = ({ products }) => {
                                         >
                                             <Menu.Items className="absolute left-0 mt-2 w-40 origin-top-left rounded-md bg-gray-50 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <div className="py-1">
-                                                        <button
-                                                            className={`mr-4 block rounded p-2 px-4 py-2 text-sm text-black md:p-2 ${order === 'DESC' ? 'bg-beige-300' : 'bg-beige-400'}`}
-                                                            disabled={order === 'DESC'}
-                                                            onClick={() => setOrder('DESC')}
-                                                        >
-                                                            DESC
-                                                        </button>
-                                                        <button
-                                                            className={`flex flex-auto rounded p-2 py-2 px-4 text-sm text-black md:p-2 ${order === 'ASC' ? 'bg-beige-300' : 'bg-beige-400'}`}
-                                                            disabled={order === 'ASC'}
-                                                            onClick={() => setOrder('ASC')}
-                                                        >
-                                                            ASC
-                                                        </button>
+                                                    <button
+                                                        className={`mr-4 block rounded p-2 px-4 py-2 text-sm text-black md:p-2 ${order === 'DESC' ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                                        disabled={order === 'DESC'}
+                                                        onClick={() => setOrder('DESC')}
+                                                    >
+                                                        DESC
+                                                    </button>
+                                                    <button
+                                                        className={`flex flex-auto rounded p-2 py-2 px-4 text-sm text-black md:p-2 ${order === 'ASC' ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                                        disabled={order === 'ASC'}
+                                                        onClick={() => setOrder('ASC')}
+                                                    >
+                                                        ASC
+                                                    </button>
                                                 </div>
                                             </Menu.Items>
                                         </Transition>
@@ -270,7 +270,7 @@ const Products = ({ products }) => {
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
                                 {data.map((product) => (
-                                    <a className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
+                                    <div className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                                             {isValidating ? (
                                                 <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
@@ -290,7 +290,7 @@ const Products = ({ products }) => {
                                                 <Link href={`/Prodotti/${product.slug}`} key={product.slug}>
                                                     <Image
                                                         className="grid h-auto w-full rounded-xl border shadow-md"
-                                                        src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
+                                                        src={product.image}
                                                         alt={'not found'}
                                                     />
                                                 </Link>
@@ -316,7 +316,7 @@ const Products = ({ products }) => {
                                                 </p>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -337,9 +337,8 @@ const Products = ({ products }) => {
                                         .splice(1)
                                         .map((numbers) => (
                                             <button
-                                                className={` transiction relative hidden items-center px-4 py-2 text-sm font-semibold text-beige-900  duration-200 ease-in-out hover:bg-beige-500 md:inline-flex ${
-                                                    pageIndex === numbers ? 'bg-beige-400' : 'bg-beige-400 text-beige-100 opacity-90 contrast-50'
-                                                }`}
+                                                className={` transiction relative hidden items-center px-4 py-2 text-sm font-semibold text-beige-900  duration-200 ease-in-out hover:bg-beige-500 md:inline-flex ${pageIndex === numbers ? 'bg-beige-400' : 'bg-beige-400 text-beige-100 opacity-90 contrast-50'
+                                                    }`}
                                                 onClick={() => setPageIndex(numbers)}
                                             >
                                                 {numbers}

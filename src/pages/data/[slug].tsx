@@ -23,7 +23,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
     const products: InferGetServerSidePropsType<typeof getServerSideProps> = props.productsData[0]
     const productsConsigliati = props.productsConsigliati[0]
     const { addItem } = useShoppingCart()
-    
+
 
     let colorsAvailable = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
     colorsAvailable = colorsAvailable.map(function (currentValue: string) {
@@ -324,10 +324,10 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                         Prodotti consigliati
                     </h2>
 
-                    <a className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
+                    <div className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                             <Link href={`/Prodotti/${productsConsigliati.slug}`} key={productsConsigliati.slug}>
-                                <Image className="grid h-auto w-full rounded-xl border shadow-md" src={process.env.NEXT_PUBLIC_API_URL + '' + productsConsigliati.image.data[0].url} alt={'not found'} />
+                                <Image className="grid h-auto w-full rounded-xl border shadow-md" src={productsConsigliati.image} alt={'not found'} />
                             </Link>
                         </div>
 
@@ -346,7 +346,7 @@ export default function ProductPage(props: InferGetServerSidePropsType<typeof ge
                                 </p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </section>
             </div>
 

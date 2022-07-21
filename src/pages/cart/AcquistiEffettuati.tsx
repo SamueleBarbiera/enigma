@@ -8,6 +8,7 @@ import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const orders = [
     {
@@ -140,19 +141,19 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                         <div className="py-1">
                                                             <Menu.Item>
                                                                 {({ active }) => (
-                                                                    <a href={order.href} className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}>
+                                                                    <Link href={order.href} className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}>
                                                                         View
-                                                                    </a>
+                                                                    </Link>
                                                                 )}
                                                             </Menu.Item>
                                                             <Menu.Item>
                                                                 {({ active }) => (
-                                                                    <a
+                                                                    <Link
                                                                         href={order.invoiceHref}
                                                                         className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
                                                                     >
                                                                         Invoice
-                                                                    </a>
+                                                                    </Link>
                                                                 )}
                                                             </Menu.Item>
                                                         </div>
@@ -179,12 +180,12 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
 
                                                             <div className="mt-4 flex w-full text-sm font-medium smd:hidden">
                                                                 <div className=" flex w-full flex-auto flex-shrink-0 break-before-all text-xs ">
-                                                                    <a
+                                                                    <Link
                                                                         href={product.href}
                                                                         className="transiction whitespace-nowrap rounded-lg border-2 border-solid border-beige-200 bg-beige-200 p-2 text-beige-900 shadow-lg duration-200 ease-in-out hover:bg-beige-100"
                                                                     >
                                                                         Visualizza
-                                                                    </a>
+                                                                    </Link>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -199,12 +200,12 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                         </div>
                                                         <div className=" mt-0 hidden pt-0 sm:ml-4 sm:border-none  smd:flex smd:items-center smd:space-x-4 smd:text-sm smd:font-medium">
                                                             <div className="flex flex-1 flex-shrink justify-center">
-                                                                <a
+                                                                <Link
                                                                     href={product.href}
                                                                     className="transiction whitespace-nowrap rounded-lg border-2 border-solid border-beige-200 bg-beige-200 p-2 text-beige-900 shadow-lg duration-200 ease-in-out hover:bg-beige-100"
                                                                 >
                                                                     Visualizza il prodotto
-                                                                </a>
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     </div>

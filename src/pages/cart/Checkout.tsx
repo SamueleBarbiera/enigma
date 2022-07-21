@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const subtotal = '210.00'
 const discount = { code: 'ENIGMA', amount: '24.00' }
@@ -243,9 +244,9 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                         >
                             <span className="sr-only">Pay with Satispay</span>
 
-                            <a className="h-5 w-auto">
-                                <Image src={'./Logo_Satispay.png'} className="h-5 w-auto" />
-                            </a>
+                            <div className="h-5 w-auto">
+                                <Image alt='' src={'./Logo_Satispay.png'} className="h-5 w-auto" />
+                            </div>
                         </button>
 
                         <button

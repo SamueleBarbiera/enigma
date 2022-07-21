@@ -13,6 +13,7 @@ import {
 import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/sidebar'
 import Image from 'next/image'
+import Link from 'next/link'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -132,9 +133,9 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                     {userNavigation.map((item) => (
                                                         <Menu.Item key={item.name}>
                                                             {({ active }) => (
-                                                                <a href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                                                                <Link href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
                                                                     {item.name}
-                                                                </a>
+                                                                </Link>
                                                             )}
                                                         </Menu.Item>
                                                     ))}
@@ -187,7 +188,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                             </main>
 
                             {/* Details sidebar */}
-                            <aside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white p-8 lg:block">
+                            <Linkside className="hidden w-96 overflow-y-auto border-l border-gray-200 bg-white p-8 lg:block">
                                 <div className="space-y-6 pb-16">
                                     <div>
                                         <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">

@@ -39,7 +39,7 @@ export default function Sidebar({ children }: Props) {
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {navigation.map((item) => (
                                 <Link href={item.href} key={item.name}>
-                                    <a
+                                    <div
                                         key={item.name}
                                         className={classNames(
                                             router.asPath === item.path ? 'bg-beige-600 text-white' : 'text-beige-100 hover:bg-beige-800 hover:text-white',
@@ -48,7 +48,7 @@ export default function Sidebar({ children }: Props) {
                                     >
                                         <item.icon className={'h-6 w-6 text-white group-hover:text-white'} aria-hidden="true" />
                                         <span className="mt-2">{item.name}</span>
-                                    </a>
+                                    </div>
                                 </Link>
                             ))}
                         </div>
@@ -106,7 +106,7 @@ export default function Sidebar({ children }: Props) {
                                     <nav className="flex h-full flex-col">
                                         <div className="space-y-1">
                                             {navigation.map((item) => (
-                                                <a
+                                                <div
                                                     key={item.name}
                                                     className={classNames(
                                                         router.asPath === item.path ? 'bg-beige-600 text-white' : 'text-beige-100 hover:bg-beige-800 hover:text-white',
@@ -115,7 +115,7 @@ export default function Sidebar({ children }: Props) {
                                                 >
                                                     <item.icon className={'h-6 w-6 text-white group-hover:text-white'} aria-hidden="true" />
                                                     <span className="mt-2">{item.name}</span>
-                                                </a>
+                                                </div>
                                             ))}
                                         </div>
                                     </nav>

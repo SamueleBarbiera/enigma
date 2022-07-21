@@ -8,7 +8,7 @@ function AccessDenied() {
         <>
             <Head>
                 <title>🔐 403  🔐</title>
-                <a rel="icon" href="/question-solid.svg" />
+                <link rel="icon" href="/question-solid.svg" />
                 <meta charSet="utf-8" className="next-head" />
             </Head>
             <div className="flex h-screen w-screen  items-center justify-center bg-red-100 ">

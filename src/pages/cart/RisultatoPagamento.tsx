@@ -1,7 +1,7 @@
 import { GetServerSideProps, GetServerSidePropsContext, NextPage, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import useSWR from 'swr'
+import useSWR, { SWRResponse } from 'swr'
 import { useShoppingCart } from 'use-shopping-cart'
 import { shootFireworks } from '../../content/lib/Utils'
 //import PrintObject from '../components/cart/PrintObject'
@@ -9,8 +9,9 @@ import { fetchGetJSON } from '../../content/utils/api-helpers'
 import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { getSession, useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import Head from 'next/head'
+import { AxiosError, AxiosResponse } from 'axios'
 
 const RisultatoPagamento: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const router = useRouter()
@@ -69,7 +70,7 @@ export default RisultatoPagamento
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await getSession(ctx)
 
-    if (!session!.user  && session!.user!.email === '') {
+    if (!session!.user && session!.user!.email === '') {
         return {
             redirect: { destination: '/AccessDenied' },
         }

@@ -1,9 +1,9 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { getSession } from 'next-auth/react'
 import Head from 'next/head'
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+//mport { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const products = [
     {
@@ -45,7 +45,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function RecapOrdini(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function RecapOrdini() {
     return (
         <>
             <Head>
@@ -81,7 +81,7 @@ export default function RecapOrdini(props: InferGetServerSidePropsType<typeof ge
 
                                             <div className="mt-6 smd:mt-0 smd:ml-6">
                                                 <h3 className="text-base font-medium text-beige-900">
-                                                    <a href={product.href}>{product.name}</a>
+                                                    <Link href={product.href}>{product.name}</Link>
                                                 </h3>
                                                 <p className="mt-2 text-sm font-medium text-beige-900">{product.price} €</p>
                                                 <p className="mt-3 text-sm text-beige-500">{product.description}</p>
@@ -193,16 +193,16 @@ export default function RecapOrdini(props: InferGetServerSidePropsType<typeof ge
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+// export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+//     const session: Session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
-    if (!session!.user && session!.user!.email === '') {
-        return {
-            redirect: { destination: '/AccessDenied' },
-        }
-    }
+//     if (!session!.user && session!.user!.email === '') {
+//         return {
+//             redirect: { destination: '/AccessDenied' },
+//         }
+//     }
 
-    return {
-        props: { products: null },
-    }
-}
+//     return {
+//         props: { session: session },
+//     }
+// }

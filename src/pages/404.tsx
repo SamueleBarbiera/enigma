@@ -1,5 +1,6 @@
 
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function FourOhFour() {
     return (
@@ -18,9 +19,9 @@ export default function FourOhFour() {
                                     <p className="text-7xl font-semibold uppercase tracking-wide text-beige-600">404 error</p>
                                     <h1 className="mt-2 text-5xl font-bold tracking-tight text-gray-900 xmd:text-5xl">Questa pagina non esiste</h1>
                                     <div className="mt-8">
-                                        <a href="#" className="rounded-lg bg-beige-200 p-2 text-2xl font-medium text-beige-600 shadow-xl hover:text-beige-500">
+                                        <Link href="/" className="rounded-lg bg-beige-200 p-2 text-2xl font-medium text-beige-600 shadow-xl hover:text-beige-500">
                                             Torna alla home<span aria-hidden="true"> &rarr;</span>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

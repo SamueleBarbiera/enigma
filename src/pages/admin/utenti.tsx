@@ -19,6 +19,7 @@ import {
 } from '@heroicons/react/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const user = {
     name: 'Whitney Francis',
@@ -79,14 +80,14 @@ export default function Contact() {
                                         <div className="hidden lg:ml-10 lg:block">
                                             <div className="flex space-x-4">
                                                 {navigation.map((item) => (
-                                                    <a
+                                                    <Link
                                                         key={item.name}
                                                         href={item.href}
                                                         className={classNames(item.current ? 'bg-gray-100' : 'hover:text-gray-700', 'rounded-md px-3 py-2 text-sm font-medium text-gray-900')}
                                                         aria-current={item.current ? 'page' : undefined}
                                                     >
                                                         {item.name}
-                                                    </a>
+                                                    </Link>
                                                 ))}
                                             </div>
                                         </div>
@@ -152,9 +153,9 @@ export default function Contact() {
                                                         {userNavigation.map((item) => (
                                                             <Menu.Item key={item.name}>
                                                                 {({ active }) => (
-                                                                    <a href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700')}>
+                                                                    <Link href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700')}>
                                                                         {item.name}
-                                                                    </a>
+                                                                    </Link>
                                                                 )}
                                                             </Menu.Item>
                                                         ))}
@@ -225,7 +226,7 @@ export default function Contact() {
                         <ul role="list" className="mt-5 divide-y divide-gray-200 border-t border-gray-200 sm:mt-0 sm:border-t-0">
                             {candidates.map((candidate) => (
                                 <li key={candidate.email}>
-                                    <a href="#" className="group block">
+                                    <Link href="#" className="group block">
                                         <div className="flex items-center py-5 px-4 sm:py-6 sm:px-0">
                                             <div className="flex min-w-0 flex-1 items-center">
                                                 <div className="flex-shrink-0">
@@ -256,7 +257,7 @@ export default function Contact() {
                                                 <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-700" aria-hidden="true" />
                                             </div>
                                         </div>
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -264,37 +265,37 @@ export default function Contact() {
                         {/* Pagination */}
                         <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0" aria-label="Pagination">
                             <div className="-mt-px flex w-0 flex-1">
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
-                                    <ArrowNarrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                    <LinkrrowNarrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
                                     Previous
-                                </a>
+                                </Link>
                             </div>
                             <div className="hidden md:-mt-px md:flex">
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     1
-                                </a>
+                                </Link>
                                 {/* Current: "border-beige-500 text-beige-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200" */}
-                                <a href="#" className="inline-flex items-center border-t-2 border-beige-500 px-4 pt-4 text-sm font-medium text-beige-600" aria-current="page">
+                                <Link href="#" className="inline-flex items-center border-t-2 border-beige-500 px-4 pt-4 text-sm font-medium text-beige-600" aria-current="page">
                                     2
-                                </a>
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                </Link>
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     3
-                                </a>
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                </Link>
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     4
-                                </a>
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                </Link>
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     5
-                                </a>
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                </Link>
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     6
-                                </a>
+                                </Link>
                             </div>
                             <div className="-mt-px flex w-0 flex-1 justify-end">
-                                <a href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
+                                <Link href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
                                     Next
-                                    <ArrowNarrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                </a>
+                                    <LinkrrowNarrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                </Link>
                             </div>
                         </nav>
                     </div>

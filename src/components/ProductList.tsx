@@ -24,7 +24,7 @@ interface Props {
   },
   redirectPath: string,
   buttonText: string,
-  onSubmit: Function,
+  onSubmit: unknown,
 }
 
 const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: Props) => {
@@ -38,8 +38,8 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
       setDisabled(true)
       toastId = toast.loading('Uploading...')
       const { data } = await axios.post('/api/data/productsImage', { image }),
-      setImageUrl(data?.url),
-      toast.success('Successfully uploaded', { id: toastId }),
+        setImageUrl(data?.url),
+          toast.success('Successfully uploaded', { id: toastId }),
     } catch (e) {
       toast.error('Unable to upload', { id: toastId })
       setImageUrl('')

@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/solid'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
 import { TrashIcon } from '@heroicons/react/outline'
 import { useShoppingCart } from 'use-shopping-cart'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import Image from 'next/image'
 
 function CartSummary() {
@@ -26,7 +19,7 @@ function CartSummary() {
     const [RetirePkgShopChecked, setRetirePkgShopChecked] = useState<boolean>(true)
 
     useEffect(() => setCartEmpty(!cartCount), [cartCount])
-    function toFixedIfNecessary(value: unknown, dp: number | undefined) {
+    function toFixedIfNecessary(value: string, dp: number | undefined) {
         return +parseFloat(value).toFixed(dp)
     }
 
@@ -35,11 +28,11 @@ function CartSummary() {
         setLoading(true)
         setErrorMessage('')
 
-        const response: unknown = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, { totalPrice })
+        const response: Response = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, { totalPrice })
 
-        if (response.statusCode > 399) {
-            console.error(response.message)
-            setErrorMessage(response.message.code)
+        if (response.status > 399) {
+            console.error(response.statusText)
+            setErrorMessage(response.statusText)
             setLoading(false)
             return
         }
@@ -69,7 +62,6 @@ function CartSummary() {
         setLoading(false)
     }, [products, setProducts])
     const cartDet = Object.entries(cartDetails).map((e) => e[1])
-
     return (
         <div className="h-fit overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
             {loading ? (
@@ -114,8 +106,8 @@ function CartSummary() {
                                                             <div className="ml-4 flex flex-1 flex-col">
                                                                 <div>
                                                                     <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
-                                                                        <a className="font-semibold capitalize">{product.name}</a>
-                                                                        <p className="ml-2 w-max">{toFixedIfNecessary(product.price * product.quantity, 2)} €</p>
+                                                                        <Link className="font-semibold capitalize">{product.name}</Link>
+                                                                        <p className="ml-2 w-max">{toFixedIfNecessary((product.price * product.quantity).toString(), 2)} €</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex flex-1 items-end justify-between text-sm">
@@ -158,7 +150,7 @@ function CartSummary() {
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
                                                                     <Image
                                                                         className="h-full w-full rounded-md object-cover object-center shadow-md"
-                                                                        src={process.env.NEXT_PUBLIC_API_URL + '' + product.image.data[0].url}
+                                                                        src={product.image}
                                                                         alt={'not found'}
                                                                     />
                                                                 </div>
@@ -166,8 +158,8 @@ function CartSummary() {
                                                             <div className="ml-4 flex flex-1 flex-col">
                                                                 <div>
                                                                     <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
-                                                                        <a className="font-semibold capitalize">{product.name}</a>
-                                                                        <p className="ml-2 w-max">{toFixedIfNecessary(product.price * product.quantity, 2)} €</p>
+                                                                        <p className="font-semibold capitalize">{product.name}</p>
+                                                                        <p className="ml-2 w-max">{toFixedIfNecessary((product.price * product.quantity).toString(), 2)} €</p>
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex flex-1 items-end justify-between text-sm">
@@ -206,7 +198,7 @@ function CartSummary() {
                                 <div className="mt-4  bg-beige-200 py-6 px-4 sm:px-6">
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                         <p>Costo Totale</p>
-                                        <p>{toFixedIfNecessary(totalPrice, 2)} €</p>
+                                        <p>{totalPrice} €</p>
                                     </div>
                                     <form onSubmit={handleCheckout} className="flex justify-between gap-2">
                                         {errorMessage ? <p style={{ color: 'red' }}>Error: {errorMessage}</p> : null}
@@ -264,9 +256,9 @@ function CartSummary() {
                                 <h2 className="text-2xl font-semibold">Il tuo carello è vuoto.</h2>
                                 <p className="mt-3 text-xl ">
                                     Visualizza i nostri vestiti{' '}
-                                    <a className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/Prodotti">
+                                    <p className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/Prodotti">
                                         qui!
-                                    </a>
+                                    </p>
                                 </p>
                             </div>
                         )}

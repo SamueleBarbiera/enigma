@@ -12,7 +12,7 @@ interface Props {
   src: string,
   accept: string,
   sizeLimit: number,
-  onChangePicture: Function,
+  onChangePicture: unknown,
 }
 
 function classNames(...classes: string[]) {

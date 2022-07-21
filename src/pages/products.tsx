@@ -1,6 +1,6 @@
 // pages/products.js
 import Layout from '../components/Layout'
-import { GetServerSideProps, NextPage, InferGetServerSidePropsType } from 'next'
+import { GetServerSideProps } from 'next'
 import axios from 'axios'
 import { Key } from 'react'
 import { ExclamationIcon } from '@heroicons/react/outline'

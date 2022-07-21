@@ -16,7 +16,7 @@ const Card = ({
   price = 0,
 }: Props) => (
   <Link href={`/products/${id}`}>
-    <a className="block w-full p-5">
+    <div className="block w-full p-5">
       <div className="card card-compact w-full bg-neutral shadow-xl">
         <div className="aspect-video relative overflow-hidden rounded-lg bg-success shadow">
           {image ? (
@@ -48,7 +48,7 @@ const Card = ({
           <button className="btn btn-info">Buy Now</button>
         </div>
       </div>
-    </a>
+    </div>
   </Link>
 )
 
