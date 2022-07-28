@@ -6,26 +6,44 @@ import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon, BellIcon, MenuIcon, XIcon } 
 import Image from 'next/image'
 import Link from 'next/link'
 
-const user = {
+const user: {
+    name: string
+    email: string
+    imageUrl: string
+} = {
     name: 'Whitney Francis',
     email: 'whitneyfrancis@example.com',
     imageUrl: 'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 
-const navigation = [
+const navigation: {
+    name: string
+    href: string
+    current: boolean
+}[] = [
     { name: 'Dashboard', href: '#', current: true },
     { name: 'Jobs', href: '#', current: false },
     { name: 'Applicants', href: '#', current: false },
     { name: 'Company', href: '#', current: false },
 ]
 
-const userNavigation = [
+const userNavigation: {
+    name: string
+    href: string
+}[] = [
     { name: 'Your Profile', href: '#' },
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
 ]
 
-const candidates = [
+const candidates: {
+    name: string
+    email: string
+    imageUrl: string
+    applied: string
+    appliedDatetime: string
+    status: string
+}[] = [
     {
         name: 'Emily Selman',
         email: 'emilyselman@example.com',

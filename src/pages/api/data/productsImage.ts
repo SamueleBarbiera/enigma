@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { withValidation } from 'next-validations'
 import { z } from 'zod'
 
-const supabase = createClient(process.env.SUPABASE_API_URL!, process.env.SUPABASE_API_KEY!)
+const supabase = createClient(process.env.SUPABASE_API_URL ?? '', process.env.SUPABASE_API_KEY ?? '')
 
 const schema = z.object({
     image: z.string().nonempty(),
@@ -38,16 +38,19 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
             }
             const fileName = nanoid()
             const ext = contentType.split('/')[1]
-            const path = `${fileName}.${ext}`
-            const { data, error: uploadError } = await supabase.storage.from(process.env.SUPABASE_STORAGE_BUCKET!).upload(path, decode(base64FileData), {
+            const path = `${fileName}.${ext ?? ''}`
+            const { data, error: uploadError } = await supabase.storage.from(process.env.SUPABASE_STORAGE_BUCKET ?? '').upload(path, decode(base64FileData), {
                 contentType,
                 upsert: true,
             })
+
             if (uploadError) {
                 console.log(uploadError)
                 throw new Error('Image upload Failed!!')
             }
-            const url = `${process.env.SUPABASE_URL!.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
+
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const url = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
 
             return res.status(200).json({ url })
         } catch (e) {
@@ -55,7 +58,7 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
         }
     } else {
         res.setHeader('Allow', ['POST'])
-        res.status(405).json({ message: `HTTP method :${req.method}: is not supported.` })
+        res.status(405).json({ message: `HTTP method :${req.method ?? ''}: is not supported.` })
     }
 }
 

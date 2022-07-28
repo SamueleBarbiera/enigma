@@ -4,11 +4,12 @@ import { DotsVerticalIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
-import { getSession } from 'next-auth/react'
 import Head from 'next/head'
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { authOptions } from '../api/auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth'
 
 const orders = [
     {
@@ -73,6 +74,7 @@ function classNames(...classes: string[]) {
 }
 
 function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    console.log('🚀 ~ file: AcquistiEffettuati.tsx ~ line 77 ~ AcquistiEffettuati ~ props', props)
     return (
         <>
             <Head>
@@ -105,7 +107,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                         <div className="mx-2 -mb-4 flex items-center p-6 sm:grid sm:grid-cols-3 sm:gap-x-6">
                                             <dl className="grid flex-1 grid-cols-2 flex-col-reverse gap-x-16 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                                                 <div>
-                                                    <dt className="font-medium text-beige-900">N. dell'ordine</dt>
+                                                    <dt className="font-medium text-beige-900">{`N. dell'ordine`}</dt>
                                                     <dd className="mt-1 text-beige-500">{order.number}</dd>
                                                 </div>
                                                 <div className="hidden sm:block">
@@ -123,7 +125,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                             <Menu as="div" className="relative flex justify-end lg:hidden">
                                                 <div className="flex items-center">
                                                     <Menu.Button className="-m-2 flex items-center p-2 text-beige-400 hover:text-beige-500">
-                                                        <span className="sr-only">Opzioni dell'ordine {order.number}</span>
+                                                        <span className="sr-only">{`Opzioni dell'ordine ${order.number}`}</span>
                                                         <DotsVerticalIcon className="h-6 w-6" aria-hidden="true" />
                                                     </Menu.Button>
                                                 </div>
@@ -140,7 +142,8 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                     <Menu.Items className="absolute right-0 mt-2 w-40 origin-bottom-right rounded-xl bg-gray-50 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                         <div className="py-1">
                                                             <Menu.Item>
-                                                                {({ active }) => (
+                                                                {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
+                                                                {({ active }: any) => (
                                                                     <Link
                                                                         href={order.href}
                                                                         className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
@@ -150,7 +153,8 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                                 )}
                                                             </Menu.Item>
                                                             <Menu.Item>
-                                                                {({ active }) => (
+                                                                {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
+                                                                {({ active }: any) => (
                                                                     <Link
                                                                         href={order.invoiceHref}
                                                                         className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
@@ -229,16 +233,16 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
 
 export default AcquistiEffettuati
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
-    if (!session!.user && session!.user.email === '') {
+    if (!session) {
         return {
             redirect: { destination: '/AccessDenied' },
         }
     }
 
     return {
-        props: { products: null },
+        props: { session: session },
     }
 }

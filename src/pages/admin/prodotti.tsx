@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { Fragment, Key, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { HeartIcon, MenuAlt2Icon, PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
@@ -255,10 +255,8 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
-
-    console.log('🚀 ~ file: prodotti.tsx ~ line 387 ~ getServerSideProps ~ session', session)
 
     if (!session || session.user.role !== 'ADMIN') {
         return { redirect: { permanent: false, destination: '/' } }

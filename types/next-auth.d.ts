@@ -1,12 +1,26 @@
-import { DefaultSession } from 'next-auth'
+import { DefaultProfile, DefaultSession } from 'next-auth'
 declare module 'next-auth' {
-    /**
-     * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-     */
     interface Session {
         user: {
             /** The user's postal address. */
             role: string
         } & DefaultSession['user']
+    }
+    // interface User {}
+    interface Token {
+        refreshToken: string
+        jwt: string
+        access_token: string
+        id: string
+        accessTokenExpires: string
+    }
+    interface Account {
+        provider: string
+        expires_in: string
+        access_token: string
+        refreshToken: string
+    }
+    interface Profile {
+        profile: { picture: string } & DefaultProfile['image']
     }
 }

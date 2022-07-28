@@ -3,12 +3,12 @@ import Cors from 'micro-cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import Stripe from 'stripe'
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
     // https://github.com/stripe/stripe-node#configuration
     apiVersion: '2020-08-27',
 })
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET ?? ''
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -17,6 +17,7 @@ export const config = {
     },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const cors = Cors({
     allowMethods: ['POST', 'HEAD'],
 })
@@ -24,7 +25,7 @@ const cors = Cors({
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const buf = await buffer(req)
-        const sig = req.headers['stripe-signature']!
+        const sig = req.headers['stripe-signature'] ?? ''
 
         let event: Stripe.Event
 
@@ -41,14 +42,14 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         // Successfully constructed event.
         console.log('✅ Success:', event.id)
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
 
         // Cast event data to Stripe object.
         if (event.type === 'payment_intent.succeeded') {
-            const paymentIntent = event.data.object as Stripe.PaymentIntent
             console.log(`💰 PaymentIntent status: ${paymentIntent.status}`)
         } else if (event.type === 'payment_intent.payment_failed') {
-            const paymentIntent = event.data.object as Stripe.PaymentIntent
-            console.log(`❌ Payment failed: ${paymentIntent.last_payment_error?.message}`)
+            const err = paymentIntent.last_payment_error?.message
+            console.log(`❌ Payment failed: ${err ?? 'ops...'}`)
         } else if (event.type === 'charge.succeeded') {
             const charge = event.data.object as Stripe.Charge
             console.log(`💵 Charge id: ${charge.id}`)
@@ -57,11 +58,11 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         // Return a response to acknowledge receipt of the event.
-        res.json({ received: true })
+        res.status(200).json({ received: true })
     } else {
         res.setHeader('Allow', 'POST')
         res.status(405).end('Method Not Allowed')
     }
 }
 
-export default cors(webhookHandler)
+export default webhookHandler

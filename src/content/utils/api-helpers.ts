@@ -5,7 +5,7 @@ export async function fetchGetJSON(url: string) {
         const res: AxiosResponse = await axios.get(url)
         const data: unknown = await res.data
         return data
-    } catch (err: AxiosError) {
+    } catch (err) {
         if (err instanceof Error) {
             throw new Error(err.message)
         }

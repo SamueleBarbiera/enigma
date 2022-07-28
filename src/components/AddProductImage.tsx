@@ -19,8 +19,8 @@ function classNames(...classes: string[]) {
 const AddProductImage = ({ label = 'Image', src = '', alt = '', accept = '.png, .jpg, .jpeg, .gif .jiff', sizeLimit = 3 * 1024 * 1024, onChangePicture = () => null }: Props) => {
     const pictureRef = useRef() as React.MutableRefObject<HTMLInputElement>
     const [image, setImage] = useState({ src, alt })
-    const [updatingPicture, setUpdatingPicture] = useState<boolean>(false)
-    const [pictureError, setPictureError] = useState<string>('')
+    const [updatingPicture, setUpdatingPicture] = useState(false)
+    const [pictureError, setPictureError] = useState('')
 
     const handleOnChangePicture = (e: React.FormEvent<HTMLInputElement>) => {
         const files = e.currentTarget.files

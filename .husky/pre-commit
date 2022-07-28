@@ -3,12 +3,11 @@
 
 echo '🏗️👷 Styling, testing and building your project before committing'
 
-
 echo '😃✨✨ Prettier Auto Format RUNNING... ✨✨😃'
 # Format all file with Prettier 
 npm run format ||
 (
-    echo '🤢🤮🤢🤮 Got and error while formatting the files 🤢🤮🤢🤮
+    echo '💀👺💀👹 Got and error while formatting files with prettier 💀👺💀👹
             Prettier Formatting Failed';
     false;
 )
@@ -37,7 +36,6 @@ npm run check-types ||
     false;
 )
 
-# If everything passes... Now we can commit
 echo '🤔🤔🤔🤔... Alright... Code looks good to me... Trying to build and commit now. 🤔🤔🤔🤔'
 
 npm run commit ||
@@ -47,7 +45,7 @@ npm run commit ||
     false;
 )
 
-# If everything passes... Now we can commit
+#If everything passes... Now we can commit
 echo '✅✅✅✅ You win this time... I am pushing this now. ✅✅✅✅'
 
 

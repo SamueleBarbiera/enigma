@@ -2,12 +2,12 @@ import Footer from '@/components/layout/Footer'
 import Header from '@/components/layout/Header'
 import { Disclosure } from '@headlessui/react'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
+import { authOptions } from '../api/auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth'
 
 const subtotal = '210.00'
 const discount = { code: 'ENIGMA', amount: '24.00' }
@@ -56,7 +56,7 @@ const products = [
     },
 ]
 
-function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Checkout() {
     const [hidden, setHidden] = useState(true)
 
     return (
@@ -78,7 +78,7 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
                                         Il tuo ordine
                                     </h2>
                                     <Disclosure.Button className="px-4 font-medium text-beige-600 hover:text-beige-500">
-                                        {open ? <span>Nascondi l'ordine</span> : <span>Visualizza</span>}
+                                        {open ? <span>Nascondi questo ordine</span> : <span>Visualizza</span>}
                                     </Disclosure.Button>
                                 </div>
 
@@ -465,16 +465,16 @@ function Checkout(props: InferGetServerSidePropsType<typeof getServerSideProps>)
 
 export default Checkout
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
-    if (!session!.user && session!.user.email === '') {
+    if (!session) {
         return {
             redirect: { destination: '/AccessDenied' },
         }
     }
 
     return {
-        props: { products: null },
+        props: { session: session },
     }
 }

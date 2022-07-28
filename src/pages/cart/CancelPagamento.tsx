@@ -1,11 +1,12 @@
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import { CheckIcon } from '@heroicons/react/solid'
-import { getSession } from 'next-auth/react'
 import Head from 'next/head'
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
+import { unstable_getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 
-function CancelPagamento(products: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function CancelPagamento() {
     return (
         <>
             <Head>
@@ -29,10 +30,10 @@ function CancelPagamento(products: InferGetServerSidePropsType<typeof getServerS
 
 export default CancelPagamento
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
-    if (!session!.user && session!.user.email === '') {
+    if (!session) {
         return {
             redirect: { destination: '/AccessDenied' },
         }

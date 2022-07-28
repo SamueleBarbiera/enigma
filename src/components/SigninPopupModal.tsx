@@ -11,9 +11,9 @@ interface Props {
 }
 
 const SigninPopupModal = ({ show = false, onClose = () => null }: Props) => {
-    const [disabled, setDisabled] = useState<boolean>(false)
-    const [showConfirm, setConfirm] = useState<boolean>(false)
-    const [showSignIn, setShowSignIn] = useState<boolean>(false)
+    const [disabled, setDisabled] = useState(false)
+    const [showConfirm, setConfirm] = useState(false)
+    const [showSignIn, setShowSignIn] = useState(false)
 
     const closeModal = () => {
         if (typeof onClose === 'function') {

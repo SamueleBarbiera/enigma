@@ -1,16 +1,43 @@
-import { validateCartItems } from 'use-shopping-cart/utilities/serverless'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { NextApiRequest, NextApiResponse } from 'next'
-import { useEffect, useState } from 'react'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
     apiVersion: '2020-08-27',
 })
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const amount = Number((req.body.amount.totalPrice * 100).toString().slice(0, 6))
-    const cartdet = Object.entries(req.body.data.cartDetails).map((e) => e[1])
-    const reqHeadersOrigin: string = req.headers.origin
+interface ExtendedNextApiRequest extends NextApiRequest {
+    body: {
+        data: {
+            id: string
+            cartDetails: CartDet
+            amount: { totalPrice: number }
+            image: string
+            name: string
+            description: string
+            price: number
+        }
+    }
+}
+
+interface CartDet {
+    currency: string
+    quantity: number
+    value: number
+    price_data: object
+    product_data: object
+    formattedValue: string
+    formattedPrice: string
+    image: string
+    name: string
+    id: string
+}
+
+export default async function handler(req: ExtendedNextApiRequest, res: NextApiResponse) {
+    const amount = Number((req.body.data.amount.totalPrice * 100).toString().slice(0, 6))
+    const cartdet: CartDet = req.body.data.cartDetails
+    const reqHeadersOrigin = req.headers.origin
     if (req.method === 'POST') {
         try {
             // Create Checkout Sessions from body params.
@@ -24,6 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 line_items: [
                     {
                         name: 'Costo totale',
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                         price: cartdet.id,
                         currency: 'EUR',
                         amount: amount,
@@ -31,10 +59,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     },
                 ],
                 mode: 'payment',
-                success_url: `${reqHeadersOrigin}/RisultatoPagamento?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${reqHeadersOrigin}/CancelPagamento`,
+                success_url: `${reqHeadersOrigin ?? ''}/RisultatoPagamento?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${reqHeadersOrigin ?? ''}/CancelPagamento`,
             }
-            //console.log('🚀 - file: cart.ts - line 48 - handler - params', params)
+
             const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params)
             res.status(200).json(checkoutSession)
         } catch (err: unknown) {

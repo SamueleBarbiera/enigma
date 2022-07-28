@@ -4,8 +4,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import SigninPopupModal from './SigninPopupModal'
 
-const Layout = () => {
-    const [showModal, setShowModal] = useState<boolean>(false)
+interface LayotProps {
+    children: React.ReactNode // 👈️ type children
+}
+
+const Layout = ({ children }: LayotProps) => {
+    const [showModal, setShowModal] = useState(false)
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
@@ -50,6 +54,9 @@ const Layout = () => {
                 {/* <main className="container mx-auto flex-grow">
                     <div className="px-4 py-12">{openModal()}</div>
                 </main> */}
+                <main className="container mx-auto flex-grow">
+                    <div className="px-4 py-12">{children}</div>
+                </main>
                 <SigninPopupModal show={showModal} onClose={closeModal} />
             </div>
         </>

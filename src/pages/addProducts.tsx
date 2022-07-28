@@ -10,7 +10,19 @@ export default function addProducts() {
             <div className="mx-auto max-w-screen-xl flex-col">
                 <h1 className="justify-center text-3xl font-medium text-gray-200">Add your Products</h1>
                 <div className="mt-8">
-                    <ProductList buttonText="Add Product" redirectPath="/products" onSubmit={createProduct} />
+                    <ProductList
+                        buttonText="Add Product"
+                        redirectPath="/products"
+                        onSubmit={createProduct}
+                        text={''}
+                        active={false}
+                        initialValues={{
+                            image: '',
+                            name: '',
+                            description: '',
+                            price: 0,
+                        }}
+                    />
                 </div>
             </div>
         </Layout>

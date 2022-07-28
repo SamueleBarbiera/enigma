@@ -68,10 +68,10 @@ interface ProductsProps {
 }
 
 const Products = ({ products }: ProductsProps) => {
-    const [mobileFiltriOpen, setMobileFiltriOpen] = useState<boolean>(false)
+    const [mobileFiltriOpen, setMobileFiltriOpen] = useState(false)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [pageIndex, setPageIndex] = useState<number>(1)
-    const [order, setOrder] = useState<string>('DESC')
+    const [pageIndex, setPageIndex] = useState(1)
+    const [order, setOrder] = useState('DESC')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { data, error, isValidating } = useSWR(`/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`, fetcher, {

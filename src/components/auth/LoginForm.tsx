@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable no-control-regex */
 
+import { Provider } from 'next-auth/providers'
 import { signIn } from 'next-auth/react'
-import { ReactNode } from 'react'
 
 interface Props {
-    providers?: ReactNode
-    id: string
-    name: string
+    providers?: Provider
 }
 
 export default function LoginForm({ providers }: Props) {
@@ -20,7 +18,7 @@ export default function LoginForm({ providers }: Props) {
                         <div className="mt-0">
                             <div className="mt-0 grid grid-cols-2 gap-2">
                                 {providers &&
-                                    Object.values(providers).map((providers: Props) => (
+                                    Object.values(providers).map((providers: Provider) => (
                                         <div key={providers.name}>
                                             {(() => {
                                                 if (providers.name == 'Google') {

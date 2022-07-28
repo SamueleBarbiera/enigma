@@ -1,13 +1,23 @@
-import { InferGetServerSidePropsType, GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Products from '../../components/cart/Products'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
-import { getSession } from 'next-auth/react'
 import Head from 'next/head'
 import prisma from 'src/content/lib/prisma'
 import { Product } from '@prisma/client'
+interface Products {
+    id: string
+    image: string
+    price: number
+    name: string | null
+    description: string | null
+    quantity: number | null
+    design: string | null
+    material: string | null
+    created_at: Date
+    updated_at: Date | null
+}
 
-const Prodotti = ({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Prodotti = (products: Products[]) => {
     return (
         <>
             <Head>
@@ -24,10 +34,7 @@ const Prodotti = ({ products }: InferGetServerSidePropsType<typeof getServerSide
 
 export default Prodotti
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
-    console.log('🚀 - file: index.tsx - line 28 - getServerSideProps - session', session!.user.email)
-
+export const getServerSideProps = async () => {
     const products: Product[] = await prisma.product.findMany()
     return {
         props: { products: products },

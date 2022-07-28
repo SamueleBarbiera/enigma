@@ -5,3 +5,5 @@ node_modules/
 next/
 ui/
 thunder-tests/
+out/next/*
+out/

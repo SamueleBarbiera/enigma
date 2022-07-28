@@ -1,21 +1,21 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import useSWR, { SWRResponse } from 'swr'
+import useSWR from 'swr'
 import { useShoppingCart } from 'use-shopping-cart'
 import { shootFireworks } from '../../content/lib/Utils'
-//import PrintObject from '../components/cart/PrintObject'
 import { fetchGetJSON } from '../../content/utils/api-helpers'
 import { CheckIcon, RefreshIcon, ExclamationCircleIcon } from '@heroicons/react/solid'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { getSession } from 'next-auth/react'
 import Head from 'next/head'
-import { AxiosError, AxiosResponse } from 'axios'
+import { unstable_getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 
-const RisultatoPagamento: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const RisultatoPagamento = () => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/restrict-template-expressions
     const { data, error } = useSWR(() => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null), fetchGetJSON)
 
     useEffect(() => {
@@ -23,6 +23,7 @@ const RisultatoPagamento: NextPage = (props: InferGetServerSidePropsType<typeof 
             shootFireworks()
             clearCart()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data])
 
     return (
@@ -67,10 +68,10 @@ const RisultatoPagamento: NextPage = (props: InferGetServerSidePropsType<typeof 
 }
 export default RisultatoPagamento
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const session = await getSession(ctx)
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
-    if (!session!.user && session!.user.email === '') {
+    if (!session) {
         return {
             redirect: { destination: '/AccessDenied' },
         }

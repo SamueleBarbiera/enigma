@@ -1,7 +1,6 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Head from 'next/head'
-//mport { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -193,7 +192,7 @@ export default function RecapOrdini() {
     )
 }
 
-// export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 //     const session: Session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
 
 //     if (!session!.user && session!.user!.email === '') {
