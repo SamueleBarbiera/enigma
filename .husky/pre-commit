@@ -38,7 +38,7 @@ npm run check-types ||
 
 echo '🤔🤔🤔🤔... Alright... Code looks good to me... Trying to build and commit now. 🤔🤔🤔🤔'
 
-npm run commit ||
+npm run build ||
 (
     echo '❌👷🔨❌ Better call Bob... Because your commit failed ❌👷🔨❌
     '

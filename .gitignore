@@ -33,6 +33,8 @@ package-lock.json
  package.json
  tsconfig.json
 thunder-tests/
+tsconfig.tsbuildinfo
+tsconfig.*
 
 # misc
 .DS_Store
@@ -56,3 +58,4 @@ yarn-error.log*
 
 **/debug.log
 .vercel
+
