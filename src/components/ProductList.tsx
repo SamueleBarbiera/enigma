@@ -6,6 +6,7 @@ import Input from '../components/Input'
 import AddProductImage from '../components/AddProductImage'
 import axios from 'axios'
 import { z } from 'zod'
+import { ImageUrl, ProdList } from 'types/IProduct'
 
 const ProductSchema = z.object({
     name: z.string().max(20).nonempty(),
@@ -13,25 +14,7 @@ const ProductSchema = z.object({
     price: z.number().nonnegative('Field is required not negative').gte(1),
 })
 
-interface Props {
-    text: string
-    active: boolean
-    initialValues: {
-        image: string
-        name: string
-        description: string
-        price: number
-    }
-    redirectPath: string
-    buttonText: string
-    onSubmit: unknown
-}
-
-interface ImageUrl {
-    url: string
-}
-
-const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: Props) => {
+const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: ProdList) => {
     const router = useRouter()
     const [disabled, setDisabled] = useState({})
     const [imageUrl, setImageUrl] = useState(initialValues.image)
@@ -41,11 +24,16 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
         try {
             setDisabled(true)
             toastId = toast.loading('Uploading...')
-            const data: ImageUrl = await axios.post('/api/data/productsImage', { image })
-            setImageUrl(data.url)
+            const data: ImageUrl = await axios.post(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`, { image: image })
+            console.log('🚀 ~ file: ProductList.tsx ~ line 30 ~ upload ~ data', data)
+            setImageUrl(`${process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? ''}/${data.url}`)
+            console.log('🚀 ~ file: ProductList.tsx ~ line 33 ~ upload ~ setImageUrl', imageUrl)
             toast.success('Successfully uploaded', { id: toastId })
-        } catch (e) {
-            toast.error('Unable to upload', { id: toastId })
+        } catch (err) {
+            let message
+            if (err instanceof Error) message = err.message
+            else message = String(err)
+            toast.error(`Unable to upload ${message}`, { id: toastId })
             setImageUrl('')
         } finally {
             setDisabled(false)
@@ -64,8 +52,11 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
             if (redirectPath) {
                 await router.push(redirectPath)
             }
-        } catch (e) {
-            toast.error('Unable to submit', { id: toastId })
+        } catch (err) {
+            let message
+            if (err instanceof Error) message = err.message
+            else message = String(err)
+            toast.error(`Unable to submit ${message}`, { id: toastId })
             setDisabled(false)
         }
     }
@@ -98,7 +89,7 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
                 )}
             </Formik>
             <div className="mb-6 max-w-full">
-                <AddProductImage src={image} alt={initialFormValues.name} onChangePicture={upload} label={''} accept={''} sizeLimit={0} />
+                <AddProductImage src={image} alt={initialFormValues.name} onChangePicture={upload} accept={'.png, .jpg, .jpeg, .gif .jiff'} sizeLimit={3} />
             </div>
         </div>
     )

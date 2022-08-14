@@ -17,7 +17,7 @@ const products = [
     {
         id: 1,
         name: 'Micro Backpack',
-        href: '#',
+        href: '/',
         price: '70.00',
         color: 'Moss',
         size: 'M',
@@ -27,7 +27,7 @@ const products = [
     {
         id: 2,
         name: 'Micro Backpack',
-        href: '#',
+        href: '/',
         price: '70.00',
         color: 'Moss',
         size: 'M',
@@ -37,7 +37,7 @@ const products = [
     {
         id: 3,
         name: 'Micro Backpack',
-        href: '#',
+        href: '/',
         price: '70.00',
         color: 'Moss',
         size: 'M',
@@ -47,7 +47,7 @@ const products = [
     {
         id: 4,
         name: 'Micro Backpack',
-        href: '#',
+        href: '/',
         price: '70.00',
         color: 'Moss',
         size: 'M',

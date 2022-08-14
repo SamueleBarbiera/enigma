@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { RefreshIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag } from 'react-icons/md'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { Fragment, useState } from 'react'
 import { BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
@@ -34,6 +35,7 @@ function classNames(...classes: string[]) {
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const { data: session, status } = useSession()
+    console.log('🚀 ~ file: Header.tsx ~ line 38 ~ Header ~ session', session)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { cartCount } = useShoppingCart()
 
@@ -105,8 +107,19 @@ export default function Header() {
                                         {/* Logo (lg+) */}
                                         <div className="hidden md:flex md:flex-1 lg:items-center">
                                             <Link href="/" className="flex-shrink-0">
-                                                <Image width={16} height={32} src={'/domanda.png'} alt="" />
+                                                <Image width={32} height={32} src={'/domanda.png'} alt="home" />
                                             </Link>
+                                            <>
+                                                {session?.user.role === 'ADMIN' ? (
+                                                    <>
+                                                        <Link href="/admin/prodotti">
+                                                            <button className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600">
+                                                                Dashboard
+                                                            </button>
+                                                        </Link>
+                                                    </>
+                                                ) : null}
+                                            </>
                                         </div>
 
                                         <div className="hidden h-full md:flex">
@@ -127,29 +140,25 @@ export default function Header() {
                                                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
                                             </button>
                                         </div>
-
-                                        {/* Logo (lg-) */}
-                                        <Link href="#" className="hidden">
-                                            <Image width={2} height={36} src={'/domanda.png'} alt="" />
-                                        </Link>
-
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="-mr-12 flex items-center">
                                                 {/* Help */}
-                                                {session ? (
-                                                    <div className="mr-4 mt-[0.4rem] flow-root">
+                                                {status === 'authenticated' ? (
+                                                    <div className="ml-2 mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
                                                             {({ open }: any) => (
                                                                 <>
                                                                     <Popover.Button
                                                                         className={classNames(
-                                                                            open ? 'text-beige-900' : 'text-beige-800',
-                                                                            'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
+                                                                            open
+                                                                                ? 'border-0 text-beige-900  focus-visible:ring-0 focus-visible:ring-opacity-100'
+                                                                                : 'border-0 text-beige-800  focus-visible:ring-0 focus-visible:ring-opacity-100',
+                                                                            'group  inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 focus-visible:ring-0 focus-visible:ring-opacity-100 '
                                                                         )}
                                                                     >
-                                                                        <Link href="#" className="group -m-2 flex items-center p-2">
+                                                                        <a href="#" className="group -m-2 flex items-center p-2">
                                                                             <FaRegUser className="h-5 w-5" aria-hidden="true" />
-                                                                        </Link>
+                                                                        </a>
                                                                     </Popover.Button>
 
                                                                     <Transition
@@ -161,17 +170,27 @@ export default function Header() {
                                                                         leaveFrom="opacity-100 translate-y-0"
                                                                         leaveTo="opacity-0 translate-y-1"
                                                                     >
-                                                                        <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-40 transform rounded-xl px-0 shadow-xl">
+                                                                        <Popover.Panel className="z-100 absolute mt-8 w-min max-w-xs -translate-x-52 transform rounded-xl px-0 shadow-xl">
                                                                             <div className="overflow-hidden rounded-lg shadow-lg">
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
-                                                                                        <Image src={session.user.image ?? ''} alt="User Img" className="mx-auto h-24 w-24 rounded-full shadow-md" />
+                                                                                        <Image
+                                                                                            src={session.user.image!}
+                                                                                            alt="User Img"
+                                                                                            className="mx-auto flex items-center justify-center  rounded-full shadow-md"
+                                                                                            width={100}
+                                                                                            height={100}
+                                                                                        />
                                                                                     </div>
                                                                                     <p className="font-semibold text-beige-900 contrast-150">{session.user.name}</p>
                                                                                     <p>{session.user.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
-                                                                                        onClick={() => signOut({ redirect: true })}
+                                                                                        onClick={() =>
+                                                                                            signOut({
+                                                                                                redirect: true,
+                                                                                            })
+                                                                                        }
                                                                                     >
                                                                                         Sign Out
                                                                                     </button>
@@ -186,12 +205,13 @@ export default function Header() {
                                                 ) : status === 'loading' ? (
                                                     <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
-                                                    <button
-                                                        className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600"
-                                                        onClick={() => signIn()}
-                                                    >
-                                                        Accedi
-                                                    </button>
+                                                    <>
+                                                        <Link href="/auth/Login">
+                                                            <button className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600">
+                                                                Accedi
+                                                            </button>
+                                                        </Link>
+                                                    </>
                                                 )}
                                                 {/* Cart */}
                                                 <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
@@ -205,8 +225,11 @@ export default function Header() {
                                                                     )}
                                                                 >
                                                                     <Link href="#" className="group -m-2 flex items-center p-2">
-                                                                        <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
-                                                                        <span className="ml-2 text-sm font-medium text-beige-900">{cartCount}</span>
+                                                                        <div>
+                                                                            {' '}
+                                                                            <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
+                                                                            <span className="ml-2 text-sm font-medium text-beige-900">{cartCount}</span>
+                                                                        </div>
                                                                     </Link>
                                                                 </Popover.Button>
 

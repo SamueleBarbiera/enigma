@@ -1,4 +1,4 @@
-import Layout from 'src/components/admin/sidebar'
+import Layout from '@/components/admin/Layout'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { CheckCircleIcon, ChevronRightIcon, MailIcon, SearchIcon } from '@heroicons/react/solid'
@@ -21,19 +21,19 @@ const navigation: {
     href: string
     current: boolean
 }[] = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Jobs', href: '#', current: false },
-    { name: 'Applicants', href: '#', current: false },
-    { name: 'Company', href: '#', current: false },
+    { name: 'Dashboard', href: '/', current: true },
+    { name: 'Jobs', href: '/', current: false },
+    { name: 'Applicants', href: '/', current: false },
+    { name: 'Company', href: '/', current: false },
 ]
 
 const userNavigation: {
     name: string
     href: string
 }[] = [
-    { name: 'Your Profile', href: '#' },
-    { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Your Profile', href: '/' },
+    { name: 'Settings', href: '/' },
+    { name: 'Sign out', href: '/' },
 ]
 
 const candidates: {
@@ -265,8 +265,9 @@ export default function Contact() {
                         <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0" aria-label="Pagination">
                             <div className="-mt-px flex w-0 flex-1">
                                 <Link href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
-                                    <ArrowNarrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    Previous
+                                    <div>
+                                        <ArrowNarrowLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" /> Previous
+                                    </div>
                                 </Link>
                             </div>
                             <div className="hidden md:-mt-px md:flex">
@@ -292,8 +293,10 @@ export default function Contact() {
                             </div>
                             <div className="-mt-px flex w-0 flex-1 justify-end">
                                 <Link href="#" className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:border-gray-200 hover:text-gray-700">
-                                    Next
-                                    <ArrowNarrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    <div>
+                                        Next
+                                        <ArrowNarrowRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    </div>
                                 </Link>
                             </div>
                         </nav>

@@ -9,25 +9,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios, { AxiosResponse } from 'axios'
 import Image from 'next/image'
+import { IProduct } from 'types/IProduct'
 
-interface ResFetch extends Response {
+export interface ResFetch extends Response {
     id: string
-}
-
-interface IProduct {
-    id: string
-    price_id: string
-    sku_id: string
-    sku: string
-    image: string
-    price: number
-    name: string | null
-    description: string | null
-    quantity: number | null
-    design: string | null
-    material: string | null
-    created_at: Date
-    updated_at: Date | null
 }
 
 function CartSummary() {

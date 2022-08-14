@@ -2,7 +2,7 @@ import { DefaultProfile, DefaultSession } from 'next-auth'
 declare module 'next-auth' {
     interface Session {
         user: {
-            /** The user's postal address. */
+            /** The user's role */
             role: string
         } & DefaultSession['user']
     }
@@ -21,6 +21,6 @@ declare module 'next-auth' {
         refreshToken: string
     }
     interface Profile {
-        profile: { picture: string } & DefaultProfile['image']
+        profile: { picture: string; role: string } & DefaultProfile['image']
     }
 }

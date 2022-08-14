@@ -6,8 +6,9 @@
         }
     },
     "env": {
+        "node": true,
         "browser": true,
-        "es2021": true
+        "es2022": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -17,7 +18,7 @@
         "ecmaVersion": "latest",
         "sourceType": "module",
         "project": ["./tsconfig.json"],
-        "files": ["*.ts", "*.tsx"]
+        "files": ["**/*.ts", "**/*.tsx", "**/*.css", "**/*.d.ts", "**/*.ts"]
     },
     "rules": {
         "@typescript-eslint/no-unsafe-argument": "error",

@@ -1,20 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { IProduct } from 'types/IProduct'
 
-interface Props {
-    id: string
-    image: string
-    name: string
-    description: string
-    price: number
-}
-
-const Card = ({ id = '', image = '', name = '', price = 0 }: Props) => (
+const Card = ({ id = '', image = '', name = '', price = 0 }: IProduct) => (
     <Link href={`/products/${id}`}>
         <div className="block w-full p-5">
             <div className="card card-compact w-full bg-neutral shadow-xl">
                 <div className="aspect-video relative overflow-hidden rounded-lg bg-success shadow">
-                    {image ? <Image src={image} alt={name} layout="fill" objectFit="cover" className="transition hover:opacity-80" /> : null}
+                    {image ? <Image src={image} alt={name ?? ''} layout="fill" objectFit="cover" className="transition hover:opacity-80" /> : null}
                 </div>
                 <div className="card-body">
                     <h2 className="card-name">

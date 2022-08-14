@@ -49,7 +49,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env 
-
+**.css
 # vercel
 .vercel
 .eslintrc

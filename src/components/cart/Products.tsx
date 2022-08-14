@@ -7,8 +7,17 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { fetcher } from '../../content/lib/fetcher'
 import Image from 'next/image'
+import { IProduct, ProductsData } from 'types/IProduct'
 
-const Filtri = [
+const Filtri: {
+    id: string
+    name: string
+    options: {
+        value: string
+        label: string
+        checked: boolean
+    }[]
+}[] = [
     {
         id: 'category',
         name: 'Category',
@@ -50,24 +59,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-interface Product {
-    id: string
-    image: string
-    price: number
-    name: string | null
-    description: string | null
-    quantity: number | null
-    design: string | null
-    material: string | null
-    created_at: Date
-    updated_at: Date | null
-}
-
-interface ProductsProps {
-    products: Product[]
-}
-
-const Products = ({ products }: ProductsProps) => {
+const Products = ({ products }: ProductsData) => {
     const [mobileFiltriOpen, setMobileFiltriOpen] = useState(false)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageIndex, setPageIndex] = useState(1)
@@ -284,7 +276,7 @@ const Products = ({ products }: ProductsProps) => {
                         {/* Product grid */}
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
-                                {products.map((product: Product) => (
+                                {products.map((product: IProduct) => (
                                     <div key={product.id} className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                                             {/* {isValidating ? (

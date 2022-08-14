@@ -4,20 +4,9 @@ import Footer from '../../components/layout/Footer'
 import Head from 'next/head'
 import prisma from 'src/content/lib/prisma'
 import { Product } from '@prisma/client'
-interface Products {
-    id: string
-    image: string
-    price: number
-    name: string | null
-    description: string | null
-    quantity: number | null
-    design: string | null
-    material: string | null
-    created_at: Date
-    updated_at: Date | null
-}
+import { IProduct } from 'types/IProduct'
 
-const Prodotti = (products: Products[]) => {
+const Prodotti = (products: IProduct[]) => {
     return (
         <>
             <Head>

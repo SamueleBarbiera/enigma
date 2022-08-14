@@ -4,21 +4,28 @@ import { Fragment, Key, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { HeartIcon, MenuAlt2Icon, PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
 import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
-import Layout from '../../components/admin/sidebar'
+import Layout from '../../components/admin/Layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from '../api/auth/[...nextauth]'
+import { CntFile, File } from 'types/Image'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 const userNavigation = [
-    { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Your profile', href: '/' },
+    { name: 'Sign out', href: '/' },
 ]
-const files = [
+const files: File[] = [
+    {
+        name: 'IMG_4985.HEIC',
+        size: '3.9 MB',
+        source: 'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
+        current: true,
+    },
     {
         name: 'IMG_4985.HEIC',
         size: '3.9 MB',
@@ -46,15 +53,6 @@ const currentFile: CntFile[] = [
         resolution: '72 x 72',
     },
 ]
-
-interface CntFile {
-    id: string
-    name: string
-    size: string
-    source: string
-    dimensions: string
-    resolution: string
-}
 
 export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
     console.log('🚀 ~ file: prodotti.tsx ~ line 71 ~ Page ~ session', session)
@@ -116,6 +114,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                         className="h-8 w-8 rounded-full"
                                                         src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
                                                         alt=""
+                                                        layout="fill"
                                                     />
                                                 </Menu.Button>
                                             </div>
@@ -172,7 +171,12 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                             'group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100'
                                                         )}
                                                     >
-                                                        <Image src={file.source} alt="" className={classNames(file.current ? '' : 'group-hover:opacity-75', 'pointer-events-none object-cover')} />
+                                                        <Image
+                                                            layout="fill"
+                                                            src={file.source}
+                                                            alt=""
+                                                            className={classNames(file.current ? '' : 'group-hover:opacity-75', 'pointer-events-none object-cover')}
+                                                        />
                                                         <button type="button" className="absolute inset-0 focus:outline-none">
                                                             <span className="sr-only">View details for {file.name}</span>
                                                         </button>
@@ -192,7 +196,7 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                     {currentFile.map((info) => (
                                         <div key={info.id}>
                                             <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">
-                                                <Image src={info.source} alt="" className="object-cover" />
+                                                <Image layout="fill" src={info.source} alt="" className="object-cover" />
                                             </div>
                                             <div className="mt-4 flex items-start justify-between">
                                                 <div>
@@ -257,8 +261,9 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+    console.log('🚀 ~ file: prodotti.tsx ~ line 259 ~ getServerSideProps ~ session', session)
 
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || session.user.role != 'ADMIN') {
         return { redirect: { permanent: false, destination: '/' } }
     }
 

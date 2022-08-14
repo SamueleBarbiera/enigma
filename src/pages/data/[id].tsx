@@ -18,7 +18,7 @@
 //     return classes.filter(Boolean).join(' ')
 // }
 
-// interface Product {
+// interface IProduct {
 //     id: string
 //     image: string
 //     price: number
@@ -38,7 +38,7 @@ export default function Id() {
 // export default function ProductPage(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
 //     console.log('🚀 - file: [slug].tsx - line 22 - ProductPage - products', props)
 //     const products = props.productsData
-//     const productsConsigliati: Product[] = props.productsData
+//     const productsConsigliati: IProduct[] = props.productsData
 //     const { addItem } = useShoppingCart()
 
 //     let colorsAvailable = Object.keys(products.dettagli[0]).filter((k) => products.dettagli[0][k] === true)
@@ -91,7 +91,7 @@ export default function Id() {
 //             </Head>
 //             <Header />
 //             <div className="mx-auto h-full w-screen p-16">
-//                 {/* Product */}
+//                 {/* IProduct */}
 //                 <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
 //                     {/* Image gallery */}
 //                     <Tab.Group as="div" className="flex flex-col-reverse">
@@ -130,12 +130,12 @@ export default function Id() {
 //                         </Tab.Panels>
 //                     </Tab.Group>
 
-//                     {/* Product info */}
+//                     {/* IProduct info */}
 //                     <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
 //                         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{products.name}</h1>
 
 //                         <div className="mt-3">
-//                             <h2 className="sr-only">Product information</h2>
+//                             <h2 className="sr-only">IProduct information</h2>
 //                             <p className="text-3xl text-gray-900">
 //                                 {formatCurrencyString({
 //                                     value: products.price * 100,

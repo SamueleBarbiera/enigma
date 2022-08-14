@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
+import { CartDet } from 'types/Cart'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
     apiVersion: '2020-08-27',
@@ -19,19 +20,6 @@ interface ExtendedNextApiRequest extends NextApiRequest {
             price: number
         }
     }
-}
-
-interface CartDet {
-    currency: string
-    quantity: number
-    value: number
-    price_data: object
-    product_data: object
-    formattedValue: string
-    formattedPrice: string
-    image: string
-    name: string
-    id: string
 }
 
 export default async function handler(req: ExtendedNextApiRequest, res: NextApiResponse) {

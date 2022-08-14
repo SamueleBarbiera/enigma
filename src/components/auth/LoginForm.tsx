@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable no-control-regex */
-
-import { Provider } from 'next-auth/providers'
 import { signIn } from 'next-auth/react'
+import { Provider, Providers } from 'types/Provider'
 
 interface Props {
-    providers?: Provider
+    providers?: Providers
 }
 
 export default function LoginForm({ providers }: Props) {
+    console.log('🚀 ~ file: LoginForm.tsx ~ line 12 ~ LoginForm ~ providers', providers)
     return (
         <>
             <div className="flex h-screen flex-col justify-center bg-beige-400 px-6 py-4">

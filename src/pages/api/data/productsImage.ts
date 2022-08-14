@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { withValidation } from 'next-validations'
 import { z } from 'zod'
 
-const supabase = createClient(process.env.SUPABASE_API_URL ?? '', process.env.SUPABASE_API_KEY ?? '')
+export const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? '', process.env.NEXT_PUBLIC_SUPABASE_API_KEY ?? '')
 
 const schema = z.object({
     image: z.string().nonempty(),
@@ -30,6 +30,7 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
         if (!image) {
             return res.status(500).json({ message: 'There is no image' })
         }
+
         try {
             const contentType = image.match(/data:(.*);base64/)?.[1]
             const base64FileData = image.split('base64,')[1]
@@ -43,18 +44,27 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
                 contentType,
                 upsert: true,
             })
+            console.log('🚀 ~ file: productsImage.ts ~ line 47 ~ data', data)
 
             if (uploadError) {
+                let message
+                if (uploadError instanceof Error) message = uploadError.message
+                else message = String(uploadError)
                 console.log(uploadError)
-                throw new Error('Image upload Failed!!')
+                throw new Error(message)
             }
 
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const url = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
+            console.log('🚀 ~ file: productsImage.ts ~ line 59 ~ handle ~ url', url)
 
             return res.status(200).json({ url })
-        } catch (e) {
-            res.status(500).json({ message: 'Something went horribly wrong' })
+        } catch (err) {
+            let message
+            if (err instanceof Error) message = err.message
+            else message = String(err)
+            console.log('🚀 ~ file: productsImage.ts ~ line 57 ~ handle ~ err', message)
+            res.status(500).json({ message: `Something went horribly wrong ${message}` })
         }
     } else {
         res.setHeader('Allow', ['POST'])

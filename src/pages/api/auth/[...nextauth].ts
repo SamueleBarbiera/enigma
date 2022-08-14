@@ -76,7 +76,6 @@ const refreshAccessToken = async (payload: Token, clientId: string, clientSecret
 }
 
 let ErrorGoogleEnv = false
-console.log('🚀 ~ file: [...nextauth].ts ~ line 79 ~ ErrorGoogleEnv', ErrorGoogleEnv)
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET } = process.env
 if (
     process.env.NODE_ENV === 'test' ||
@@ -102,7 +101,7 @@ if (ErrorGoogleEnv) {
             clientSecret: GOOGLE_CLIENT_SECRET!,
             accessTokenUrl: GOOGLE_AUTHORIZATION_URL,
             profile(profile: Profile) {
-                console.log('🚀 - file: [...nextauth].ts - line 92 - profile - profile', profile)
+                //console.log('🚀 - file: [...nextauth].ts - line 92 - profile - profile', profile)
                 return {
                     id: profile.sub,
                     name: profile.name,
@@ -112,11 +111,12 @@ if (ErrorGoogleEnv) {
             },
         }),
         FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET ?? '',
+            clientId: process.env.FACEBOOK_CLIENT_ID!,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
         })
     )
 }
+//console.log('🚀 ~ file: [...nextauth].ts ~ line 94 ~ providers', providers)
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -126,10 +126,9 @@ export const authOptions: NextAuthOptions = {
         secret: process.env.NEXTAUTH_SECRET,
     },
     callbacks: {
-        session({ session, user }: { session: Session; user: User; token: JWT }) {
-            console.log('🚀 - file: [...nextauth].ts - line 113 - session - user', user, session)
-
-            session.jwt = user.jwt
+        session({ session, user }: { session: Session; user: User }) {
+            session.user.role = user.role as string
+            //console.log('🚀 - file: [...nextauth].ts - line 113 - session - user', user, session)
             session.id = user.id
             return session
         },
@@ -146,7 +145,7 @@ export const authOptions: NextAuthOptions = {
                 token.access_token = account?.access_token
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
                 token.id = response.data.user.id
-                console.log(response.data, token)
+                //console.log(response.data, token)
             }
 
             // Return previous token if the access token has not expired yet

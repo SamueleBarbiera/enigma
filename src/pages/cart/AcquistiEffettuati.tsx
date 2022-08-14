@@ -14,8 +14,8 @@ import { unstable_getServerSession } from 'next-auth'
 const orders = [
     {
         number: 'WU88191111',
-        href: '#',
-        invoiceHref: '#',
+        href: '/',
+        invoicehref: '/',
         createdDate: 'Jul 6, 2021',
         createdDatetime: '2021-07-06',
         deliveredDate: 'July 12, 2021',
@@ -27,7 +27,7 @@ const orders = [
                 name: 'Micro Backpack',
 
                 description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
-                href: '#',
+                href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
                 imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -37,8 +37,8 @@ const orders = [
     },
     {
         number: 'WU88191111',
-        href: '#',
-        invoiceHref: '#',
+        href: '/',
+        invoicehref: '/',
         createdDate: 'Jul 6, 2021',
         createdDatetime: '2021-07-06',
         deliveredDate: 'July 12, 2021',
@@ -49,7 +49,7 @@ const orders = [
                 id: 1,
                 name: 'Micro Backpack',
                 description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
-                href: '#',
+                href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
                 imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -59,7 +59,7 @@ const orders = [
                 name: 'Micro Backpack',
 
                 description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
-                href: '#',
+                href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
                 imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
@@ -156,7 +156,8 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                                 {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
                                                                 {({ active }: any) => (
                                                                     <Link
-                                                                        href={order.invoiceHref}
+                                                                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                                                        href={order.invoicehref}
                                                                         className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
                                                                     >
                                                                         Invoice

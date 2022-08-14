@@ -7,15 +7,15 @@ const footerNavigation = {
     bottomLinks: [
         {
             name: 'Facebook',
-            href: '#',
+            href: '/',
             image: <TiSocialFacebook className="-mt-[0.1rem] h-[1.9rem] w-[1.7rem]" aria-hidden="true" />,
         },
         {
             name: 'Whatsapp',
-            href: '#',
+            href: '/',
             image: <AiOutlineWhatsApp className="ml-[0.05rem] mr-[0.3rem] h-[1.7rem] w-6" aria-hidden="true" />,
         },
-        { name: 'Instagram', href: '#', image: <RiInstagramLine className=" h-[1.7rem] w-6" aria-hidden="true" /> },
+        { name: 'Instagram', href: '/', image: <RiInstagramLine className=" h-[1.7rem] w-6" aria-hidden="true" /> },
     ],
 }
 

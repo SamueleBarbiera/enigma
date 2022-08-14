@@ -1,22 +1,12 @@
 import { FieldHookConfig, useField } from 'formik'
 import { ExclamationCircleIcon } from '@heroicons/react/solid'
-
-interface Props {
-    type: string
-    label: string
-    className: string
-    placeholder: string
-    disabled: object
-    rows: number
-    min: string
-    name: string
-}
+import { InputField } from 'types/Image'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const Input = ({ type = '', label = '', className = '', name = '' }: Props) => {
+const Input = ({ type = '', label = '', className = '', name = '' }: InputField) => {
     const props: string | FieldHookConfig<unknown> = { type, name, className }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [field, meta] = useField(props)

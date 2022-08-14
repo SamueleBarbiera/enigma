@@ -1,4 +1,4 @@
-import Layout from 'src/components/admin/sidebar'
+import Layout from '@/components/admin/Layout'
 
 export default function About() {
     return (

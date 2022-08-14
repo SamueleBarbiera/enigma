@@ -30,11 +30,11 @@ export default function Sidebar({ children }: Props) {
                 <div className="hidden w-28 overflow-y-auto bg-beige-700 md:block">
                     <div className="flex w-full flex-col items-center py-6">
                         <div className="flex flex-shrink-0 items-center">
-                            <Image className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
+                            <Image layout="fill" className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
                         </div>
                         <div className="mt-6 w-full flex-1 space-y-1 px-2">
                             {navigation.map((item) => (
-                                <Link href={item.href} key={item.name}>
+                                <Link href={item.path} key={item.name}>
                                     <div
                                         key={item.name}
                                         className={classNames(
@@ -96,7 +96,7 @@ export default function Sidebar({ children }: Props) {
                                     </div>
                                 </Transition.Child>
                                 <div className="flex flex-shrink-0 items-center px-4">
-                                    <Image className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
+                                    <Image className="h-8 w-auto" layout="fill" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
                                 </div>
                                 <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
                                     <nav className="flex h-full flex-col">
