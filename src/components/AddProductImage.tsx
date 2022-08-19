@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { useState, useRef, ChangeEvent } from 'react'
+import { useState, useRef, ChangeEvent, MutableRefObject } from 'react'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import { CloudUploadIcon } from '@heroicons/react/outline'
@@ -8,15 +8,18 @@ import { addImg } from 'types/Image'
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
-const AddProductImage = ({ src = '', alt = '', accept = '.png, .jpg, .jpeg, .gif .jiff', sizeLimit = 3 * 1024 * 1024, onChangePicture = () => null }: addImg) => {
-    const pictureRef = useRef() as React.MutableRefObject<HTMLInputElement>
-    const [image, setImage] = useState({ src, alt })
+const AddProductImage = ({ src, alt, accept, sizeLimit, onChangePicture = () => null }: addImg) => {
+    console.log('🚀 ~ file: AddProductImage.tsx ~ line 12 ~ AddProductImage ~ sizeLimit', sizeLimit)
+
+    const pictureRef = useRef() as MutableRefObject<HTMLInputElement>
+    const [image, setImage] = useState({ src, alt } ?? null)
     const [updatingPicture, setUpdatingPicture] = useState(false)
     const [pictureError, setPictureError] = useState('')
 
     const handleOnChangePicture = (e: ChangeEvent<HTMLInputElement>) => {
         let file
         if (e.target.files) {
+            console.log('🚀 ~ file: AddProductImage.tsx ~ line 20 ~ handleOnChangePicture ~ e.target.files', e.target.files)
             file = e.target.files[0]
         }
         const reader: FileReader = new FileReader()
@@ -33,6 +36,8 @@ const AddProductImage = ({ src = '', alt = '', accept = '.png, .jpg, .jpeg, .gif
                     if (typeof onChangePicture === 'function') {
                         await onChangePicture(reader.result)
                     }
+                    console.log('🚀 ~ file: AddProductImage.tsx ~ line 40 ~ AddProductImage ~ src', { src })
+                    console.log('🚀 ~ file: AddProductImage.tsx ~ line 41 ~ IMAGE', { image })
                 } catch (err) {
                     toast.error('Unable to update image')
                 } finally {
@@ -43,7 +48,7 @@ const AddProductImage = ({ src = '', alt = '', accept = '.png, .jpg, .jpeg, .gif
         )
 
         if (file) {
-            if (file.size > sizeLimit) {
+            if (file.size <= sizeLimit) {
                 setUpdatingPicture(true)
                 setPictureError('')
                 reader.readAsDataURL(file)
@@ -61,20 +66,17 @@ const AddProductImage = ({ src = '', alt = '', accept = '.png, .jpg, .jpeg, .gif
 
     return (
         <div className="flex flex-col space-y-2">
-            <label className="text-gray-200 ">Image</label>
-
             <button
                 disabled={updatingPicture}
                 onClick={handleOnClickPicture}
                 className={classNames(
                     'aspect-video group relative overflow-hidden rounded-md transition focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
-                    image.src ? 'hover:opacity-50 disabled:hover:opacity-100' : 'border-2 border-dotted hover:border-gray-400 focus:border-gray-400 disabled:hover:border-gray-200'
+                    image?.src ? 'hover:opacity-50 disabled:hover:opacity-100' : 'border-2 border-dotted hover:border-gray-400 focus:border-gray-400 disabled:hover:border-gray-200'
                 )}
             >
-                {image.src ? <Image src={image.src as string} alt={image.alt} layout="fill" objectFit={'cover'} /> : null}
-
+                {image?.src ? <Image src={image.src as string} alt={image?.alt ?? 'Uploaded img'} layout="fill" objectFit={'cover'} /> : null}
                 <div className="flex items-center justify-center">
-                    {!image.src ? (
+                    {!image?.src ? (
                         <div className="flex flex-col items-center space-y-2">
                             <div className="shrink-0 rounded-full bg-gray-200 p-2 transition group-hover:scale-110 group-focus:scale-110">
                                 <CloudUploadIcon className="h-4 w-4 text-gray-500 transition" />

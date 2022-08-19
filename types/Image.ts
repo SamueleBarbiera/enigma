@@ -27,7 +27,7 @@ export interface InputField {
 
 export interface addImg {
     alt: string
-    src: string | ArrayBuffer | null
+    src: string | null | ArrayBuffer
     accept: string
     sizeLimit: number
     onChangePicture: unknown

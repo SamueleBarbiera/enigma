@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
@@ -14,10 +16,10 @@ const ProductSchema = z.object({
     price: z.number().nonnegative('Field is required not negative').gte(1),
 })
 
-const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', onSubmit = () => null }: ProdList) => {
+const ProductList = ({ initialValues, redirectPath, buttonText, onSubmit = () => null }: ProdList) => {
     const router = useRouter()
     const [disabled, setDisabled] = useState({})
-    const [imageUrl, setImageUrl] = useState(initialValues.image)
+    const [imageUrl, setImageUrl] = useState<string>(initialValues.image)
 
     const upload = async (image: string) => {
         let toastId
@@ -26,8 +28,8 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
             toastId = toast.loading('Uploading...')
             const data: ImageUrl = await axios.post(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`, { image: image })
             console.log('🚀 ~ file: ProductList.tsx ~ line 30 ~ upload ~ data', data)
-            setImageUrl(`${process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? ''}/${data.url}`)
-            console.log('🚀 ~ file: ProductList.tsx ~ line 33 ~ upload ~ setImageUrl', imageUrl)
+            setImageUrl(data.data.url)
+            console.log('🚀 ~ file: ProductList.tsx ~ line 33 ~ upload ~ setImageUrl', { imageUrl })
             toast.success('Successfully uploaded', { id: toastId })
         } catch (err) {
             let message
@@ -61,7 +63,8 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
         }
     }
 
-    const { image, ...initialFormValues } = initialValues
+    const { image = imageUrl, ...initialFormValues } = initialValues
+    console.log('🚀 ~ file: ProductList.tsx ~ line 33 ~ upload ~ setImageUrl', { imageUrl }, { image })
 
     return (
         <div>
@@ -89,7 +92,7 @@ const ProductList = ({ initialValues, redirectPath = '', buttonText = 'Submit', 
                 )}
             </Formik>
             <div className="mb-6 max-w-full">
-                <AddProductImage src={image} alt={initialFormValues.name} onChangePicture={upload} accept={'.png, .jpg, .jpeg, .gif .jiff'} sizeLimit={3} />
+                <AddProductImage src={imageUrl} alt={initialFormValues.name} onChangePicture={upload} accept={'.png, .jpg, .jpeg, .gif .jiff'} sizeLimit={3 * 1024 * 1024} />
             </div>
         </div>
     )

@@ -38,7 +38,7 @@
             "@/pages/*": ["./src/pages/*"]
         }
     },
-    "include": ["next-env.d.ts", "types/**/*.ts", "**/*.ts", "**/*.tsx"],
+    "include": ["types/*.ts", "**/*.ts", "**/*.tsx", "**/*.css"],
     "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
     "ts-node": {
         "compilerOptions": {

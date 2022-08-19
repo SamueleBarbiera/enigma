@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 import ProductList from '../components/ProductList'
 
 export default function addProducts() {
-    const createProduct = (data: AxiosRequestConfig<unknown> | undefined) => axios.get('/api/data/createProduct', data)
+    const createProduct = (data: AxiosRequestConfig<unknown> | undefined) => axios.get(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/createProduct`, data)
 
     return (
         <Layout>

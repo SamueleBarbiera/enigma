@@ -38,7 +38,7 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
                     price,
                 },
             })
-            res.status(200).json(product)
+            res.status(200).json({ product })
         } catch (e) {
             res.status(500).json({ message: 'Something went wrong' })
         }

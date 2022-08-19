@@ -1,3 +1,6 @@
+import { AxiosResponse } from 'axios'
+
+/* eslint-disable @typescript-eslint/no-extra-semi */
 export interface IProduct {
     id: string
     price_id: string
@@ -36,8 +39,10 @@ export interface ProdList {
     onSubmit: unknown
 }
 
-export interface ImageUrl {
-    url: string
+export interface ImageUrl extends AxiosResponse {
+    data: {
+        url: string
+    }
 }
 
 export interface Filtri {

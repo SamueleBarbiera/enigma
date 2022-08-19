@@ -11,41 +11,51 @@
         "es2022": true
     },
     "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": ["./tsconfig.json"],
-        "files": ["**/*.ts", "**/*.tsx", "**/*.css", "**/*.d.ts", "**/*.ts"]
-    },
-    "rules": {
-        "@typescript-eslint/no-unsafe-argument": "error",
-        "@typescript-eslint/no-unnecessary-condition": 2,
-        "react/react-in-jsx-scope": 0,
-        "@typescript-eslint/no-misused-promises": [
-            "error",
-            {
-                "checksVoidReturn": false
-            }
-        ],
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-unused-vars": "error",
-        "@typescript-eslint/explicit-member-accessibility": ["error"]
-    },
-    "plugins": ["@typescript-eslint", "react"],
-    "ignorePatterns": [".eslintrc"],
-    "extends": [
-        "eslint:recommended",
-        "next",
-        "plugin:@typescript-eslint/recommended",
-        "next/core-web-vitals",
-        "prettier",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:@typescript-eslint/strict",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended"
+    "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.css", "*.d.ts", "*.ts"],
+            "parserOptions": {
+                "requireConfigFile": false,
+                "ecmaFeatures": {
+                    "jsx": true
+                },
+                "ecmaVersion": "latest",
+                "sourceType": "module",
+                "project": ["./tsconfig.json"]
+            },
+            "rules": {
+                "prettier/prettier": "error",
+                "@typescript-eslint/no-unsafe-argument": "error",
+                "@typescript-eslint/no-unnecessary-condition": 2,
+                "react/react-in-jsx-scope": 0,
+                "@typescript-eslint/no-misused-promises": [
+                    "error",
+                    {
+                        "checksVoidReturn": false
+                    }
+                ],
+                "@typescript-eslint/no-explicit-any": "error",
+                "@typescript-eslint/no-unused-vars": "error",
+                "@typescript-eslint/explicit-member-accessibility": ["error"],
+                "react-hooks/rules-of-hooks": "error",
+                "react-hooks/exhaustive-deps": "warn"
+            },
+
+            "extends": [
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking",
+                "eslint:recommended",
+                "next",
+                "plugin:@typescript-eslint/recommended",
+                "next/core-web-vitals",
+                "prettier",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking",
+                "plugin:@typescript-eslint/strict",
+                "plugin:react/recommended",
+                "plugin:react-hooks/recommended"
+            ]
+        }
     ]
 }

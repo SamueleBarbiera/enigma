@@ -53,9 +53,10 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
                 console.log(uploadError)
                 throw new Error(message)
             }
-
+            const prefixUrl = `${process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? ''}`
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const url = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
+            const rootUrl = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
+            const url = `${prefixUrl + rootUrl}`
             console.log('🚀 ~ file: productsImage.ts ~ line 59 ~ handle ~ url', url)
 
             return res.status(200).json({ url })
