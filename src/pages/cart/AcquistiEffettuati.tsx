@@ -26,11 +26,13 @@ const orders = [
                 id: 1,
                 name: 'Micro Backpack',
 
-                description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
+                description:
+                    'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
                 href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
-                imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
+                imageAlt:
+                    'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
             },
             // More products...
         ],
@@ -48,21 +50,25 @@ const orders = [
             {
                 id: 1,
                 name: 'Micro Backpack',
-                description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
+                description:
+                    'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
                 href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
-                imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
+                imageAlt:
+                    'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
             },
             {
                 id: 2,
                 name: 'Micro Backpack',
 
-                description: 'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
+                description:
+                    'Are you a minimalist yday carry items. Wear it like a backpack or carry it like a satchel for all-day use.',
                 href: '/',
                 price: '$70.00',
                 imageSrc: 'https://tailwindui.com/img/ecommerce-images/order-history-page-03-product-01.jpg',
-                imageAlt: 'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
+                imageAlt:
+                    'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
             },
             // More products...
         ],
@@ -87,8 +93,12 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                 <main className="py-24">
                     <div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
                         <div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
-                            <h1 className="text-2xl font-extrabold tracking-tight text-beige-900 sm:text-3xl">Storico degli ordini</h1>
-                            <p className="mt-2 text-sm text-beige-500">Controlla lo stato degli ordini effettuati e acquistali di nuovo</p>
+                            <h1 className="text-2xl font-extrabold tracking-tight text-beige-900 sm:text-3xl">
+                                Storico degli ordini
+                            </h1>
+                            <p className="mt-2 text-sm text-beige-500">
+                                Controlla lo stato degli ordini effettuati e acquistali di nuovo
+                            </p>
                         </div>
                     </div>
 
@@ -101,7 +111,8 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                 {orders.map((order) => (
                                     <div key={order.number} className="rounded-xl bg-gray-50 shadow-xl ">
                                         <h3 className="sr-only">
-                                            Order placed on <time dateTime={order.createdDatetime}>{order.createdDate}</time>
+                                            Order placed on{' '}
+                                            <time dateTime={order.createdDatetime}>{order.createdDate}</time>
                                         </h3>
 
                                         <div className="mx-2 -mb-4 flex items-center p-6 sm:grid sm:grid-cols-3 sm:gap-x-6">
@@ -113,7 +124,9 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                 <div className="hidden sm:block">
                                                     <dt className="font-medium text-beige-900">Data acquisto</dt>
                                                     <dd className="mt-1 flex w-max flex-shrink-0 text-beige-500">
-                                                        <time dateTime={order.createdDatetime}>{order.createdDate}</time>
+                                                        <time dateTime={order.createdDatetime}>
+                                                            {order.createdDate}
+                                                        </time>
                                                     </dd>
                                                 </div>
                                                 <div className="ml-10 items-end justify-end sm:ml-0">
@@ -146,7 +159,12 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                                 {({ active }: any) => (
                                                                     <Link
                                                                         href={order.href}
-                                                                        className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
+                                                                        className={classNames(
+                                                                            active
+                                                                                ? 'bg-beige-100 text-beige-900'
+                                                                                : 'text-beige-700',
+                                                                            'block px-4 py-2 text-sm'
+                                                                        )}
                                                                     >
                                                                         View
                                                                     </Link>
@@ -158,7 +176,12 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                                     <Link
                                                                         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                                                                         href={order.invoicehref}
-                                                                        className={classNames(active ? 'bg-beige-100 text-beige-900' : 'text-beige-700', 'block px-4 py-2 text-sm')}
+                                                                        className={classNames(
+                                                                            active
+                                                                                ? 'bg-beige-100 text-beige-900'
+                                                                                : 'text-beige-700',
+                                                                            'block px-4 py-2 text-sm'
+                                                                        )}
                                                                     >
                                                                         Invoice
                                                                     </Link>
@@ -177,14 +200,22 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                 <li key={product.id} className="p-6">
                                                     <div className="flex items-center">
                                                         <div className="mr-4 -ml-3 h-32 w-32 flex-shrink-0 overflow-hidden rounded-xl bg-beige-100 sm:ml-2">
-                                                            <Image src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
+                                                            <Image
+                                                                src={product.imageSrc}
+                                                                alt={product.imageAlt}
+                                                                className="h-full w-full object-cover object-center"
+                                                            />
                                                         </div>
                                                         <div className="ml-4 flex-1 text-sm">
                                                             <div className="font-medium text-beige-900 smd:flex smd:justify-between">
                                                                 <h5 className="">{product.name}</h5>
-                                                                <p className="mt-1 smd:ml-2 smd:mt-0">{product.price}</p>
+                                                                <p className="mt-1 smd:ml-2 smd:mt-0">
+                                                                    {product.price}
+                                                                </p>
                                                             </div>
-                                                            <p className="hidden text-beige-500 smd:mt-2 smd:block">{product.description}</p>
+                                                            <p className="hidden text-beige-500 smd:mt-2 smd:block">
+                                                                {product.description}
+                                                            </p>
 
                                                             <div className="mt-4 flex w-full text-sm font-medium smd:hidden">
                                                                 <div className=" flex w-full flex-auto flex-shrink-0 break-before-all text-xs ">
@@ -201,9 +232,15 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
 
                                                     <div className="mt-6 flex items-center justify-center smd:justify-between">
                                                         <div className="flex  items-center">
-                                                            <CheckCircleIcon className="h-5 w-5 flex-shrink-0 text-green-500" aria-hidden="true" />
+                                                            <CheckCircleIcon
+                                                                className="h-5 w-5 flex-shrink-0 text-green-500"
+                                                                aria-hidden="true"
+                                                            />
                                                             <p className=" text-sm font-medium text-beige-500 smd:ml-2">
-                                                                Spedito il <time dateTime={order.deliveredDatetime}>{order.deliveredDate}</time>
+                                                                Spedito il{' '}
+                                                                <time dateTime={order.deliveredDatetime}>
+                                                                    {order.deliveredDate}
+                                                                </time>
                                                             </p>
                                                         </div>
                                                         <div className=" mt-0 hidden pt-0 sm:ml-4 sm:border-none  smd:flex smd:items-center smd:space-x-4 smd:text-sm smd:font-medium">

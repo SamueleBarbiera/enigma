@@ -1,5 +1,5 @@
 import { buffer } from 'micro'
-import Cors from 'micro-cors'
+//import Cors from 'micro-cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import Stripe from 'stripe'
@@ -17,10 +17,9 @@ export const config = {
     },
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const cors = Cors({
-    allowMethods: ['POST', 'HEAD'],
-})
+// const cors = Cors({
+//     allowMethods: ['POST', 'HEAD'],
+// })
 
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {

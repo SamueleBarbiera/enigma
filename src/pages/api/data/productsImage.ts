@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { nanoid } from 'nanoid'
 import { decode } from 'base64-arraybuffer'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withValidation } from 'next-validations'
 import { z } from 'zod'
+import { env } from 'src/env/client.mjs'
+import { env as envB } from 'src/env/server.mjs'
 
-export const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? '', process.env.NEXT_PUBLIC_SUPABASE_API_KEY ?? '')
+export const supabase: SupabaseClient = createClient(env.NEXT_PUBLIC_SUPABASE_API_URL, envB.SUPABASE_API_KEY)
 
 const schema = z.object({
     image: z.string().nonempty(),
@@ -40,10 +44,12 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
             const fileName = nanoid()
             const ext = contentType.split('/')[1]
             const path = `${fileName}.${ext ?? ''}`
-            const { data, error: uploadError } = await supabase.storage.from(process.env.SUPABASE_STORAGE_BUCKET ?? '').upload(path, decode(base64FileData), {
-                contentType,
-                upsert: true,
-            })
+            const { data, error: uploadError } = await supabase.storage
+                .from(process.env.SUPABASE_STORAGE_BUCKET ?? '')
+                .upload(path, decode(base64FileData), {
+                    contentType,
+                    upsert: true,
+                })
             console.log('🚀 ~ file: productsImage.ts ~ line 47 ~ data', data)
 
             if (uploadError) {
@@ -55,7 +61,9 @@ const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
             }
             const prefixUrl = `${process.env.NEXT_PUBLIC_SUPABASE_API_URL ?? ''}`
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const rootUrl = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${data!.Key}`
+            const rootUrl = `${process.env.SUPABASE_URL ?? ''.replace('.co', '.in')}/storage/v1/object/public/${
+                data!.Key
+            }`
             const url = `${prefixUrl + rootUrl}`
             console.log('🚀 ~ file: productsImage.ts ~ line 59 ~ handle ~ url', url)
 

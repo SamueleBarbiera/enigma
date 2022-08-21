@@ -15,11 +15,20 @@ export default function FourOhFour() {
                         <div className="flex flex-grow flex-col items-center justify-center  p-4">
                             <div className="mx-auto flex  max-w-7xl flex-grow flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
                                 <div className="my-8 flex-shrink-0 flex-col justify-center">
-                                    <p className="text-7xl font-semibold uppercase tracking-wide text-beige-600">404 error</p>
-                                    <h1 className="mt-2 text-5xl font-bold tracking-tight text-gray-900 xmd:text-5xl">Questa pagina non esiste</h1>
+                                    <p className="text-7xl font-semibold uppercase tracking-wide text-beige-600">
+                                        404 error
+                                    </p>
+                                    <h1 className="mt-2 text-5xl font-bold tracking-tight text-gray-900 xmd:text-5xl">
+                                        Questa pagina non esiste
+                                    </h1>
                                     <div className="mt-8">
-                                        <Link href="/" className="rounded-lg bg-beige-200 p-2 text-2xl font-medium text-beige-600 shadow-xl hover:text-beige-500">
-                                            Torna alla home<span aria-hidden="true"> &rarr;</span>
+                                        <Link
+                                            href="/"
+                                            className="rounded-lg bg-beige-200 p-2 text-2xl font-medium text-beige-600 shadow-xl hover:text-beige-500"
+                                        >
+                                            <p>
+                                                Torna alla home<span aria-hidden="true"> &rarr;</span>
+                                            </p>
                                         </Link>
                                     </div>
                                 </div>

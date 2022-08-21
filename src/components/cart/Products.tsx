@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { formatCurrencyString } from 'use-shopping-cart'
 import { ExclamationCircleIcon, RefreshIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { XIcon } from '@heroicons/react/outline'
@@ -7,7 +8,7 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import { fetcher } from '../../content/lib/fetcher'
 import Image from 'next/image'
-import { IProduct, ProductsData } from 'types/IProduct'
+import { IProduct, ProductsData } from 'src/types/IProduct'
 
 const Filtri: {
     id: string
@@ -66,9 +67,13 @@ const Products = ({ products }: ProductsData) => {
     const [order, setOrder] = useState('DESC')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { data, error, isValidating } = useSWR(`/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`, fetcher, {
-        fallbackData: products,
-    })
+    const { data, error, isValidating } = useSWR(
+        `/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
+        fetcher,
+        {
+            fallbackData: products,
+        }
+    )
     console.log('🚀 Products.tsx - line 76 - fetchData', data)
 
     return (
@@ -84,7 +89,9 @@ const Products = ({ products }: ProductsData) => {
                 <div className="mx-auto h-min max-w-full rounded-lg bg-red-100 py-4 px-4 shadow-xl">
                     <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
                         <ExclamationCircleIcon className="mt-3 h-12 w-12 flex-shrink-0 animate-bounce text-red-600" />
-                        <p className="mt-3 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .</p>
+                        <p className="mt-3 text-lg text-red-500">
+                            Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .
+                        </p>
                         <p>{error}</p>
                     </div>
                 </div>
@@ -130,21 +137,36 @@ const Products = ({ products }: ProductsData) => {
                                     {/* Filtri */}
                                     <form className="mt-4">
                                         {Filtri.map((section) => (
-                                            <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                                            <Disclosure
+                                                as="div"
+                                                key={section.id}
+                                                className="border-t border-gray-200 px-4 py-6"
+                                            >
                                                 {({ open }) => (
                                                     <>
                                                         <h3 className="-mx-2 -my-3 flow-root">
                                                             <Disclosure.Button className="flex w-full items-center justify-between bg-gray-50 px-2 py-3 text-sm text-gray-400">
-                                                                <span className="font-medium text-gray-900">{section.name}</span>
+                                                                <span className="font-medium text-gray-900">
+                                                                    {section.name}
+                                                                </span>
                                                                 <span className="ml-6 flex items-center">
-                                                                    <ChevronDownIcon className={classNames(open ? '-rotate-180' : 'rotate-0', 'h-5 w-5 transform')} aria-hidden="true" />
+                                                                    <ChevronDownIcon
+                                                                        className={classNames(
+                                                                            open ? '-rotate-180' : 'rotate-0',
+                                                                            'h-5 w-5 transform'
+                                                                        )}
+                                                                        aria-hidden="true"
+                                                                    />
                                                                 </span>
                                                             </Disclosure.Button>
                                                         </h3>
                                                         <Disclosure.Panel className="pt-6">
                                                             <div className="space-y-6">
                                                                 {section.options.map((option, optionIdx) => (
-                                                                    <div key={option.value} className="flex items-center">
+                                                                    <div
+                                                                        key={option.value}
+                                                                        className="flex items-center"
+                                                                    >
                                                                         <input
                                                                             id={`Filtro-mobile-${section.id}-${optionIdx}`}
                                                                             name={`${section.id}[]`}
@@ -153,7 +175,10 @@ const Products = ({ products }: ProductsData) => {
                                                                             defaultChecked={option.checked}
                                                                             className="h-4 w-4 rounded border-gray-300 text-beige-600 focus:ring-beige-500"
                                                                         />
-                                                                        <label htmlFor={`Filtro-mobile-${section.id}-${optionIdx}`} className="ml-3 text-sm text-gray-500">
+                                                                        <label
+                                                                            htmlFor={`Filtro-mobile-${section.id}-${optionIdx}`}
+                                                                            className="ml-3 text-sm text-gray-500"
+                                                                        >
                                                                             {option.label}
                                                                         </label>
                                                                     </div>
@@ -180,7 +205,10 @@ const Products = ({ products }: ProductsData) => {
                                         <div>
                                             <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                                 Ordina
-                                                <ChevronDownIcon className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                                                <ChevronDownIcon
+                                                    className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                    aria-hidden="true"
+                                                />
                                             </Menu.Button>
                                         </div>
 
@@ -196,14 +224,18 @@ const Products = ({ products }: ProductsData) => {
                                             <Menu.Items className="absolute left-0 mt-2 w-40 origin-top-left rounded-md bg-gray-50 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <div className="py-1">
                                                     <button
-                                                        className={`mr-4 block rounded p-2 px-4 py-2 text-sm text-black md:p-2 ${order === 'DESC' ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                                        className={`mr-4 block rounded p-2 px-4 py-2 text-sm text-black md:p-2 ${
+                                                            order === 'DESC' ? 'bg-beige-300' : 'bg-beige-400'
+                                                        }`}
                                                         disabled={order === 'DESC'}
                                                         onClick={() => setOrder('DESC')}
                                                     >
                                                         DESC
                                                     </button>
                                                     <button
-                                                        className={`flex flex-auto rounded p-2 py-2 px-4 text-sm text-black md:p-2 ${order === 'ASC' ? 'bg-beige-300' : 'bg-beige-400'}`}
+                                                        className={`flex flex-auto rounded p-2 py-2 px-4 text-sm text-black md:p-2 ${
+                                                            order === 'ASC' ? 'bg-beige-300' : 'bg-beige-400'
+                                                        }`}
                                                         disabled={order === 'ASC'}
                                                         onClick={() => setOrder('ASC')}
                                                     >
@@ -214,7 +246,11 @@ const Products = ({ products }: ProductsData) => {
                                         </Transition>
                                     </Menu>
                                     <div className="flex">
-                                        <button type="button" className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 smd:hidden" onClick={() => setMobileFiltriOpen(true)}>
+                                        <button
+                                            type="button"
+                                            className="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 smd:hidden"
+                                            onClick={() => setMobileFiltriOpen(true)}
+                                        >
                                             Filtri
                                         </button>
                                     </div>
@@ -223,13 +259,21 @@ const Products = ({ products }: ProductsData) => {
                                         <div className="flow-root">
                                             <Popover.Group className="-mx-4 flex items-center justify-between divide-x divide-gray-200">
                                                 {Filtri.map((section, sectionIdx) => (
-                                                    <Popover key={section.name} className="relative inline-block px-4 text-left">
+                                                    <Popover
+                                                        key={section.name}
+                                                        className="relative inline-block px-4 text-left"
+                                                    >
                                                         <Popover.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                                             <span>{section.name}</span>
                                                             {sectionIdx === 0 ? (
-                                                                <span className="ml-1.5 rounded bg-beige-400 py-0.5 px-1.5 pt-1 text-xs font-semibold tabular-nums text-gray-700">1</span>
+                                                                <span className="ml-1.5 rounded bg-beige-400 py-0.5 px-1.5 pt-1 text-xs font-semibold tabular-nums text-gray-700">
+                                                                    1
+                                                                </span>
                                                             ) : null}
-                                                            <ChevronDownIcon className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                                                            <ChevronDownIcon
+                                                                className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                                aria-hidden="true"
+                                                            />
                                                         </Popover.Button>
 
                                                         <Transition
@@ -244,7 +288,10 @@ const Products = ({ products }: ProductsData) => {
                                                             <Popover.Panel className="absolute right-0 mt-2 origin-top-right rounded-md bg-gray-50 p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                                 <form className="space-y-4">
                                                                     {section.options.map((option, optionIdx) => (
-                                                                        <div key={option.value} className="flex items-center">
+                                                                        <div
+                                                                            key={option.value}
+                                                                            className="flex items-center"
+                                                                        >
                                                                             <input
                                                                                 id={`Filtro-${section.id}-${optionIdx}`}
                                                                                 name={`${section.id}[]`}
@@ -277,7 +324,10 @@ const Products = ({ products }: ProductsData) => {
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
                                 {products.map((product: IProduct) => (
-                                    <div key={product.id} className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
+                                    <div
+                                        key={product.id}
+                                        className="group rounded-xl border bg-beige-200 p-6 shadow-xl"
+                                    >
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
                                             {/* {isValidating ? (
                                                 <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
@@ -295,7 +345,11 @@ const Products = ({ products }: ProductsData) => {
                                                 </div>
                                             ) : ( */}
                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
-                                                <Image className="grid h-auto w-full rounded-xl border shadow-md" src={product.image} alt={'not found'} />
+                                                <Image
+                                                    className="grid h-auto w-full rounded-xl border shadow-md"
+                                                    src={product.image}
+                                                    alt={'not found'}
+                                                />
                                             </Link>
                                             {/*)}
                                              {product.image.data.map((image) => (

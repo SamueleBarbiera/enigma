@@ -2,14 +2,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// generator dbml {
-//   provider = "prisma-dbml-generator"
-// }
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// generator dbml {
+//   provider = "prisma-dbml-generator"
+// }
 
 model Account {
   id                String  @id @default(cuid())
@@ -24,17 +24,18 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+  
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -47,6 +48,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 }
+
+
 
 enum Role {
   USER

@@ -7,7 +7,7 @@ import LoginForm from '../../components/auth/LoginForm'
 import Head from 'next/head'
 import { InferGetServerSidePropsType } from 'next'
 import axios from 'axios'
-import { Providers } from 'types/Provider'
+import { Providers } from 'src/types/Provider'
 
 export default function Login(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (

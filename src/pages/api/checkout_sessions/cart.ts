@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
-import { CartDet } from 'types/Cart'
+import { CartDet } from 'src/types/Cart'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
     apiVersion: '2022-08-01',

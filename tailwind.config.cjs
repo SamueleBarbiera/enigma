@@ -1,7 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-    plugins: [require('@tailwindcss/forms'), require('prettier-plugin-tailwindcss'), require('@tailwindcss/aspect-ratio'), require('daisyui')],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('prettier-plugin-tailwindcss'),
+        require('@tailwindcss/aspect-ratio'),
+        require('daisyui'),
+    ],
     content: ['./src/**/*.{js,ts,jsx,tsx}'],
     daisyui: {
         fontFamily: {

@@ -7,10 +7,14 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
     return (
-        <div className="flex h-screen flex-row justify-start">
-            <Sidebar />
-            <div className="flex-1 bg-primary p-4 text-white">{children}</div>
-        </div>
+        <>
+            <div className="flex flex-auto">
+                <Sidebar />
+                <div className="grow">
+                    <div className="m-5">{children}</div>
+                </div>
+            </div>
+        </>
     )
 }
 

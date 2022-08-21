@@ -1,17 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { RefreshIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
 import { MdOutlineShoppingBag } from 'react-icons/md'
-import { useSession, signOut } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import { Fragment, useState } from 'react'
 import { BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
 import { useShoppingCart } from 'use-shopping-cart'
 import CartSummary from '../cart/CartSummary'
 import Link from 'next/link'
+import { trpc } from 'src/content/utils/trpc'
+import { Session } from 'next-auth'
 
 const navigation = {
     pages: [
@@ -34,7 +37,8 @@ function classNames(...classes: string[]) {
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const { data: session, status } = useSession()
+    const querySession = trpc.useQuery(['auth.next-auth.getSession'], { suspense: true })
+    const session: Session | null | undefined = querySession.data
     console.log('🚀 ~ file: Header.tsx ~ line 38 ~ Header ~ session', session)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { cartCount } = useShoppingCart()
@@ -67,7 +71,11 @@ export default function Header() {
                     >
                         <div className="relative flex w-2/3 flex-col overflow-y-auto bg-beige-50 pb-8 shadow-xl md:hidden">
                             <div className="flex p-2 ">
-                                <button type="button" className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-beige-400" onClick={() => setMobileMenuOpen(false)}>
+                                <button
+                                    type="button"
+                                    className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-beige-400"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
                                     <XIcon className="h-6 w-6 text-beige-900" aria-hidden="true" />
                                 </button>
                             </div>
@@ -75,7 +83,10 @@ export default function Header() {
                             <div className="space-y-6 py-6 px-6">
                                 {navigation.pages.map((page) => (
                                     <div key={page.name} className="flow-root">
-                                        <Link href={page.href} className="-m-2 mb-1 block justify-between rounded-lg bg-beige-200 p-2 font-medium text-beige-900">
+                                        <Link
+                                            href={page.href}
+                                            className="-m-2 mb-1 block justify-between rounded-lg bg-beige-200 p-2 font-medium text-beige-900"
+                                        >
                                             <div className="flex flex-1 flex-col">
                                                 <div>
                                                     <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
@@ -126,7 +137,11 @@ export default function Header() {
                                             {/* Flyout menus */}
                                             <Popover.Group className="inset-x-0 bottom-0 px-4">
                                                 <div className="flex h-full items-center justify-between space-x-8">
-                                                    <a href={navigation.pages[1]?.href} key={navigation.pages[1]?.name} className="flex items-center gap-x-2 text-sm  font-medium text-beige-900">
+                                                    <a
+                                                        href={navigation.pages[1]?.href}
+                                                        key={navigation.pages[1]?.name}
+                                                        className="flex items-center gap-x-2 text-sm  font-medium text-beige-900"
+                                                    >
                                                         <p className="items-start">{navigation.pages[1]?.name} </p>
                                                         <p className="items-end">{navigation.pages[1]?.icon}</p>
                                                     </a>
@@ -136,14 +151,18 @@ export default function Header() {
 
                                         {/* Mobile menu and search (lg-) */}
                                         <div className="flex flex-1 items-center md:hidden">
-                                            <button type="button" className="-ml-2 p-2 text-beige-900" onClick={() => setMobileMenuOpen(true)}>
+                                            <button
+                                                type="button"
+                                                className="-ml-2 p-2 text-beige-900"
+                                                onClick={() => setMobileMenuOpen(true)}
+                                            >
                                                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
                                             </button>
                                         </div>
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="-mr-12 flex items-center">
                                                 {/* Help */}
-                                                {status === 'authenticated' ? (
+                                                {session ? (
                                                     <div className="ml-2 mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
                                                             {({ open }: any) => (
@@ -156,8 +175,14 @@ export default function Header() {
                                                                             'group  inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 focus-visible:ring-0 focus-visible:ring-opacity-100 '
                                                                         )}
                                                                     >
-                                                                        <a href="#" className="group -m-2 flex items-center p-2">
-                                                                            <FaRegUser className="h-5 w-5" aria-hidden="true" />
+                                                                        <a
+                                                                            href="#"
+                                                                            className="group -m-2 flex items-center p-2"
+                                                                        >
+                                                                            <FaRegUser
+                                                                                className="h-5 w-5"
+                                                                                aria-hidden="true"
+                                                                            />
                                                                         </a>
                                                                     </Popover.Button>
 
@@ -182,7 +207,9 @@ export default function Header() {
                                                                                             height={100}
                                                                                         />
                                                                                     </div>
-                                                                                    <p className="font-semibold text-beige-900 contrast-150">{session.user.name}</p>
+                                                                                    <p className="font-semibold text-beige-900 contrast-150">
+                                                                                        {session.user.name}
+                                                                                    </p>
                                                                                     <p>{session.user.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
@@ -202,8 +229,6 @@ export default function Header() {
                                                             )}
                                                         </Popover>
                                                     </div>
-                                                ) : status === 'loading' ? (
-                                                    <RefreshIcon className="mr-4 h-6 w-6 flex-shrink-0 animate-spin text-beige-800 " />
                                                 ) : (
                                                     <>
                                                         <Link href="/auth/Login">
@@ -224,11 +249,19 @@ export default function Header() {
                                                                         'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                     )}
                                                                 >
-                                                                    <Link href="#" className="group -m-2 flex items-center p-2">
+                                                                    <Link
+                                                                        href="#"
+                                                                        className="group -m-2 flex items-center p-2"
+                                                                    >
                                                                         <div>
                                                                             {' '}
-                                                                            <MdOutlineShoppingBag className="h-6 w-6 flex-shrink-0 text-beige-900" aria-hidden="true" />
-                                                                            <span className="ml-2 text-sm font-medium text-beige-900">{cartCount}</span>
+                                                                            <MdOutlineShoppingBag
+                                                                                className="h-6 w-6 flex-shrink-0 text-beige-900"
+                                                                                aria-hidden="true"
+                                                                            />
+                                                                            <span className="ml-2 text-sm font-medium text-beige-900">
+                                                                                {cartCount}
+                                                                            </span>
                                                                         </div>
                                                                     </Link>
                                                                 </Popover.Button>

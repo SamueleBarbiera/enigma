@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Prisma } from '@prisma/client'
-import prisma from '../src/content/lib/prisma'
+import { prisma } from '../src/server/db/client'
 
 const prodData: Prisma.ProductCreateInput[] = [
     {

@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
-import { Fragment, Key, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { HeartIcon, MenuAlt2Icon, PlusSmIcon as PlusSmIconOutline } from '@heroicons/react/outline'
-import { PencilIcon, PlusSmIcon as PlusSmIconSolid, SearchIcon } from '@heroicons/react/solid'
+import { PencilIcon, SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/Layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from '../api/auth/[...nextauth]'
-import { CntFile, File } from 'types/Image'
+import { CntFile, File } from 'src/types/Image'
+import { trpc } from 'src/content/utils/trpc'
+import { Product } from '@prisma/client'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -56,7 +59,12 @@ const currentFile: CntFile[] = [
 
 export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
     console.log('🚀 ~ file: prodotti.tsx ~ line 71 ~ Page ~ session', session)
+    // eslint-disable-next-line no-unused-vars
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const query = trpc.useQuery(['createProduct.view'], { suspense: true })
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const posts: Product[] = query.data!
 
     return (
         <>
@@ -112,6 +120,8 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                     <span className="sr-only">Open user menu</span>
                                                     <Image
                                                         className="h-8 w-8 rounded-full"
+                                                        height={32}
+                                                        width={32}
                                                         src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
                                                         alt=""
                                                         layout="fill"
@@ -132,7 +142,13 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                         <Menu.Item key={item.name}>
                                                             {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
                                                             {({ active }: any) => (
-                                                                <Link href={item.href} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                                                                <Link
+                                                                    href={item.href}
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100' : '',
+                                                                        'block px-4 py-2 text-sm text-gray-700'
+                                                                    )}
+                                                                >
                                                                     {item.name}
                                                                 </Link>
                                                             )}
@@ -160,7 +176,10 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                 <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
                                     {/* Gallery */}
                                     <section className="mt-8 pb-16" aria-labelledby="gallery-heading">
-                                        <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                                        <ul
+                                            role="list"
+                                            className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+                                        >
                                             {files.map((file) => (
                                                 <li key={file.name} className="relative">
                                                     <div
@@ -173,16 +192,30 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                                     >
                                                         <Image
                                                             layout="fill"
+                                                            height={32}
+                                                            width={32}
                                                             src={file.source}
                                                             alt=""
-                                                            className={classNames(file.current ? '' : 'group-hover:opacity-75', 'pointer-events-none object-cover')}
+                                                            className={classNames(
+                                                                file.current ? '' : 'group-hover:opacity-75',
+                                                                'pointer-events-none object-cover'
+                                                            )}
                                                         />
-                                                        <button type="button" className="absolute inset-0 focus:outline-none">
-                                                            <span className="sr-only">View details for {file.name}</span>
+                                                        <button
+                                                            type="button"
+                                                            className="absolute inset-0 focus:outline-none"
+                                                        >
+                                                            <span className="sr-only">
+                                                                View details for {file.name}
+                                                            </span>
                                                         </button>
                                                     </div>
-                                                    <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">{file.name}</p>
-                                                    <p className="pointer-events-none block text-sm font-medium text-gray-500">{file.size}</p>
+                                                    <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
+                                                        {file.name}
+                                                    </p>
+                                                    <p className="pointer-events-none block text-sm font-medium text-gray-500">
+                                                        {file.size}
+                                                    </p>
                                                 </li>
                                             ))}
                                         </ul>
@@ -196,7 +229,14 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                     {currentFile.map((info) => (
                                         <div key={info.id}>
                                             <div className="aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg">
-                                                <Image layout="fill" src={info.source} alt="" className="object-cover" />
+                                                <Image
+                                                    height={32}
+                                                    width={32}
+                                                    layout="fill"
+                                                    src={info.source}
+                                                    alt=""
+                                                    className="object-cover"
+                                                />
                                             </div>
                                             <div className="mt-4 flex items-start justify-between">
                                                 <div>
@@ -220,7 +260,10 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                         <h3 className="font-medium text-gray-900">Information</h3>
                                         <dl className="mt-2 divide-y divide-gray-200 border-t border-b border-gray-200">
                                             {currentFile.map((info) => (
-                                                <div key={info.id} className="flex justify-between py-3 text-sm font-medium">
+                                                <div
+                                                    key={info.id}
+                                                    className="flex justify-between py-3 text-sm font-medium"
+                                                >
                                                     <dt className="text-gray-500">{info.id}</dt>
                                                     <dd className="text-gray-900">{info.dimensions}</dd>
                                                     <dd className="text-gray-900">{info.resolution}</dd>
@@ -231,7 +274,9 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                     <div>
                                         <h3 className="font-medium text-gray-900">Description</h3>
                                         <div className="mt-2 flex items-center justify-between">
-                                            <p className="text-sm italic text-gray-500">Add a description to this image.</p>
+                                            <p className="text-sm italic text-gray-500">
+                                                Add a description to this image.
+                                            </p>
                                             <button
                                                 type="button"
                                                 className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-beige-500"
@@ -252,6 +297,12 @@ export default function Page(session: InferGetServerSidePropsType<typeof getServ
                                 </div>
                             </aside>
                         </div>
+
+                        {posts.map((post: Product) => (
+                            <article key={post.id} className="prose overflow-hidden bg-white p-4 shadow sm:rounded-lg">
+                                <h3>{post.name}</h3>
+                            </article>
+                        ))}
                     </div>
                 </div>
             </Layout>

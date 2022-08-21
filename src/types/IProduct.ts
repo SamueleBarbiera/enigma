@@ -54,7 +54,7 @@ export interface Filtri {
         checked: boolean
     }[]
 }
-;[]
+[]
 
 export interface Options {
     value: string

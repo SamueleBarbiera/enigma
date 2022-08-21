@@ -2,9 +2,9 @@ import Products from '../../components/cart/Products'
 import Header from '../../components/layout/Header'
 import Footer from '../../components/layout/Footer'
 import Head from 'next/head'
-import prisma from 'src/content/lib/prisma'
+import { prisma } from '../../server/db/client'
 import { Product } from '@prisma/client'
-import { IProduct } from 'types/IProduct'
+import { IProduct } from 'src/types/IProduct'
 
 const Prodotti = (products: IProduct[]) => {
     return (

@@ -11,7 +11,7 @@
         "es2022": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks"],
+    "plugins": ["@typescript-eslint", "react", "react-hooks"],
     "overrides": [
         {
             "files": ["*.ts", "*.tsx", "*.css", "*.d.ts", "*.ts"],
@@ -20,12 +20,12 @@
                 "ecmaFeatures": {
                     "jsx": true
                 },
+                "tsconfigRootDir": "./",
                 "ecmaVersion": "latest",
                 "sourceType": "module",
                 "project": ["./tsconfig.json"]
             },
             "rules": {
-                "prettier/prettier": "error",
                 "@typescript-eslint/no-unsafe-argument": "error",
                 "@typescript-eslint/no-unnecessary-condition": 2,
                 "react/react-in-jsx-scope": 0,
@@ -39,19 +39,18 @@
                 "@typescript-eslint/no-unused-vars": "error",
                 "@typescript-eslint/explicit-member-accessibility": ["error"],
                 "react-hooks/rules-of-hooks": "error",
-                "react-hooks/exhaustive-deps": "warn"
+                "react-hooks/exhaustive-deps": "warn",
+                "require-await": "off",
+                "@typescript-eslint/require-await": 0
             },
 
             "extends": [
+                "plugin:@next/next/recommended",
                 "plugin:@typescript-eslint/recommended",
                 "plugin:@typescript-eslint/recommended-requiring-type-checking",
                 "eslint:recommended",
                 "next",
-                "plugin:@typescript-eslint/recommended",
                 "next/core-web-vitals",
-                "prettier",
-                "plugin:@typescript-eslint/recommended",
-                "plugin:@typescript-eslint/recommended-requiring-type-checking",
                 "plugin:@typescript-eslint/strict",
                 "plugin:react/recommended",
                 "plugin:react-hooks/recommended"

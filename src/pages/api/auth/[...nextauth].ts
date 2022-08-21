@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import NextAuth, { Session, User } from 'next-auth'
-import type { NextAuthOptions } from 'next-auth'
 import { AppProviders } from 'next-auth/providers'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import prisma from '../../../content/lib/prisma'
 import axios, { AxiosResponse } from 'axios'
 import { JWT } from 'next-auth/jwt'
+import NextAuth, { type NextAuthOptions, Session, User } from 'next-auth'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { prisma } from '../../../server/db/client'
+//import { env } from '../../../env/server.mjs'
 
 const GOOGLE_AUTHORIZATION_URL =
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -135,7 +135,11 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, user, account }) {
             const isSignIn = user && account ? true : false
             if (isSignIn) {
-                const response: AxiosResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/auth/${account!.provider}/callback?access_token=${account!.access_token}`)
+                const response: AxiosResponse = await axios.get(
+                    `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/auth/${account!.provider}/callback?access_token=${
+                        account!.access_token
+                    }`
+                )
 
                 token.access_token = account?.access_token
                 token.accessTokenExpires = account?.expires_in
@@ -154,7 +158,11 @@ export const authOptions: NextAuthOptions = {
             }
 
             // Access token has expired, try to update it
-            return await refreshAccessToken(token as Token, String(process.env.GOOGLE_CLIENT_ID), String(process.env.GOOGLE_CLIENT_SECRET))
+            return await refreshAccessToken(
+                token as Token,
+                String(process.env.GOOGLE_CLIENT_ID),
+                String(process.env.GOOGLE_CLIENT_SECRET)
+            )
         },
         redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
             // Allows relative callback URLs

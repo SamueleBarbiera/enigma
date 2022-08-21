@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -16,7 +17,10 @@ const RisultatoPagamento = () => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/restrict-template-expressions
-    const { data, error } = useSWR(() => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null), fetchGetJSON)
+    const { data, error } = useSWR(
+        () => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null),
+        fetchGetJSON
+    )
 
     useEffect(() => {
         if (data) {
@@ -39,7 +43,9 @@ const RisultatoPagamento = () => {
                     <div className="mx-auto w-fit rounded-lg bg-red-200 py-4 px-4 shadow-xl">
                         <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
                             <ExclamationCircleIcon className="m-2 h-12 w-12 flex-shrink-0 rounded-full bg-red-100 py-2 text-red-600 " />
-                            <p className="m-2 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine!</p>
+                            <p className="m-2 text-lg text-red-500">
+                                Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine!
+                            </p>
                         </div>
                     </div>
                 ) : !data ? (

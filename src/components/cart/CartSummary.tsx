@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios, { AxiosResponse } from 'axios'
 import Image from 'next/image'
-import { IProduct } from 'types/IProduct'
+import { IProduct } from 'src/types/IProduct'
 
 export interface ResFetch extends Response {
     id: string
@@ -18,7 +18,8 @@ export interface ResFetch extends Response {
 function CartSummary() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const cart = useShoppingCart()
-    const { removeItem, cartCount, addItem, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } = cart
+    const { removeItem, cartCount, addItem, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } =
+        cart
     const [products, setProducts] = useState<AxiosResponse | IProduct>()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
@@ -94,7 +95,9 @@ function CartSummary() {
                     <div className="mx-auto h-min max-w-full rounded-lg bg-red-100 py-4 px-4 shadow-xl">
                         <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
                             <ExclamationCircleIcon className="mt-3 h-12 w-12 flex-shrink-0  text-red-600" />
-                            <p className="mt-3 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .</p>
+                            <p className="mt-3 text-lg text-red-500">
+                                Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .
+                            </p>
                             <p>{error}</p>
                         </div>
                     </div>
@@ -114,14 +117,28 @@ function CartSummary() {
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
-                                                                    <Image className="h-full w-full rounded-md object-cover object-center shadow-md" src={product.image ?? ''} alt={'not found'} />
+                                                                    <Image
+                                                                        className="h-full w-full rounded-md object-cover object-center shadow-md"
+                                                                        src={product.image ?? ''}
+                                                                        alt={'not found'}
+                                                                    />
                                                                 </div>
                                                             </Link>
                                                             <div className="ml-4 flex flex-1 flex-col">
                                                                 <div>
                                                                     <div className="flex  w-full min-w-full justify-between text-sm font-medium text-gray-900">
-                                                                        <p className="font-semibold capitalize">{product.name}</p>
-                                                                        <p className="ml-2 w-max">{toFixedIfNecessary((product.price * product.quantity).toString(), 2)} €</p>
+                                                                        <p className="font-semibold capitalize">
+                                                                            {product.name}
+                                                                        </p>
+                                                                        <p className="ml-2 w-max">
+                                                                            {toFixedIfNecessary(
+                                                                                (
+                                                                                    product.price * product.quantity
+                                                                                ).toString(),
+                                                                                2
+                                                                            )}{' '}
+                                                                            €
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div className="flex flex-1 items-end justify-between text-sm">
@@ -134,7 +151,9 @@ function CartSummary() {
                                                                         >
                                                                             <MinusSmIcon className="h-6 w-6 flex-shrink-0" />
                                                                         </button>
-                                                                        <p className="text-lg font-light">{product.quantity}</p>
+                                                                        <p className="text-lg font-light">
+                                                                            {product.quantity}
+                                                                        </p>
                                                                         <button
                                                                             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                                                                             onClick={() => addItem(product)}
@@ -146,7 +165,10 @@ function CartSummary() {
 
                                                                     <div className="mb-1 flex">
                                                                         {/*eslint-disable-next-line @typescript-eslint/no-unsafe-return*/}
-                                                                        <button onClick={() => removeItem(product.id)} className="ml-4 hover:text-rose-500">
+                                                                        <button
+                                                                            onClick={() => removeItem(product.id)}
+                                                                            className="ml-4 hover:text-rose-500"
+                                                                        >
                                                                             <TrashIcon className="h-6 w-6 flex-shrink-0  opacity-50 transition-opacity hover:opacity-100" />
                                                                         </button>
                                                                     </div>
@@ -165,7 +187,9 @@ function CartSummary() {
                                             <p>{totalPrice} €</p>
                                         </div>
                                         <form onSubmit={handleCheckout} className="flex justify-between gap-2">
-                                            {errorMessage ? <p style={{ color: 'red' }}>Error: {errorMessage}</p> : null}
+                                            {errorMessage ? (
+                                                <p style={{ color: 'red' }}>Error: {errorMessage}</p>
+                                            ) : null}
                                             <div className="mt-6 w-full">
                                                 <button
                                                     type="submit"
@@ -211,7 +235,10 @@ function CartSummary() {
                                     <h2 className="text-2xl font-semibold">Il tuo carello è vuoto.</h2>
                                     <p className="mt-3 text-xl ">
                                         Visualizza i nostri vestiti{' '}
-                                        <Link className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700" href="/Prodotti">
+                                        <Link
+                                            className="ml-1 rounded-lg bg-beige-200 py-1 px-2 text-gray-700"
+                                            href="/Prodotti"
+                                        >
                                             qui!
                                         </Link>
                                     </p>

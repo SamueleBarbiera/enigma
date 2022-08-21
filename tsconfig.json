@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
-        "typeRoots": ["./types"],
-        "target": "es6",
+        "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": false,
+        "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
@@ -15,6 +14,8 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
+        "noUncheckedIndexedAccess": true,
+        "typeRoots": ["src/types"],
         "alwaysStrict": true,
         "downlevelIteration": true,
         "inlineSourceMap": true,
@@ -23,7 +24,6 @@
         "noUnusedLocals": false,
         "noImplicitReturns": false,
         "noImplicitAny": true,
-        "noUncheckedIndexedAccess": true,
         "noUnusedParameters": true,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
@@ -38,7 +38,20 @@
             "@/pages/*": ["./src/pages/*"]
         }
     },
-    "include": ["types/*.ts", "**/*.ts", "**/*.tsx", "**/*.css"],
+    "include": [
+        "src/types/*.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.css",
+        ".eslintrc",
+        "next-env.d.ts",
+        "next-auth.d.ts",
+        "**/*.js",
+        "next.config.mjs",
+        "tailwind.config.cjs",
+        "postcss.config.cjs",
+        "next.config.mjs"
+    ],
     "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
     "ts-node": {
         "compilerOptions": {
