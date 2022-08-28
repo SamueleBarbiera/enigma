@@ -1,4 +1,6 @@
 import { ReactNode } from 'react'
+import AdminHeader from '../layout/AdminHeader'
+import Footer from '../layout/Footer'
 import Sidebar from './Sidebar'
 
 interface Props {
@@ -8,12 +10,12 @@ interface Props {
 const Layout = ({ children }: Props) => {
     return (
         <>
-            <div className="flex flex-auto">
-                <Sidebar />
-                <div className="grow">
-                    <div className="m-5">{children}</div>
-                </div>
+            <AdminHeader />
+            <Sidebar />
+            <div className="flex h-screen grow">
+                <div className="m-5">{children}</div>
             </div>
+            <Footer />
         </>
     )
 }

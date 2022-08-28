@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useRouter } from 'next/router'
-import { PhotographIcon, UserGroupIcon } from '@heroicons/react/outline'
+import { TagIcon, FolderAddIcon, ClipboardCopyIcon } from '@heroicons/react/outline'
+import { FiUsers } from 'react-icons/fi'
 import Link from 'next/link'
 
 export default function Sidebar() {
     const location = useRouter()
 
     const navigation = [
-        { name: 'Prodotti', href: 'crea', path: '/admin/aggiungiProd', icon: PhotographIcon },
-        { name: 'Utenti', href: 'utenti', path: '/admin/utenti', icon: UserGroupIcon },
-        { name: 'Categorie', href: 'prodotti', path: '/admin/prodotti', icon: UserGroupIcon },
-        { name: 'Categorie', href: 'categorie', path: '/admin/categorie', icon: UserGroupIcon },
+        { name: 'Aggiungi Prodotto', href: 'crea', path: '/admin/Prova', icon: FolderAddIcon },
+        { name: 'Utenti', href: 'utenti', path: '/admin/Users', icon: FiUsers },
+        { name: 'Prodotti', href: 'prodotti', path: '/admin/Product', icon: ClipboardCopyIcon },
+        { name: 'Categorie', href: 'categorie', path: '/admin/Category', icon: TagIcon },
     ]
 
     return (

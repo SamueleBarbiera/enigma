@@ -6,7 +6,7 @@ const prodData: Prisma.ProductCreateInput[] = [
     {
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: '',
+        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
         name: 'vestito 1',
         material: 'cotone',
         price: 20,
@@ -15,7 +15,7 @@ const prodData: Prisma.ProductCreateInput[] = [
     {
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: '',
+        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
         name: 'vestito 2',
         material: 'cotone',
         price: 6,
@@ -24,7 +24,7 @@ const prodData: Prisma.ProductCreateInput[] = [
     {
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: '',
+        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
         name: 'vestito 3',
         material: 'cotone',
         price: 15,
@@ -34,7 +34,7 @@ const prodData: Prisma.ProductCreateInput[] = [
 
 async function main() {
     console.log('Start seeding ...')
-    // await prisma.product.deleteMany({})
+    await prisma.product.deleteMany()
     const products = await prisma.product.createMany({
         data: prodData,
     })

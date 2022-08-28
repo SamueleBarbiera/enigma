@@ -67,56 +67,56 @@ model VerificationToken {
 model Category {
   id          String    @id @default(cuid())
   name        String
-  description String?
+  description String
   created_at  DateTime  @default(now())
   updated_at  DateTime? @updatedAt
 }
 
 model Color {
   id         String    @id @default(cuid())
-  purple     Boolean?  @default(false)
-  red        Boolean?  @default(false)
-  orange     Boolean?  @default(false)
-  yellow     Boolean?  @default(false)
-  black      Boolean?  @default(false)
-  white      Boolean?  @default(false)
-  pink       Boolean?  @default(false)
-  blue       Boolean?  @default(false)
-  sky        Boolean?  @default(false)
-  teal       Boolean?  @default(false)
-  green      Boolean?  @default(false)
-  gray       Boolean?  @default(false)
+  purple     Boolean  @default(true)
+  red        Boolean  @default(true)
+  orange     Boolean  @default(true)
+  yellow     Boolean  @default(true)
+  black      Boolean  @default(true)
+  white      Boolean  @default(true)
+  pink       Boolean  @default(true)
+  blue       Boolean  @default(true)
+  sky        Boolean  @default(true)
+  teal       Boolean  @default(true)
+  green      Boolean  @default(true)
+  gray       Boolean  @default(true)
   created_at DateTime  @default(now())
   updated_at DateTime? @updatedAt
-  Product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
 }
 
 model Size {
   id         String    @id @default(cuid())
-  xxs        Boolean?  @default(false)
-  xs         Boolean?  @default(false)
-  s          Boolean?  @default(false)
-  m          Boolean?  @default(false)
-  l          Boolean?  @default(false)
-  xl         Boolean?  @default(false)
-  xxl        Boolean?  @default(false)
-  xxxl       Boolean?  @default(false)
+  xxs        Boolean  @default(true)
+  xs         Boolean  @default(true)
+  s          Boolean  @default(true)
+  m          Boolean  @default(true)
+  l          Boolean  @default(true)
+  xl         Boolean  @default(true)
+  xxl        Boolean  @default(true)
+  xxxl       Boolean  @default(true)
   created_at DateTime  @default(now())
   updated_at DateTime? @updatedAt
-  Product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
 }
 
 model Product {
   id          String    @id @default(cuid())
-  image       String?
-  description String?
-  price       Float?
-  quantity    Int?
-  design      String?
-  material    String?
-  name        String?   @unique
+  image       String
+  description String
+  price       Float
+  quantity    Int
+  design      String
+  material    String
+  name        String   @unique
   created_at  DateTime  @default(now())
   updated_at  DateTime? @updatedAt
   size        Size[]

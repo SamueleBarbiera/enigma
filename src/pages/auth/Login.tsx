@@ -8,6 +8,7 @@ import Head from 'next/head'
 import { InferGetServerSidePropsType } from 'next'
 import axios from 'axios'
 import { Providers } from 'src/types/Provider'
+import { env } from '../../env/client.mjs'
 
 export default function Login(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
@@ -24,7 +25,7 @@ export default function Login(props: InferGetServerSidePropsType<typeof getServe
 }
 
 export const getServerSideProps = async () => {
-    const res = await axios(`${process.env.NEXTAUTH_URL!}/api/auth/providers`)
+    const res = await axios(`${env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/providers`)
     const data: Providers = await res.data
     console.log('🚀 ~ file: Login.tsx ~ line 26 ~ getServerSideProps ~ session', data)
 

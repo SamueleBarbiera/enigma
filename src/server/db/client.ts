@@ -1,31 +1,26 @@
-// src/server/db/client.ts
-import { PrismaClient } from '@prisma/client'
-import { env } from '../../env/server.mjs'
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+import { Prisma, PrismaClient } from '@prisma/client'
+declare const global: typeof globalThis & { prisma?: PrismaClient }
 
-declare global {
-    // eslint-disable-next-line no-var
-    var prisma: PrismaClient | undefined
-}
+export const prisma = new PrismaClient({
+    log: [
+        {
+            emit: 'event',
+            level: 'query',
+        },
+        'info',
+        'warn',
+        'error',
+    ],
+})
 
-export const prisma =
-    global.prisma ??
-    new PrismaClient({
-        log: [
-            {
-                emit: 'event',
-                level: 'query',
-            },
-            'info',
-            'warn',
-            'error',
-        ],
-    })
+prisma.$on('query', (e: Prisma.QueryEvent) => {
+    console.log('Query: ' + e.query)
+    console.log('Duration: ' + e.duration + 'ms')
+})
 
-// prisma.$on('beforeExit', (e) => {
-//     console.log('Query: ', e.query)
-//     console.log('Duration: ', e.duration, ' ms')
-// })
-
-if (env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     global.prisma = prisma
 }
+
+export default prisma

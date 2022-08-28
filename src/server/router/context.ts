@@ -16,7 +16,7 @@ interface CreateContextOptions {
  **/
 export const createContextInner = async (opts: CreateContextOptions) => {
     return {
-        session: opts.session,
+        session: opts.session?.user,
         prisma,
     }
 }

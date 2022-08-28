@@ -5,6 +5,9 @@ import { CheckCircleIcon, ChevronRightIcon, MailIcon, SearchIcon } from '@heroic
 import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Link from 'next/link'
+import { GetServerSidePropsContext } from 'next'
+import { authOptions } from '../api/auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth'
 
 const user: {
     name: string
@@ -406,4 +409,17 @@ export default function Contact() {
             </div>
         </Layout>
     )
+}
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+    console.log('🚀 ~ file: prodotti.tsx ~ line 259 ~ getServerSideProps ~ session', session)
+
+    if (!session || session.user.role != 'ADMIN') {
+        return { redirect: { permanent: false, destination: '/' } }
+    }
+
+    return {
+        props: { session: session },
+    }
 }

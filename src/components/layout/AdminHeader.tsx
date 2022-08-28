@@ -5,13 +5,10 @@
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { FaRegUser } from 'react-icons/fa'
-import { MdOutlineShoppingBag } from 'react-icons/md'
 import { signOut } from 'next-auth/react'
 import { Fragment, useState } from 'react'
 import { BiHomeAlt, BiBarcodeReader } from 'react-icons/bi'
 import Image from 'next/image'
-import { useShoppingCart } from 'use-shopping-cart'
-import CartSummary from '../cart/CartSummary'
 import Link from 'next/link'
 import { trpc } from 'src/content/utils/trpc'
 
@@ -34,13 +31,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Header() {
+export default function AdminHeader() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const querySession = trpc.useQuery(['auth.next-auth.getSession'], { suspense: true })
     const session = querySession.data
     console.log('🚀 ~ file: Header.tsx ~ line 38 ~ Header ~ session', session)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { cartCount } = useShoppingCart()
 
     return (
         <>
@@ -237,51 +232,6 @@ export default function Header() {
                                                         </Link>
                                                     </>
                                                 )}
-                                                {/* Cart */}
-                                                <div className="ml-2 mr-12 mt-[0.4rem] flow-root">
-                                                    <Popover className="relative">
-                                                        {({ open }: any) => (
-                                                            <>
-                                                                <Popover.Button
-                                                                    className={classNames(
-                                                                        open ? 'text-beige-900' : 'text-beige-500',
-                                                                        'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
-                                                                    )}
-                                                                >
-                                                                    <Link
-                                                                        href="#"
-                                                                        className="group -m-2 flex items-center p-2"
-                                                                    >
-                                                                        <div>
-                                                                            {' '}
-                                                                            <MdOutlineShoppingBag
-                                                                                className="h-6 w-6 flex-shrink-0 text-beige-900"
-                                                                                aria-hidden="true"
-                                                                            />
-                                                                            <span className="ml-2 text-sm font-medium text-beige-900">
-                                                                                {cartCount}
-                                                                            </span>
-                                                                        </div>
-                                                                    </Link>
-                                                                </Popover.Button>
-
-                                                                <Transition
-                                                                    as={Fragment}
-                                                                    enter="transition ease-out duration-200"
-                                                                    enterFrom="opacity-0 translate-y-1"
-                                                                    enterTo="opacity-100 translate-y-0"
-                                                                    leave="transition ease-in duration-150"
-                                                                    leaveFrom="opacity-100 translate-y-0"
-                                                                    leaveTo="opacity-0 translate-y-1"
-                                                                >
-                                                                    <Popover.Panel className="z-100 absolute -right-1/4 mt-8 w-min transform lg:max-w-3xl">
-                                                                        <CartSummary />
-                                                                    </Popover.Panel>
-                                                                </Transition>
-                                                            </>
-                                                        )}
-                                                    </Popover>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
