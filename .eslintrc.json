@@ -1,0 +1,60 @@
+{
+    "root": true,
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "env": {
+        "node": true,
+        "browser": true,
+        "es2022": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "react", "react-hooks"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.css", "*.d.ts", "*.ts"],
+            "parserOptions": {
+                "requireConfigFile": false,
+                "ecmaFeatures": {
+                    "jsx": true
+                },
+                "tsconfigRootDir": "./",
+                "ecmaVersion": "latest",
+                "sourceType": "module",
+                "project": ["./tsconfig.json"]
+            },
+            "rules": {
+                "@typescript-eslint/no-unsafe-argument": "error",
+                "@typescript-eslint/no-unnecessary-condition": 2,
+                "react/react-in-jsx-scope": 0,
+                "@typescript-eslint/no-misused-promises": [
+                    "error",
+                    {
+                        "checksVoidReturn": false
+                    }
+                ],
+                "@typescript-eslint/no-explicit-any": "error",
+                "@typescript-eslint/no-unused-vars": "error",
+                "@typescript-eslint/explicit-member-accessibility": ["error"],
+                "react-hooks/rules-of-hooks": "error",
+                "react-hooks/exhaustive-deps": "warn",
+                "require-await": "off",
+                "@typescript-eslint/require-await": 0
+            },
+
+            "extends": [
+                "plugin:@next/next/recommended",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking",
+                "eslint:recommended",
+                "next",
+                "next/core-web-vitals",
+                "plugin:@typescript-eslint/strict",
+                "plugin:react/recommended",
+                "plugin:react-hooks/recommended"
+            ]
+        }
+    ]
+}

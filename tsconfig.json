@@ -1,0 +1,62 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "noUncheckedIndexedAccess": true,
+        "typeRoots": ["src/types"],
+        "alwaysStrict": true,
+        "downlevelIteration": true,
+        "inlineSourceMap": true,
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": false,
+        "noImplicitReturns": false,
+        "noImplicitAny": true,
+        "noUnusedParameters": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "stripInternal": true,
+        "useDefineForClassFields": true,
+        "useUnknownInCatchVariables": false,
+        "baseUrl": ".",
+        "paths": {
+            "@/components/*": ["./src/components/*"],
+            "@/pages/*": ["./src/pages/*"]
+        }
+    },
+    "include": [
+        "src/types/*.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.css",
+        ".eslintrc",
+        "next-env.d.ts",
+        "next-auth.d.ts",
+        "**/*.js",
+        "next.config.mjs",
+        "tailwind.config.cjs",
+        "postcss.config.cjs",
+        "next.config.mjs"
+    ],
+    "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "commonjs"
+        }
+    },
+    "typeRoots": ["./types/*.ts"]
+}

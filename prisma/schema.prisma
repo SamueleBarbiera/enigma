@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// generator dbml {
+//   provider = "prisma-dbml-generator"
+// }
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+}
+
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+}
+
+model Color {
+  id         String    @id @default(cuid())
+  purple     Boolean  @default(true)
+  red        Boolean  @default(true)
+  orange     Boolean  @default(true)
+  yellow     Boolean  @default(true)
+  black      Boolean  @default(true)
+  white      Boolean  @default(true)
+  pink       Boolean  @default(true)
+  blue       Boolean  @default(true)
+  sky        Boolean  @default(true)
+  teal       Boolean  @default(true)
+  green      Boolean  @default(true)
+  gray       Boolean  @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+}
+
+model Size {
+  id         String    @id @default(cuid())
+  xxs        Boolean  @default(true)
+  xs         Boolean  @default(true)
+  s          Boolean  @default(true)
+  m          Boolean  @default(true)
+  l          Boolean  @default(true)
+  xl         Boolean  @default(true)
+  xxl        Boolean  @default(true)
+  xxxl       Boolean  @default(true)
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  image       String
+  description String
+  price       Float
+  quantity    Int
+  design      String
+  material    String
+  name        String   @unique
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  size        Size[]
+  color       Color[]
+}

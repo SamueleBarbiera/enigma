@@ -1,0 +1,132 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  roles Role[] [not null]
+  accounts Account [not null]
+  sessions Session [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Table Category {
+  id String [pk]
+  name String [not null]
+  description String
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Table Color {
+  id String [pk]
+  purple Boolean [default: false]
+  red Boolean [default: false]
+  orange Boolean [default: false]
+  yellow Boolean [default: false]
+  black Boolean [default: false]
+  white Boolean [default: false]
+  pink Boolean [default: false]
+  blue Boolean [default: false]
+  sky Boolean [default: false]
+  teal Boolean [default: false]
+  green Boolean [default: false]
+  gray Boolean [default: false]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+  Product Product
+  productId String
+}
+
+Table Size {
+  id String [pk]
+  xxs Boolean [default: false]
+  xs Boolean [default: false]
+  s Boolean [default: false]
+  m Boolean [default: false]
+  l Boolean [default: false]
+  xl Boolean [default: false]
+  xxl Boolean [default: false]
+  xxxl Boolean [default: false]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+  Product Product
+  productId String
+}
+
+Table Product {
+  id String [pk]
+  quantity Int
+  price Decimal
+  design String
+  material String
+  size Size [not null]
+  color Color [not null]
+  name String [unique]
+  description String
+  currency String
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Table files {
+  id String [pk]
+  name String
+  url String
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Enum Role {
+  USER
+  ADMIN
+}
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]
+
+Ref: Color.productId > Product.id
+
+Ref: Size.productId > Product.id
