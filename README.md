@@ -6,8 +6,9 @@
 
 ## Frontend ⚡
 
--   [**Next**](https://quasar.dev/) React framework with Next-Auth, tsx
--   [**Tailwind css**](https://tailwindcss.com/) CSS framework implemeented with next
+-   [**Next**](https://nextjs.org/) React framework written in tsx
+-   [**Tailwind css**](https://tailwindcss.com/) CSS framework implemeented with next and daisyui
+-   [**Zustand**](https://zustand-demo.pmnd.rs/) State Manager
 
 ## Backend 👨‍💻
 
@@ -16,20 +17,26 @@
 
 ## Deployment 🚧
 
--   [**Railway**](https://railway.app/) Cloud platform for backend & frontend deployment
+-   [**Supabase**](https://supabase.com/) Cloud platform for storage buckets & batabase
 
 ## Standard Api 🎯
 
--   [**Rest**] Apis used to fetch deta
+-   [**TRPC**](https://trpc.io/) E2E Functions used to fetch data
+-   [**Next-Auth**](https://next-auth.js.org/) Provider used to get session and auth for the user
 -   [**Stripe**](https://stripe.com/) Payment api used on the checkout
 
 ## Database 🧱
 
 -   [**Postgres**](https://www.postgresql.org/) Database used by strapi
 
-## Dev&Ops 📦
+## Dev&Ops / Linting 📦
 
 -   [**CI/CD Github Actions**](https://docs.github.com/en/actions) Automations for the deployment and testing phase
+-   [**Commitizen**](https://github.com/commitizen/cz-cli) Commit Linting CLI
+-   [**Husky**](https://typicode.github.io/husky/#/) Auto pre-commit scripts to test types and code 
+-   [**Ts-Lint**](https://typescript-eslint.io/) Linting for error and warning in the code
+-   [**Prettier**](https://prettier.io/) Code Formatter
+
 
 # My Socials 🤳
 
