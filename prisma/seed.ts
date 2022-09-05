@@ -4,28 +4,52 @@ import { prisma } from '../src/server/db/client'
 
 const prodData: Prisma.ProductCreateInput[] = [
     {
+        currency: 'EUR',
+        price_id: Math.random().toString(),
+        sku_id: Math.random().toString(),
+        sku: Math.random().toString(),
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
-        name: 'vestito 1',
+        image: [
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+        ],
+        name: Math.random().toString(),
         material: 'cotone',
         price: 20,
+        misure: 'csdcsdcsdcsdc',
         quantity: 2,
     },
     {
+        currency: 'EUR',
+        price_id: Math.random().toString(),
+        sku_id: Math.random().toString(),
+        sku: Math.random().toString(),
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
-        name: 'vestito 2',
+        image: [
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+        ],
+        name: Math.random().toString(),
         material: 'cotone',
         price: 6,
-        quantity: 3,
+        misure: 'csdcsdcsdcsdc',
+        quantity: 2,
     },
     {
+        currency: 'EUR',
+        price_id: Math.random().toString(),
+        sku_id: Math.random().toString(),
+        sku: Math.random().toString(),
         description: 'ue uajo bella sta descrizione',
         design: 'bel design',
-        image: 'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
-        name: 'vestito 3',
+        misure: 'csdcsdcsdcsdc',
+        image: [
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+            'https://djbvayehzzzpqffzyyva.supabase.co/storage/v1/object/public/prodotti/-y1jJBWIQyxkER5HVVcVj.jpeg',
+        ],
+        name: Math.random().toString(),
         material: 'cotone',
         price: 15,
         quantity: 1,
@@ -34,7 +58,7 @@ const prodData: Prisma.ProductCreateInput[] = [
 
 async function main() {
     console.log('Start seeding ...')
-    await prisma.product.deleteMany()
+    //await prisma.product.deleteMany()
     const products = await prisma.product.createMany({
         data: prodData,
     })

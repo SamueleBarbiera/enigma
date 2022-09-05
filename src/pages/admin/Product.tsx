@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import { useState } from 'react'
 import { MenuAlt2Icon } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
 import Layout from '../../components/admin/Layout'
 import Image from 'next/image'
-import { unstable_getServerSession } from 'next-auth/next'
-import { authOptions } from '../api/auth/[...nextauth]'
 import { trpc } from 'src/content/utils/trpc'
 import { Product } from '@prisma/client'
 import Modal from '@/components/admin/Modal'
+import { unstable_getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 
-export default function Page(session: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    console.log('🚀 ~ file: prodotti.tsx ~ line 71 ~ Page ~ session', session)
+export default function Page() {
     // eslint-disable-next-line no-unused-vars
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const query = trpc.useQuery(['createProduct.view'], { suspense: true })

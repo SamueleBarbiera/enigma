@@ -12,12 +12,11 @@ import { unstable_getServerSession } from 'next-auth'
 const user: {
     name: string
     email: string
-    imageUrl: string
+    image: string
 } = {
     name: 'Whitney Francis',
     email: 'whitneyfrancis@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    image: 'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 
 const navigation: {
@@ -43,7 +42,7 @@ const userNavigation: {
 const candidates: {
     name: string
     email: string
-    imageUrl: string
+    image: string
     applied: string
     appliedDatetime: string
     status: string
@@ -51,8 +50,7 @@ const candidates: {
     {
         name: 'Emily Selman',
         email: 'emilyselman@example.com',
-        imageUrl:
-            'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        image: 'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         applied: 'January 7, 2020',
         appliedDatetime: '2020-07-01T15:34:56',
         status: 'Completed phone screening',
@@ -157,7 +155,7 @@ export default function Contact() {
                                                             height={32}
                                                             width={32}
                                                             className="h-8 w-8 rounded-full"
-                                                            src={user.imageUrl}
+                                                            src={user.image}
                                                             alt=""
                                                         />
                                                     </Menu.Button>
@@ -175,7 +173,7 @@ export default function Contact() {
                                                         {userNavigation.map((item) => (
                                                             <Menu.Item key={item.name}>
                                                                 {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
-                                                                {({ active }: any) => (
+                                                                {({ active }) => (
                                                                     <Link
                                                                         href={item.href}
                                                                         className={classNames(
@@ -220,7 +218,7 @@ export default function Contact() {
                                                 height={32}
                                                 width={32}
                                                 className="h-10 w-10 rounded-full"
-                                                src={user.imageUrl}
+                                                src={user.image}
                                                 alt=""
                                             />
                                         </div>
@@ -282,7 +280,7 @@ export default function Contact() {
                                                         height={32}
                                                         width={32}
                                                         className="h-12 w-12 rounded-full group-hover:opacity-75"
-                                                        src={candidate.imageUrl}
+                                                        src={candidate.image}
                                                         alt=""
                                                     />
                                                 </div>

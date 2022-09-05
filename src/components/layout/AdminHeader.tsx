@@ -33,9 +33,9 @@ function classNames(...classes: string[]) {
 
 export default function AdminHeader() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const querySession = trpc.useQuery(['auth.next-auth.getSession'], { suspense: true })
-    const session = querySession.data
-    console.log('🚀 ~ file: Header.tsx ~ line 38 ~ Header ~ session', session)
+    const { data } = trpc.useQuery(['authAdmin.next-auth.getAdminSession'], {
+        suspense: true,
+    })
 
     return (
         <>
@@ -115,7 +115,7 @@ export default function AdminHeader() {
                                                 <Image width={32} height={32} src={'/domanda.png'} alt="home" />
                                             </Link>
                                             <>
-                                                {session?.role === 'ADMIN' ? (
+                                                {data?.user.role === 'ADMIN' ? (
                                                     <>
                                                         <Link href="/admin/Users">
                                                             <button className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600">
@@ -156,10 +156,10 @@ export default function AdminHeader() {
                                         <div className="flex flex-1 items-center justify-end">
                                             <div className="-mr-12 flex items-center">
                                                 {/* Help */}
-                                                {session ? (
+                                                {data ? (
                                                     <div className="ml-2 mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
-                                                            {({ open }: any) => (
+                                                            {({ open }) => (
                                                                 <>
                                                                     <Popover.Button
                                                                         className={classNames(
@@ -194,7 +194,7 @@ export default function AdminHeader() {
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
                                                                                         <Image
-                                                                                            src={session.image ?? ''}
+                                                                                            src={data.user.image ?? ''}
                                                                                             alt="User Img"
                                                                                             className="mx-auto flex items-center justify-center  rounded-full shadow-md"
                                                                                             width={100}
@@ -202,9 +202,9 @@ export default function AdminHeader() {
                                                                                         />
                                                                                     </div>
                                                                                     <p className="font-semibold text-beige-900 contrast-150">
-                                                                                        {session.name}
+                                                                                        {data.user.name}
                                                                                     </p>
-                                                                                    <p>{session.email}</p>
+                                                                                    <p>{data.user.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                                         onClick={() =>

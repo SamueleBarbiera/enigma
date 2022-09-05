@@ -3,11 +3,13 @@ import { User } from '@prisma/client'
 import { TrashIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { trpc } from '../../content/utils/trpc'
+import { useRouter } from 'next/router'
+import { Session, unstable_getServerSession } from 'next-auth'
 import { GetServerSidePropsContext } from 'next'
 import { authOptions } from '../api/auth/[...nextauth]'
-import { unstable_getServerSession, Session } from 'next-auth'
 
 export default function Users() {
+    const router = useRouter()
     const utils = trpc.useContext()
     const query = trpc.useQuery(['users.view'], { suspense: true })
     const users = query.data
@@ -17,10 +19,14 @@ export default function Users() {
             await utils.invalidateQueries(['users.view'])
         },
     })
-    const querySession = trpc.useQuery(['auth.next-auth.getSession'], { suspense: true })
-    const getMe = querySession.data
 
-    console.log('🚀 ~ file: Users.tsx ~ line 66 ~ Contact ~ users', users)
+    const querySession = trpc.useQuery(['authAdmin.next-auth.getAdminSession'], {
+        onError: async (err) => {
+            console.log('Got Error:', err)
+            await router.push('/')
+        },
+    })
+    const getMe = querySession.data
 
     return (
         <Layout>
@@ -62,7 +68,7 @@ export default function Users() {
                                     <button className="btn btn-ghost btn-xs">details</button>
                                 </th>
                                 <th>
-                                    {user.email != getMe?.email ? (
+                                    {user.email != getMe?.user.email ? (
                                         <button
                                             className="btn gap-2"
                                             onClick={() =>

@@ -1,15 +1,13 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { ExclamationCircleIcon, MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/solid'
 import { fetchPostJSON } from '../../content/utils/api-helpers'
 import { TrashIcon } from '@heroicons/react/outline'
 import { useShoppingCart } from 'use-shopping-cart'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import axios, { AxiosResponse } from 'axios'
 import Image from 'next/image'
-import { IProduct } from 'src/types/IProduct'
+import { Product } from '@prisma/client'
+import { trpc } from '../../../src/content/utils/trpc'
+import { CartEntry } from 'use-shopping-cart/core'
 
 export interface ResFetch extends Response {
     id: string
@@ -20,7 +18,7 @@ function CartSummary() {
     const cart = useShoppingCart()
     const { removeItem, cartCount, addItem, clearCart, cartDetails, decrementItem, totalPrice, redirectToCheckout } =
         cart
-    const [products, setProducts] = useState<AxiosResponse | IProduct>()
+    const [products, setProducts] = useState<Product[]>()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [cartEmpty, setCartEmpty] = useState(true)
@@ -48,37 +46,31 @@ function CartSummary() {
             setLoading(false)
             return
         }
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         await redirectToCheckout(response.id)
     }
 
-    useEffect(() => {
-        setLoading(true)
-        const fetchData = async () => {
-            try {
-                const data = await axios.get('/api/data')
-                if (data.status == 200) {
-                    console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', data)
-                    setProducts(data)
-                    return products
-                }
-            } catch (err) {
-                if (axios.isAxiosError(err)) {
-                    console.log(err instanceof Error ? err.message : 'Unknown error')
-                    setError(err.message)
-                } else {
-                    console.log('unexpected error: ', error)
-                    return 'An unexpected error occurred'
-                }
+    const { status, data } = trpc.useQuery(['createProduct.view'], {
+        suspense: true,
+        onError: (err) => {
+            setLoading(false)
+            let message
+            if (err instanceof Error) message = err.message
+            else message = String(err)
+            console.log(err instanceof Error ? err.message : 'Unknown error')
+            setError(message)
+        },
+        onSuccess() {
+            if (status == 'success') {
+                setLoading(false)
+                console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', data)
+                setProducts(data)
+                return products
+            } else if (status == 'loading') {
+                setLoading(true)
             }
-        }
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        fetchData()
-        setLoading(false)
-    }, [error, products, setProducts])
+        },
+    })
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument
     const cartDet = Object.values(cartDetails ?? {})
 
     return (
@@ -104,6 +96,7 @@ function CartSummary() {
                 ) : (
                     <div className="relative flex bg-beige-50 ">
                         <div className="mx-min xl:w-max">
+                            {/*eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
                             {cartCount! > 0 ? (
                                 <>
                                     <div className="flex-1 overflow-auto py-6 px-4 sm:px-6">
@@ -113,11 +106,14 @@ function CartSummary() {
                                         <div className="mt-8 xl:grid ">
                                             <div className="xl:grid">
                                                 <ul role="list" className="-my-6 xl:grid  xl:grid-cols-2 xl:gap-x-4 ">
-                                                    {cartDet.map((product) => (
+                                                    {cartDet.map((product: CartEntry) => (
                                                         <li key={product.id} className="flex py-6">
                                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-beige-200 shadow-lg">
                                                                     <Image
+                                                                        width={64}
+                                                                        height={64}
+                                                                        layout="responsive"
                                                                         className="h-full w-full rounded-md object-cover object-center shadow-md"
                                                                         src={product.image ?? ''}
                                                                         alt={'not found'}

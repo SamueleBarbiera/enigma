@@ -110,13 +110,18 @@ model Size {
 
 model Product {
   id          String    @id @default(cuid())
-  image       String
+  image       String[]
   description String
-  price       Float
+  price       Float 
   quantity    Int
   design      String
+  misure String
   material    String
   name        String   @unique
+  sku         String  @unique
+  price_id String 
+  sku_id String 
+  currency String
   created_at  DateTime  @default(now())
   updated_at  DateTime? @updatedAt
   size        Size[]

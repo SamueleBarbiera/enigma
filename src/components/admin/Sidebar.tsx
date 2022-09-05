@@ -8,16 +8,14 @@ export default function Sidebar() {
     const location = useRouter()
 
     const navigation = [
-        { name: 'Aggiungi Prodotto', href: 'crea', path: '/admin/Prova', icon: FolderAddIcon },
+        { name: 'Aggiungi Prodotto', href: 'crea', path: '/admin/Add', icon: FolderAddIcon },
         { name: 'Utenti', href: 'utenti', path: '/admin/Users', icon: FiUsers },
         { name: 'Prodotti', href: 'prodotti', path: '/admin/Product', icon: ClipboardCopyIcon },
         { name: 'Categorie', href: 'categorie', path: '/admin/Category', icon: TagIcon },
     ]
 
     return (
-        <div
-            className={`relative hidden h-screen w-60 border-r border-gray-200 bg-gray-100 p-5 duration-300 dark:border-gray-600 dark:bg-slate-800 sm:block`}
-        >
+        <div className={`h-screen  w-60 border-r p-5 duration-300 dark:border-gray-600 dark:bg-slate-800 sm:block`}>
             <Link href="/">
                 <div className={`flex items-center gap-x-4`}>
                     <span className="whitespace-nowrap text-xl font-medium dark:text-white">Admin dashboard</span>

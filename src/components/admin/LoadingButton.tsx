@@ -1,14 +1,13 @@
-import React from 'react'
-import Spinner from './Spinner'
+import { ReactNode } from 'react'
 
 interface LoadingButtonProps {
     loading: boolean
     btnColor?: string
     textColor?: string
-    children: React.ReactNode
+    children: ReactNode
 }
 
-export const LoadingButton = ({
+export const ButtonForm = ({
     textColor = 'text-white',
     btnColor = 'bg-ct-yellow-600',
     children,
@@ -21,14 +20,7 @@ export const LoadingButton = ({
                 loading ? 'bg-[#ccc]' : ''
             }`}
         >
-            {loading ? (
-                <div className="flex items-center gap-3">
-                    <Spinner width={5} height={5} color={'bg-blue-600'} bgColor={'bg-blue-900'} />
-                    <span className="text-slate-500">Loading...</span>
-                </div>
-            ) : (
-                <span className={`${textColor}`}>{children}</span>
-            )}
+            <span className={`${textColor}`}>{children}</span>
         </button>
     )
 }

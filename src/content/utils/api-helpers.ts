@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 
-export async function fetchGetJSON(url: string) {
+export async function fetchGetJSON<T>(url: string) {
     try {
-        const res: AxiosResponse = await axios.get(url)
+        const res: AxiosResponse = await axios.get<T>(url)
         const data: unknown = await res.data
         return data
     } catch (err) {

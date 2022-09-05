@@ -33,10 +33,9 @@
 
 -   [**CI/CD Github Actions**](https://docs.github.com/en/actions) Automations for the deployment and testing phase
 -   [**Commitizen**](https://github.com/commitizen/cz-cli) Commit Linting CLI
--   [**Husky**](https://typicode.github.io/husky/#/) Auto pre-commit scripts to test types and code 
+-   [**Husky**](https://typicode.github.io/husky/#/) Auto pre-commit scripts to test types and code
 -   [**Ts-Lint**](https://typescript-eslint.io/) Linting for error and warning in the code
 -   [**Prettier**](https://prettier.io/) Code Formatter
-
 
 # My Socials 🤳
 

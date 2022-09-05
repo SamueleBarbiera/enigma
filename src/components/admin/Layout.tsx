@@ -9,14 +9,14 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
     return (
-        <>
+        <div className="h-screen w-screen">
             <AdminHeader />
             <Sidebar />
-            <div className="flex h-screen grow">
+            <div className="flex h-min flex-col items-end justify-end">
                 <div className="m-5">{children}</div>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

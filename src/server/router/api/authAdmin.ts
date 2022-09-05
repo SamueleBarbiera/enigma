@@ -9,14 +9,15 @@ export const authAdmin = createRouter()
             try {
                 return ctx.session
             } catch (error) {
-                console.log(error)
+                console.log('🚀 ~ file: authAdmin.ts ~ line 12 ~ resolve ~ ERROR', error)
             }
         },
     })
     .middleware(async ({ ctx, next }) => {
         // Any query or mutation after this middleware will raise
         // an error unless there is a current session
-        if (ctx.session?.role != 'ADMIN') {
+        if (!ctx.session || ctx.session.user.role != 'ADMIN') {
+            console.log('🚀 ~ file: authAdmin.ts ~ line 23 ~ .middleware ~ session', ctx.session?.user.role)
             throw new TRPCError({ code: 'UNAUTHORIZED' })
         }
         return next()

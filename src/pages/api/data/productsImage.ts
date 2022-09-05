@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { nanoid } from 'nanoid'
-import { decode } from 'base64-arraybuffer'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { withValidation } from 'next-validations'
@@ -11,43 +10,30 @@ import { env as envB } from 'src/env/server.mjs'
 
 export const supabase: SupabaseClient = createClient(env.NEXT_PUBLIC_SUPABASE_API_URL, envB.SUPABASE_API_KEY)
 
-const schema = z.object({
-    image: z.string().nonempty(),
-})
+const schema = z.object({})
 
 const validate = withValidation({
     schema,
     type: 'Zod',
     mode: 'body',
 })
-
 interface ExtendedNextApiRequest extends NextApiRequest {
     body: {
-        image: string
+        image: FormData
     }
 }
 
 const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const { image } = req.body
-
-        if (!image) {
-            return res.status(500).json({ message: 'There is no image' })
-        }
+        console.log('🚀 ~ file: productsImage.ts ~ line 33 ~ handle ~ image', image)
 
         try {
-            const contentType = image.match(/data:(.*);base64/)?.[1]
-            const base64FileData = image.split('base64,')[1]
-            if (!contentType || !base64FileData) {
-                return res.status(500).json({ message: 'Image data not valid' })
-            }
             const fileName = nanoid()
-            const ext = contentType.split('/')[1]
-            const path = `${fileName}.${ext ?? ''}`
+            const path = `${fileName}`
             const { data, error: uploadError } = await supabase.storage
                 .from(process.env.SUPABASE_STORAGE_BUCKET ?? '')
-                .upload(path, decode(base64FileData), {
-                    contentType,
+                .upload(path, image, {
                     upsert: true,
                 })
             console.log('🚀 ~ file: productsImage.ts ~ line 47 ~ data', data)

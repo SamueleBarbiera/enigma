@@ -120,7 +120,7 @@ export default function Header() {
                                                 <Image width={32} height={32} src={'/domanda.png'} alt="home" />
                                             </Link>
                                             <>
-                                                {session?.role === 'ADMIN' ? (
+                                                {session?.user.role === 'ADMIN' ? (
                                                     <>
                                                         <Link href="/admin/Users">
                                                             <button className="mr-4 rounded-lg bg-beige-500 py-1 px-2 text-beige-50 transition duration-200 ease-in-out hover:bg-beige-600">
@@ -164,7 +164,7 @@ export default function Header() {
                                                 {session ? (
                                                     <div className="ml-2 mr-4 mt-[0.4rem] flow-root">
                                                         <Popover className="relative">
-                                                            {({ open }: any) => (
+                                                            {({ open }) => (
                                                                 <>
                                                                     <Popover.Button
                                                                         className={classNames(
@@ -199,7 +199,9 @@ export default function Header() {
                                                                                 <div className="absolute items-center justify-center rounded-lg border bg-beige-50 px-6 py-6 shadow-xl">
                                                                                     <div className="relative my-4 items-center">
                                                                                         <Image
-                                                                                            src={session.image ?? ''}
+                                                                                            src={
+                                                                                                session.user.image ?? ''
+                                                                                            }
                                                                                             alt="User Img"
                                                                                             className="mx-auto flex items-center justify-center  rounded-full shadow-md"
                                                                                             width={100}
@@ -207,9 +209,9 @@ export default function Header() {
                                                                                         />
                                                                                     </div>
                                                                                     <p className="font-semibold text-beige-900 contrast-150">
-                                                                                        {session.name}
+                                                                                        {session.user.name}
                                                                                     </p>
-                                                                                    <p>{session.email}</p>
+                                                                                    <p>{session.user.email}</p>
                                                                                     <button
                                                                                         className="text-medium mt-2 inline-flex w-full justify-center  rounded-lg bg-beige-500 py-2 px-4 font-medium text-beige-50 shadow-lg transition duration-200 ease-in-out hover:bg-beige-600"
                                                                                         onClick={() =>
@@ -248,21 +250,18 @@ export default function Header() {
                                                                         'group inline-flex items-center rounded-md text-base font-medium hover:text-beige-900 '
                                                                     )}
                                                                 >
-                                                                    <Link
+                                                                    <a
                                                                         href="#"
                                                                         className="group -m-2 flex items-center p-2"
                                                                     >
-                                                                        <div>
-                                                                            {' '}
-                                                                            <MdOutlineShoppingBag
-                                                                                className="h-6 w-6 flex-shrink-0 text-beige-900"
-                                                                                aria-hidden="true"
-                                                                            />
-                                                                            <span className="ml-2 text-sm font-medium text-beige-900">
-                                                                                {cartCount}
-                                                                            </span>
-                                                                        </div>
-                                                                    </Link>
+                                                                        <MdOutlineShoppingBag
+                                                                            className="h-6 w-6 flex-shrink-0 text-beige-900"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                        <span className="ml-2 text-sm font-medium text-beige-900">
+                                                                            {cartCount}
+                                                                        </span>
+                                                                    </a>
                                                                 </Popover.Button>
 
                                                                 <Transition

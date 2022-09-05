@@ -1,15 +1,20 @@
 import axios from 'axios'
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { Controller, useController, useFormContext } from 'react-hook-form'
 import { ImageUrl } from 'src/types/IProduct'
 import useStore, { Store } from '../../hooks/index'
-import Spinner from './Spinner'
 
 interface FileUpLoaderProps {
     name: string
 }
 
-const FileUpLoader = ({ name }: FileUpLoaderProps) => {
+export interface UploadableFile {
+    id: number
+    file: File[]
+    url?: string
+}
+
+export default function FileUpLoader({ name }: FileUpLoaderProps) {
     const {
         control,
         formState: { errors },
@@ -17,52 +22,38 @@ const FileUpLoader = ({ name }: FileUpLoaderProps) => {
     const { field } = useController({ name, control })
     const store: Store = useStore()
 
-    const onFileDrop = (e: ChangeEvent<HTMLInputElement>) => {
-        let file: File | undefined
-        const reader: FileReader = new FileReader()
-        const target = e.target as HTMLInputElement
-        if (!target.files) return
-        if (e.target.files) {
-            console.log(
-                '🚀 ~ file: AddProductImage.tsx ~ line 20 ~ handleOnChangePicture ~ e.target.files',
-                e.target.files
-            )
-            file = e.target.files[0]
-        }
-
+    const onFileDrop = async (e: ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files
         const formData = new FormData()
-        formData.append('file', file as string | Blob)
-        console.log('🚀 ~ file: FileUpload.tsx ~ line 27 ~ onFileDrop ~ file', file)
+        if (!files) return
 
-        reader.addEventListener('load', async function () {
-            try {
-                store.setUploadingImage(true)
-                const data: ImageUrl = await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`,
-                    {
-                        image: reader.result,
-                    }
-                )
-                console.log('🚀 ~ file: FileUpload.tsx ~ line 42 ~ data', data)
-                if (data.data.url) {
+        try {
+            // eslint-disable-next-line @typescript-eslint/prefer-for-of
+            for (const image of files) {
+                formData.append('files', image)
+                if (image.size <= 6 * 1024 * 1024) {
+                    store.setUploadingImage(true)
+                    const data: ImageUrl = await axios.post(
+                        `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`,
+                        {
+                            image: image,
+                        }
+                    )
+                    console.log('🚀 ~ file: FileUpload.tsx ~ line 42 ~ data', data)
+                    console.log('🚀 ~ file: FileUpload.tsx ~ line 27 ~ onFileDrop ~ image', formData)
                     field.onChange(data.data.url)
+                    return data
+                } else {
+                    throw Error('File size is exceeding 6MB.')
                 }
-                return data
-            } catch (err) {
-                store.setUploadingImage(false)
-                throw Error('Unable to update image')
-            } finally {
-                store.setUploadingImage(false)
-                console.log('FINITOOOOOOOOOOO')
             }
-        })
-
-        if (file) {
-            if (file.size <= 3 * 1024 * 1024) {
-                reader.readAsDataURL(file)
-            } else {
-                throw Error('File size is exceeding 3MB.')
-            }
+        } catch (err) {
+            console.log('🚀 ~ file: FileUpload.tsx ~ line 56 ~ err', err)
+            store.setUploadingImage(false)
+            throw Error('Unable to update image')
+        } finally {
+            store.setUploadingImage(false)
+            console.log('FINITOOOOOOOOOOO')
         }
     }
 
@@ -83,14 +74,9 @@ const FileUpLoader = ({ name }: FileUpLoaderProps) => {
                                 onBlur={onBlur}
                                 ref={ref}
                                 onChange={onFileDrop}
-                                multiple={false}
+                                multiple
                                 accept="image/jpg, image/png, image/jpeg"
                             />
-                        </div>
-                        <div>
-                            {store.uploadingImage && (
-                                <Spinner color={'text-yellow-400'} bgColor={'bg-blue-900'} height={8} width={8} />
-                            )}
                         </div>
                     </div>
                     <p className={`mb-2 text-xs italic text-red-500 ${errors[name] ? 'visible' : 'invisible'}`}>
@@ -101,5 +87,3 @@ const FileUpLoader = ({ name }: FileUpLoaderProps) => {
         />
     )
 }
-
-export default FileUpLoader

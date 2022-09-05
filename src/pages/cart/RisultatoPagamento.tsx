@@ -2,7 +2,6 @@
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import useSWR from 'swr'
 import { useShoppingCart } from 'use-shopping-cart'
 import { shootFireworks } from '../../content/lib/Utils'
 import { fetchGetJSON } from '../../content/utils/api-helpers'
@@ -12,14 +11,18 @@ import Footer from '@/components/layout/Footer'
 import Head from 'next/head'
 import { unstable_getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
+import { useQuery } from 'react-query'
 
 const RisultatoPagamento = () => {
     const router = useRouter()
     const { clearCart } = useShoppingCart()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/restrict-template-expressions
-    const { data, error } = useSWR(
-        () => (router.query.session_id ? `/api/checkout_sessions/${router.query.session_id}` : null),
-        fetchGetJSON
+    const { data, error } = useQuery(
+        ['checkout-sessions'],
+        () => fetchGetJSON(`/api/checkout_sessions/${router.query.session_id}`),
+        {
+            enabled: !!router.query.session_id,
+        }
     )
 
     useEffect(() => {

@@ -1,8 +1,8 @@
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import FormInput from '../../components/admin/FormInput'
-import { LoadingButton } from '../../components/admin/LoadingButton'
+import { ButtonForm } from '../../components/admin/LoadingButton'
 import toast from 'react-hot-toast'
 import { trpc } from '../../content/utils/trpc'
 import FileUpLoader from '../../components/admin/FileUpload'
@@ -10,12 +10,13 @@ import Layout from '@/components/admin/Layout'
 import { UseFormProps } from 'react-hook-form/dist/types'
 import { TypeOf, z } from 'zod'
 import { GetServerSidePropsContext } from 'next'
-import { authOptions } from '../api/auth/[...nextauth]'
 import { unstable_getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]'
 
 export const validationSchema = z.object({
-    imageUrl: z.string().min(1, 'Photo is required').url('Photo URL is invalid'),
+    image: z.string().min(1, 'Photo is required').url('Photo URL is invalid'),
     name: z.string().min(2),
+    misure: z.string().min(2),
     description: z.string().min(2),
     price: z.number().min(1).default(1),
     quantity: z.number().min(1).default(1),
@@ -41,11 +42,10 @@ function useZodForm<TSchema extends z.ZodType>(
     return form
 }
 
-const RegisterPage = () => {
-    const { isLoading, mutate } = trpc.useMutation(['createProduct.add'], {
-        onSuccess: () => {
-            toast.success('Registration successful')
-        },
+const AddProductPage = () => {
+    const [isLoading, setisLoading] = useState<boolean>(false)
+
+    const { mutate: MutationOn } = trpc.useMutation(['createProduct.add'], {
         onError: (error) => {
             toast.error(error.message, {
                 position: 'top-right',
@@ -56,11 +56,12 @@ const RegisterPage = () => {
     const methods = useZodForm({
         schema: validationSchema,
         defaultValues: {
-            imageUrl: '',
+            image: '',
             description: '',
             price: 1,
             quantity: 1,
             design: '',
+            misure: '',
             material: '',
             name: '',
         },
@@ -79,17 +80,32 @@ const RegisterPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isSubmitSuccessful])
 
-    const onSubmitHandler: SubmitHandler<{
+    const handleOnSubmit = async (values: {
         price?: number | undefined
         quantity?: number | undefined
-        imageUrl: string
+        image: string
         name: string
         description: string
         design: string
         material: string
-    }> = (values) => {
-        // 👇 Execute the Mutation
-        mutate(values)
+        misure: string
+    }) => {
+        let toastId
+        try {
+            toastId = toast.loading('Caricamento del prodotto...')
+            setisLoading(true)
+            MutationOn(values)
+        } catch (err) {
+            setisLoading(true)
+            let message
+            if (err instanceof Error) message = err.message
+            else message = String(err)
+            toast.error(`Unable to submit ${message}`, { id: toastId })
+        } finally {
+            setisLoading(false)
+
+            toast.success('Prodotto pubblicato', { id: toastId })
+        }
     }
 
     return (
@@ -100,19 +116,20 @@ const RegisterPage = () => {
                     <div className="w-full">
                         <FormProvider {...methods}>
                             <form
-                                onSubmit={handleSubmit(onSubmitHandler)}
+                                onSubmit={handleSubmit(handleOnSubmit)}
                                 className="bg-ct-dark-200 mx-auto w-full max-w-md space-y-5 overflow-hidden rounded-2xl p-8 shadow-lg"
                             >
                                 <FormInput label="Nome" name="name" type="text" />
+                                <FormInput label="Misure" name="misure" type="text" />
                                 <FormInput label="Descrizione" name="description" type="text" />
                                 <FormInput label="Prezzo" name="price" type="number" />
                                 <FormInput label="Quantità" name="quantity" type="number" />
                                 <FormInput label="Design" name="design" type="text" />
                                 <FormInput label="Materiale" name="material" type="text" />
-                                <FileUpLoader name="imageUrl" />
-                                <LoadingButton loading={isLoading} textColor="text-ct-blue-600">
+                                <FileUpLoader name="image" />
+                                <ButtonForm loading={isLoading} textColor="text-ct-blue-600">
                                     {isLoading ? 'Loading' : 'Submit'}
-                                </LoadingButton>
+                                </ButtonForm>
                             </form>
                         </FormProvider>
                     </div>
@@ -122,7 +139,7 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage
+export default AddProductPage
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)

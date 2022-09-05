@@ -156,7 +156,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                         <div className="py-1">
                                                             <Menu.Item>
                                                                 {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
-                                                                {({ active }: any) => (
+                                                                {({ active }) => (
                                                                     <Link
                                                                         href={order.href}
                                                                         className={classNames(
@@ -172,7 +172,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                             </Menu.Item>
                                                             <Menu.Item>
                                                                 {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
-                                                                {({ active }: any) => (
+                                                                {({ active }) => (
                                                                     <Link
                                                                         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                                                                         href={order.invoicehref}

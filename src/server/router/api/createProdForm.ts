@@ -1,4 +1,4 @@
-import { validationSchema } from '../../../pages/admin/AddProd'
+import { validationSchema } from '../../../pages/admin/Add'
 import { createProtectedRouter } from '../protectedCtx'
 
 export const createProdForm = createProtectedRouter()
@@ -17,7 +17,12 @@ export const createProdForm = createProtectedRouter()
             try {
                 await ctx.prisma.product.create({
                     data: {
-                        image: input.imageUrl,
+                        currency: 'EUR',
+                        price_id: Math.random().toString(),
+                        sku_id: Math.random().toString(),
+                        misure: input.misure,
+                        sku: Math.random().toString(),
+                        image: input.image,
                         name: input.name,
                         description: input.description,
                         price: input.price,

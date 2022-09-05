@@ -5,10 +5,9 @@ import { XIcon } from '@heroicons/react/outline'
 import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react'
 import { useState, Fragment } from 'react'
 import Link from 'next/link'
-import useSWR from 'swr'
-import { fetcher } from '../../content/lib/fetcher'
 import Image from 'next/image'
-import { IProduct, ProductsData } from 'src/types/IProduct'
+import { trpc } from '../../content/utils/trpc'
+import { Product } from '@prisma/client'
 
 const Filtri: {
     id: string
@@ -60,25 +59,20 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-const Products = ({ products }: ProductsData) => {
+const Products = () => {
     const [mobileFiltriOpen, setMobileFiltriOpen] = useState(false)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [pageIndex, setPageIndex] = useState(1)
     const [order, setOrder] = useState('DESC')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { data, error, isValidating } = useSWR(
-        `/api/variantetaglias?populate=*&sort=price:${order}&sort=createdAt:${order}&pagination[page]=${pageIndex}&pagination[pageSize]=4`,
-        fetcher,
-        {
-            fallbackData: products,
-        }
-    )
-    console.log('🚀 Products.tsx - line 76 - fetchData', data)
+    const { error, data, isLoading } = trpc.useQuery(['createProduct.view'], { suspense: true })
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const products: Product[] | undefined = data
 
     return (
         <main className="my-12 flex h-full items-center justify-center xl:h-screen ">
-            {isValidating ? (
+            {isLoading ? (
                 <div className="mx-4  flex h-screen w-screen items-center justify-center rounded-lg bg-beige-200 px-2 py-8 shadow-xl smd:mx-12 smd:px-4">
                     <div className="mx-auto flex flex-col items-center justify-center space-x-1 text-4xl font-semibold">
                         <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
@@ -92,7 +86,7 @@ const Products = ({ products }: ProductsData) => {
                         <p className="mt-3 text-lg text-red-500">
                             Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine . . .
                         </p>
-                        <p>{error}</p>
+                        <p>{error.message}</p>
                     </div>
                 </div>
             ) : (
@@ -323,39 +317,22 @@ const Products = ({ products }: ProductsData) => {
                         {/* Product grid */}
                         <div className=" mx-auto flex max-w-2xl flex-col items-center px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                             <div className="mx-4 grid grid-cols-1 gap-y-8 gap-x-12  md:mx-0 md:grid-cols-2 xl:grid-cols-4">
-                                {products.map((product: IProduct) => (
+                                {products?.map((product: Product) => (
                                     <div
                                         key={product.id}
                                         className="group rounded-xl border bg-beige-200 p-6 shadow-xl"
                                     >
                                         <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
-                                            {/* {isValidating ? (
-                                                <div className="mx-auto h-auto w-full rounded-lg bg-beige-200  py-4  px-4 shadow-xl">
-                                                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
-                                                        <RefreshIcon className="m-2 h-12 w-12 flex-shrink-0 animate-spin rounded-full bg-beige-100 py-2 text-beige-800 " />
-                                                        <p className="mt-3 animate-pulse text-lg">Caricamento . . .</p>
-                                                    </div>
-                                                </div>
-                                            ) : error ? (
-                                                <div className="mx-auto w-fit rounded-lg bg-red-200 py-4 px-4 shadow-xl">
-                                                    <div className="flex flex-col items-center space-x-1 text-4xl font-semibold">
-                                                        <ExclamationCircleIcon className="m-2 h-12 w-12 flex-shrink-0 rounded-full bg-red-100 py-2 text-red-600 " />
-                                                        <p className="m-2 text-lg text-red-500">Qualcosa è andato storto, non preccuparti il pagamento non è andato a buon fine!</p>
-                                                    </div>
-                                                </div>
-                                            ) : ( */}
                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                 <Image
-                                                    className="grid h-auto w-full rounded-xl border shadow-md"
+                                                    className="grid h-auto w-auto rounded-lg border shadow-md"
                                                     src={product.image}
                                                     alt={'not found'}
+                                                    width={64}
+                                                    height={64}
+                                                    layout="responsive"
                                                 />
                                             </Link>
-                                            {/*)}
-                                             {product.image.data.map((image) => (
-                                                    <Image className="flex  h-auto w-24 flex-row justify-between" src={process.env.NEXT_PUBLIC_API_URL + '' + image.url} alt={'not found'} />
-                                                ))} 
-                                            */}
                                         </div>
 
                                         <div className="mt-4 sm:mt-8">

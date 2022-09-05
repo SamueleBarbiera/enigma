@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios'
-
 /* eslint-disable @typescript-eslint/no-extra-semi */
 export interface IProduct {
     id: string
@@ -39,10 +37,58 @@ export interface ProdList {
     onSubmit: unknown
 }
 
-export interface ImageUrl extends AxiosResponse {
-    data: {
-        url: string
-    }
+export interface ImageUrl {
+    data: Data
+    status: number
+    statusText: string
+    headers: Headers
+    config: Config
+    request: Request
+}
+
+export interface Data {
+    url: string
+}
+
+export interface Headers {
+    connection: string
+    'content-length': string
+    'content-type': string
+    date: string
+    etag: string
+    'keep-alive': string
+    vary: string
+}
+
+export interface Config {
+    transitional: Transitional
+    transformRequest: unknown[]
+    transformResponse: unknown[]
+    timeout: number
+    xsrfCookieName: string
+    xsrfHeaderName: string
+    maxContentLength: number
+    maxBodyLength: number
+    env: Env
+    headers: Headers2
+    method: string
+    url: string
+    data: string
+}
+
+export interface Transitional {
+    silentJSONParsing: boolean
+    forcedJSONParsing: boolean
+    clarifyTimeoutError: boolean
+}
+
+export interface Env {
+    FormData: unknown
+}
+
+export interface Headers2 {
+    Accept: string
+    'Content-Type': string
 }
 
 export interface Filtri {
