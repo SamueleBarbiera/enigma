@@ -61,13 +61,9 @@ function classNames(...classes: string[]) {
 
 const Products = () => {
     const [mobileFiltriOpen, setMobileFiltriOpen] = useState(false)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [pageIndex, setPageIndex] = useState(1)
+    //const [pageIndex, setPageIndex] = useState(1)
     const [order, setOrder] = useState('DESC')
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { error, data, isLoading } = trpc.useQuery(['createProduct.view'], { suspense: true })
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const products: Product[] | undefined = data
 
     return (

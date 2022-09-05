@@ -14,7 +14,7 @@ import { unstable_getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
 
 export const validationSchema = z.object({
-    image: z.string().min(1, 'Photo is required').url('Photo URL is invalid'),
+    image: z.string().min(1, 'Photo is required').url('Photo URL is invalid').array(),
     name: z.string().min(2),
     misure: z.string().min(2),
     description: z.string().min(2),
@@ -56,7 +56,7 @@ const AddProductPage = () => {
     const methods = useZodForm({
         schema: validationSchema,
         defaultValues: {
-            image: '',
+            image: [''],
             description: '',
             price: 1,
             quantity: 1,
@@ -83,7 +83,7 @@ const AddProductPage = () => {
     const handleOnSubmit = async (values: {
         price?: number | undefined
         quantity?: number | undefined
-        image: string
+        image: string[]
         name: string
         description: string
         design: string

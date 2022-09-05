@@ -1,4 +1,3 @@
-import { Product } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { createProtectedRouter } from '../protectedCtx'
@@ -9,7 +8,7 @@ export const byId = createProtectedRouter().query('view', {
     }),
     async resolve({ input, ctx }) {
         try {
-            const post: Product | null = await ctx.prisma.product.findUnique({ where: { id: input.id } })
+            const post = await ctx.prisma.product.findUnique({ where: { id: input.id } })
             if (!post) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',

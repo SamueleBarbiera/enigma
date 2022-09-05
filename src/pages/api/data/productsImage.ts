@@ -19,14 +19,13 @@ const validate = withValidation({
 })
 interface ExtendedNextApiRequest extends NextApiRequest {
     body: {
-        image: FormData
+        image: string
     }
 }
 
 const handle = async (req: ExtendedNextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         const { image } = req.body
-        console.log('🚀 ~ file: productsImage.ts ~ line 33 ~ handle ~ image', image)
 
         try {
             const fileName = nanoid()

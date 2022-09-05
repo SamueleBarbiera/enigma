@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Product } from '@prisma/client'
 import { trpc } from '../../../src/content/utils/trpc'
 import { CartEntry } from 'use-shopping-cart/core'
+import { toast } from 'react-hot-toast'
 
 export interface ResFetch extends Response {
     id: string
@@ -39,8 +40,12 @@ function CartSummary() {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const response: ResFetch = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, totalPrice)
+        console.log("🚀 ~ file: CartSummary.tsx ~ line 42 ~ consthandleCheckout:React.FormEventHandler<HTMLFormElement>= ~ response", response)
 
         if (response.status > 399) {
+            toast.error(response.statusText, {
+                position: 'top-right',
+            })
             console.error(response.statusText)
             setErrorMessage(response.statusText)
             setLoading(false)
@@ -62,7 +67,6 @@ function CartSummary() {
         onSuccess() {
             if (status == 'success') {
                 setLoading(false)
-                console.log('🚀 - file: Products.tsx - line 76 - fetchData - jsonResponse', data)
                 setProducts(data)
                 return products
             } else if (status == 'loading') {

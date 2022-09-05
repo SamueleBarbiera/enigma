@@ -130,7 +130,7 @@ function AcquistiEffettuati(props: InferGetServerSidePropsType<typeof getServerS
                                                     </dd>
                                                 </div>
                                                 <div className="ml-10 items-end justify-end sm:ml-0">
-                                                    <dt className="font-medium text-beige-900">Costo totale</dt>
+                                                    <dt className="font-medium text-beige-900"></dt>
                                                     <dd className="mt-1 font-medium text-beige-600">{order.total}</dd>
                                                 </div>
                                             </dl>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useRouter } from 'next/router'
 import { useShoppingCart } from 'use-shopping-cart'
 //import { useState } from 'react'
@@ -11,9 +12,8 @@ import { Fragment } from 'react'
 import { toast } from 'react-hot-toast'
 //import Link from 'next/link'
 import Image from 'next/image'
-import { Product } from '@prisma/client'
 import { trpc } from '../../content/utils/trpc'
-import Link from 'next/link'
+import { Product } from 'use-shopping-cart/core'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -30,8 +30,8 @@ export default function ProductPage() {
         },
     })
 
-    const product: Product | undefined = data
-    const { data: productsConsigliati } = trpc.useQuery(['getCons.view'], { suspense: true })
+    const product = data as unknown as Product
+    //const { data: productsConsigliati } = trpc.useQuery(['getCons.view'], { suspense: true })
     const { addItem } = useShoppingCart()
 
     // let colorsAvailable = Object.keys(products?.dettagli[0]).filter((k) => products?.dettagli[0][k] === true)
@@ -91,21 +91,23 @@ export default function ProductPage() {
                         {/* Image selector */}
                         <div className="mx-auto mt-6  w-full max-w-full sm:block lg:max-w-none">
                             <Tab.List className="grid grid-cols-4 gap-6">
+
                                 <Tab
-                                    key={product?.id}
+                                    key={product.id}
                                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
                                 >
                                     {/*eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
                                     {({ selected }: any) => (
                                         <>
-                                            <span className="sr-only">{product?.name}</span>
+                                            <span className="sr-only">{product.name}</span>
+
                                             <span className="absolute inset-0 overflow-hidden rounded-md">
                                                 <Image
                                                     width={64}
                                                     height={64}
                                                     layout="responsive"
                                                     className="h-full w-full rounded-lg object-cover object-center shadow-xl"
-                                                    src={product?.image ?? ''}
+                                                    src={product.image ?? ''}
                                                     alt={'not found'}
                                                 />
                                             </span>
@@ -123,13 +125,13 @@ export default function ProductPage() {
                         </div>
 
                         <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-                            <Tab.Panel key={product?.id}>
+                            <Tab.Panel key={product.id}>
                                 <Image
                                     width={64}
                                     height={64}
                                     layout="responsive"
                                     className="h-min w-min rounded-lg border-4 border-beige-600 object-cover object-center shadow-xl "
-                                    src={product?.image ?? ''}
+                                    src={product.image ?? ''}
                                     alt={'not found'}
                                 />
                             </Tab.Panel>
@@ -139,13 +141,13 @@ export default function ProductPage() {
                     {/* IProduct info */}
                     <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                         <>
-                            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product?.name}</h1>
+                            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
 
                             <div className="mt-3">
                                 <h2 className="sr-only">IProduct information</h2>
                                 <p className="text-3xl text-gray-900">
                                     {formatCurrencyString({
-                                        value: product?.price * 100,
+                                        value: product.price * 100,
                                         currency: 'EUR',
                                     })}
                                 </p>
@@ -156,7 +158,7 @@ export default function ProductPage() {
 
                                 <div
                                     className="space-y-6 text-base text-beige-700"
-                                    dangerouslySetInnerHTML={{ __html: product?.description ?? 'descrizione' }}
+                                    dangerouslySetInnerHTML={{ __html: product.description ?? 'descrizione' }}
                                 />
                             </div>
 
@@ -248,7 +250,7 @@ export default function ProductPage() {
                                             </div>
                                         </RadioGroup>
                                     </div> */}
-                                <div key={product?.id} className="sm:flex-col1 mt-10 flex">
+                                <div key={product.id} className="sm:flex-col1 mt-10 flex">
                                     <button
                                         onClick={() => {
                                             notify(product), addItem(product)
@@ -267,7 +269,7 @@ export default function ProductPage() {
                         Additional details
                     </h2>
 
-                    <Disclosure as="div" key={product?.name}>
+                    <Disclosure as="div" key={product.name}>
                         {({ open }) => (
                             <>
                                 <h3>
@@ -301,9 +303,9 @@ export default function ProductPage() {
                                 >
                                     <p
                                         className="text-md font-normal tracking-tight text-beige-700"
-                                        key={product?.description}
+                                        key={product.description}
                                     >
-                                        {product?.description}
+                                        {product.description}
                                     </p>
                                 </Disclosure.Panel>
                             </>
@@ -356,17 +358,17 @@ export default function ProductPage() {
                             </Tab.List>
                         </div>
 
-                        <Tab.Panels as={Fragment} key={product?.id}>
+                        <Tab.Panels as={Fragment} key={product.id}>
                             <Tab.Panel className="pt-10">
-                                <p>{product?.material}</p>
+                                <p>{product.material}</p>
                             </Tab.Panel>
 
                             <Tab.Panel className="pt-10">
-                                <p>{product?.description}</p>
+                                <p>{product.description}</p>
                             </Tab.Panel>
 
                             <Tab.Panel className="pt-10">
-                                <p>{product?.design}</p>
+                                <p>{product.design}</p>
                             </Tab.Panel>
                         </Tab.Panels>
                     </Tab.Group>
@@ -376,7 +378,7 @@ export default function ProductPage() {
                         Prodotti consigliati
                     </h2>
 
-                    <div className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
+                    {/* <div className="group rounded-xl border bg-beige-200 p-6 shadow-xl">
                         {productsConsigliati?.map((product: Product) => (
                             <>
                                 <div className="h-auto  w-auto items-center justify-between p-2 group-hover:scale-105 group-hover:transform group-hover:duration-200 group-hover:ease-in-out">
@@ -409,7 +411,7 @@ export default function ProductPage() {
                                 </div>
                             </>
                         ))}
-                    </div>
+                    </div> */}
                 </section>
             </div>
 
