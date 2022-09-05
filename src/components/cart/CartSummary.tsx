@@ -40,7 +40,10 @@ function CartSummary() {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const response: ResFetch = await fetchPostJSON('/api/checkout_sessions/cart', { cartDetails }, totalPrice)
-        console.log("🚀 ~ file: CartSummary.tsx ~ line 42 ~ consthandleCheckout:React.FormEventHandler<HTMLFormElement>= ~ response", response)
+        console.log(
+            '🚀 ~ file: CartSummary.tsx ~ line 42 ~ consthandleCheckout:React.FormEventHandler<HTMLFormElement>= ~ response',
+            response
+        )
 
         if (response.status > 399) {
             toast.error(response.statusText, {

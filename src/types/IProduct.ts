@@ -1,9 +1,7 @@
 import { Product } from 'use-shopping-cart/core'
 
 /* eslint-disable @typescript-eslint/no-extra-semi */
-export interface IProduct extends Product {
-    
-}
+export interface IProduct extends Product {}
 
 export interface GetProductsResponse {
     data: IProduct[]

@@ -91,7 +91,6 @@ export default function ProductPage() {
                         {/* Image selector */}
                         <div className="mx-auto mt-6  w-full max-w-full sm:block lg:max-w-none">
                             <Tab.List className="grid grid-cols-4 gap-6">
-
                                 <Tab
                                     key={product.id}
                                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-beige-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"

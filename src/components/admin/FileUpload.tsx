@@ -3,13 +3,11 @@ import { useState } from 'react'
 import { Controller, useController, useFormContext } from 'react-hook-form'
 import { ImageUrl } from 'src/types/IProduct'
 import useStore, { Store } from '../../hooks/index'
-import ImageUploading, { ImageListType } from "react-images-uploading";
-
+import ImageUploading, { ImageListType } from 'react-images-uploading'
 
 interface FileUpLoaderProps {
     name: string
 }
-
 
 export default function FileUpLoader({ name }: FileUpLoaderProps) {
     const {
@@ -18,32 +16,30 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
     } = useFormContext()
     const { field } = useController({ name, control })
     const store: Store = useStore()
-    const [images, setImages] = useState([]);
-    const maxNumber = 69;
+    const [images, setImages] = useState([])
+    const maxNumber = 69
 
-
-    const onFileDrop = async (imageList: ImageListType,
-        addUpdateIndex: number[] | undefined) => {
-        console.log(imageList, addUpdateIndex);
-        setImages(imageList as never[]);
+    const onFileDrop = async (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
+        console.log(imageList, addUpdateIndex)
+        setImages(imageList as never[])
 
         try {
             store.setUploadingImage(true)
-            const imagesRequests = imageList.map(file => axios.post<AxiosResponse, AxiosError>(
-                `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`,
-                {
-                    image: file,
-                }
-            ));
-            const data = await Promise.all(imagesRequests);
+            const imagesRequests = imageList.map((file) =>
+                axios.post<AxiosResponse, AxiosError>(
+                    `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`,
+                    {
+                        image: file,
+                    }
+                )
+            )
+            const data = await Promise.all(imagesRequests)
 
             console.log('🚀 ~ file: FileUpload.tsx ~ line 42 ~ data', data)
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            field.onChange(data.map(d => d.response?.data) as unknown as ImageUrl)
+            field.onChange(data.map((d) => d.response?.data) as unknown as ImageUrl)
             return data
-
-
         } catch (err) {
             console.log('🚀 ~ file: FileUpload.tsx ~ line 56 ~ err', err)
             store.setUploadingImage(false)
@@ -74,13 +70,7 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                                 multiple
                                 accept="image/jpg, image/png, image/jpeg"
                             /> */}
-                            <ImageUploading
-
-                                multiple
-                                value={images}
-                                onChange={onFileDrop}
-                                maxNumber={maxNumber}
-                            >
+                            <ImageUploading multiple value={images} onChange={onFileDrop} maxNumber={maxNumber}>
                                 {({
                                     imageList,
                                     onImageUpload,
@@ -88,12 +78,12 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                                     onImageUpdate,
                                     onImageRemove,
                                     isDragging,
-                                    dragProps
+                                    dragProps,
                                 }) => (
                                     // write your building UI
                                     <div className="upload__image-wrapper">
                                         <button
-                                            style={isDragging ? { color: "red" } : undefined}
+                                            style={isDragging ? { color: 'red' } : undefined}
                                             onClick={onImageUpload}
                                             {...dragProps}
                                         >
