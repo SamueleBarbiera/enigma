@@ -18,8 +18,8 @@ export const validationSchema = z.object({
     name: z.string().min(2),
     misure: z.string().min(2),
     description: z.string().min(2),
-    price: z.number().min(1).default(1),
-    quantity: z.number().min(1).default(1),
+    price: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive().min(1)),
+    quantity: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive().min(1)),
     design: z.string().min(2),
     material: z.string().min(2),
 })
@@ -81,14 +81,14 @@ const AddProductPage = () => {
     }, [isSubmitSuccessful])
 
     const handleOnSubmit = async (values: {
-        price?: number | undefined
-        quantity?: number | undefined
         image: string[]
         name: string
+        misure: string
         description: string
+        price: number
+        quantity: number
         design: string
         material: string
-        misure: string
     }) => {
         let toastId
         try {

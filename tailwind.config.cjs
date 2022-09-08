@@ -1,17 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
     plugins: [
         require('@tailwindcss/forms'),
         require('prettier-plugin-tailwindcss'),
         require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/typography'),
         require('daisyui'),
     ],
     content: ['./src/**/*.{js,ts,jsx,tsx}'],
+
     daisyui: {
-        fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
-        },
+        styled: true,
+        base: true,
+        utils: true,
+        logs: true,
+        prefix: '',
+        darkTheme: 'dark',
     },
     theme: {
         container: {
@@ -30,6 +37,10 @@ module.exports = {
             '2xl': '1536px',
         },
         extend: {
+            fontFamily: {
+                sans: ['Proxima Nova', ...defaultTheme.fontFamily.sans],
+                poppins: ['Poppins', 'sans-serif'],
+            },
             spacing: {
                 94: '22rem',
                 120: '30rem',

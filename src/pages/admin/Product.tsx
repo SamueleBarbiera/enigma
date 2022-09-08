@@ -86,13 +86,19 @@ export default function Page() {
                                                             'group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-beige-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100'
                                                         }
                                                     >
-                                                        <Image
-                                                            layout="fill"
-                                                            height={32}
-                                                            width={32}
-                                                            src={file.image}
-                                                            alt={file.name}
-                                                        />
+                                                        {file.image.map((imgUrl, index) => {
+                                                            return (
+                                                                <Image
+                                                                    className="grid h-auto w-auto rounded-lg border shadow-md"
+                                                                    key={index}
+                                                                    src={imgUrl}
+                                                                    alt={'not found'}
+                                                                    height={32}
+                                                                    width={32}
+                                                                    layout="responsive"
+                                                                />
+                                                            )
+                                                        })}
                                                     </div>
                                                     <Modal
                                                         name={file.name}

@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { Controller, useController, useFormContext } from 'react-hook-form'
 import { ImageUrl } from 'src/types/IProduct'
 import useStore, { Store } from '../../hooks/index'
-import ImageUploading, { ImageListType } from 'react-images-uploading'
+import ImageUploading, { ImageListType, ImageType } from 'react-images-uploading'
+import Image from 'next/image'
 
 interface FileUpLoaderProps {
     name: string
@@ -16,8 +17,7 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
     } = useFormContext()
     const { field } = useController({ name, control })
     const store: Store = useStore()
-    const [images, setImages] = useState([])
-    const maxNumber = 69
+    const [images, setImages] = useState<never[]>([])
 
     const onFileDrop = async (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
         console.log(imageList, addUpdateIndex)
@@ -25,25 +25,24 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
 
         try {
             store.setUploadingImage(true)
-            const imagesRequests = imageList.map((file) =>
-                axios.post<AxiosResponse, AxiosError>(
+            const imagesRequests: Promise<AxiosError>[] = imageList.map((file: ImageType) =>
+                axios.post<AxiosResponse<ImageUrl>, AxiosError>(
                     `${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/data/productsImage`,
                     {
                         image: file,
                     }
                 )
             )
-            const data = await Promise.all(imagesRequests)
+            const data = await Promise.all<ImageUrl>(imagesRequests as Iterable<ImageUrl | PromiseLike<ImageUrl>>)
 
             console.log('🚀 ~ file: FileUpload.tsx ~ line 42 ~ data', data)
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            field.onChange(data.map((d) => d.response?.data) as unknown as ImageUrl)
+            field.onChange(data.map((d) => d.data.url))
             return data
         } catch (err) {
             console.log('🚀 ~ file: FileUpload.tsx ~ line 56 ~ err', err)
             store.setUploadingImage(false)
-            throw Error('Unable to update image')
         } finally {
             store.setUploadingImage(false)
             console.log('FINITOOOOOOOOOOO')
@@ -59,18 +58,14 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                 <>
                     <div className="mb-2 flex items-center justify-between">
                         <div>
-                            <span className="mb-2 block">Choose profile photo</span>
-                            {/* <input
-                                className="mb-2 block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
-                                type="file"
-                                name={name}
-                                onBlur={onBlur}
-                                ref={ref}
-                                onChange={onFileDrop}
+                            <ImageUploading
                                 multiple
-                                accept="image/jpg, image/png, image/jpeg"
-                            /> */}
-                            <ImageUploading multiple value={images} onChange={onFileDrop} maxNumber={maxNumber}>
+                                value={images}
+                                maxNumber={4}
+                                allowNonImageType={false}
+                                maxFileSize={4.096}
+                                onChange={onFileDrop}
+                            >
                                 {({
                                     imageList,
                                     onImageUpload,
@@ -79,10 +74,12 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                                     onImageRemove,
                                     isDragging,
                                     dragProps,
+                                    errors,
                                 }) => (
                                     // write your building UI
                                     <div className="upload__image-wrapper">
                                         <button
+                                            className="btn m-2 bg-beige-200 text-beige-900"
                                             style={isDragging ? { color: 'red' } : undefined}
                                             onClick={onImageUpload}
                                             {...dragProps}
@@ -90,16 +87,63 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                                             Click or Drop here
                                         </button>
                                         &nbsp;
-                                        <button onClick={onImageRemoveAll}>Remove all images</button>
+                                        <button
+                                            onClick={onImageRemoveAll}
+                                            className="btn m-2 bg-beige-400 text-beige-900"
+                                        >
+                                            Remove all images
+                                        </button>
                                         {imageList.map((image, index) => (
                                             <div key={index} className="image-item">
-                                                <img src={image.dataURL} alt="" width="100" />
+                                                <Image
+                                                    layout="responsive"
+                                                    width={64}
+                                                    height={64}
+                                                    className="h-full w-full rounded-md object-cover object-center shadow-md"
+                                                    src={image.dataURL ?? ''}
+                                                    alt=""
+                                                />
                                                 <div className="image-item__btn-wrapper">
-                                                    <button onClick={() => onImageUpdate(index)}>Update</button>
-                                                    <button onClick={() => onImageRemove(index)}>Remove</button>
+                                                    <button
+                                                        onClick={() => onImageUpdate(index)}
+                                                        className="btn m-2 bg-beige-200 text-beige-900"
+                                                    >
+                                                        Update
+                                                    </button>
+                                                    <button
+                                                        onClick={() => onImageRemove(index)}
+                                                        className="btn btn-error m-2"
+                                                    >
+                                                        Remove
+                                                    </button>
                                                 </div>
                                             </div>
                                         ))}
+                                        {errors ? (
+                                            <div className="alert alert-error shadow-lg">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="h-6 w-6 flex-shrink-0 stroke-current"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                    />
+                                                </svg>
+
+                                                {errors.maxNumber && (
+                                                    <span>Number of selected images exceed maxNumber</span>
+                                                )}
+                                                {errors.acceptType && <span>Your selected file type is not allow</span>}
+                                                {errors.maxFileSize && (
+                                                    <span>Selected file size exceed maxFileSize</span>
+                                                )}
+                                            </div>
+                                        ) : null}
                                     </div>
                                 )}
                             </ImageUploading>

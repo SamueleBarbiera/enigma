@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -10,11 +11,18 @@ import { Toaster } from 'react-hot-toast'
 import superjson from 'superjson'
 import { withTRPC } from '@trpc/next'
 import { AppRouter } from 'src/server/router'
-import { AppProps } from 'next/app'
+import type { NextComponentType, NextPageContext } from 'next/dist/shared/lib/utils'
+import { Session } from 'next-auth'
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({
+    Component,
+    pageProps: { session, ...pageProps },
+}: {
+    Component: NextComponentType<NextPageContext, unknown, unknown>
+    pageProps: { session: Session }
+}) => {
     return (
-        <SessionProvider session={pageProps.session}>
+        <SessionProvider session={session}>
             <CartProvider
                 cartMode="checkout-session"
                 stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ''}

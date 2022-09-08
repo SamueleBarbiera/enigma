@@ -3,9 +3,14 @@
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
 
+@layer base {
+    html {
+        font-family: Poppins, sans-serif;
+    }
+}
+
 html,
 body {
-    font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
     @apply overflow-x-hidden transition duration-200 ease-in-out;
     scrollbar-width: thin;

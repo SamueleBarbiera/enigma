@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/no-extra-semi */
 import { Product } from 'use-shopping-cart/core'
 
-/* eslint-disable @typescript-eslint/no-extra-semi */
-export interface IProduct extends Product {}
-
 export interface GetProductsResponse {
-    data: IProduct[]
+    data: Product[]
 }
 
 export interface ProductsData {
-    products: IProduct[]
+    products: Product[]
 }
 
 export interface ProdList {
@@ -27,8 +25,6 @@ export interface ProdList {
 
 export interface ImageUrl {
     data: Data
-    status: number
-    statusText: string
 }
 
 export interface Data {
@@ -44,6 +40,7 @@ export interface Filtri {
         checked: boolean
     }[]
 }
+// eslint-disable-next-line no-extra-semi
 ;[]
 
 export interface Options {

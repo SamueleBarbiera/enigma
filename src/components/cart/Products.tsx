@@ -322,7 +322,7 @@ const Products = () => {
                                             <Link href={`/Prodotti/${product.id}`} key={product.id}>
                                                 <Image
                                                     className="grid h-auto w-auto rounded-lg border shadow-md"
-                                                    src={product.image}
+                                                    src={product.image[1] ?? ''}
                                                     alt={'not found'}
                                                     width={64}
                                                     height={64}

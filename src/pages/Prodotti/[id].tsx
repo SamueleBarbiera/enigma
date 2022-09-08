@@ -298,7 +298,7 @@ export default function ProductPage() {
                                 </h3>
                                 <Disclosure.Panel
                                     as="div"
-                                    className="prose-sm duraiton-200 prose pb-6 transition ease-in-out"
+                                    className="duraiton-200 prose prose-sm pb-6 transition ease-in-out"
                                 >
                                     <p
                                         className="text-md font-normal tracking-tight text-beige-700"
