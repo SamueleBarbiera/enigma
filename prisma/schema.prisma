@@ -7,10 +7,308 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// generator dbml {
-//   provider = "prisma-dbml-generator"
-// }
+model address {
+  id            String    @id @default(cuid())
+  title       String    
+  type        String    
+  default     Boolean   @default(false)
+  address     Json      @db.Json
+  customer_id Int
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  users       User     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "address_customer_id_fk")
+}
 
+model attachments {
+  id         Int    @id @default(autoincrement())
+  url        String    @default("") 
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model attribute_product {
+  id            String    @id @default(cuid())
+  attribute_value_id Int
+  created_at         DateTime?        @default(now())
+  updated_at         DateTime?        @default(now())
+  attribute_values   attribute_values @relation(fields: [attribute_value_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attribute_product_attribute_value_id_fk")
+  Product           Product         @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attribute_product_product_id_fk")
+}
+
+model attribute_values {
+  id                Int              @id @default(autoincrement())
+  attribute_id      Int
+  value             String              
+  created_at        DateTime?           @default(now())
+  updated_at        DateTime?           @default(now())
+  meta              String?             
+  attributes        attributes          @relation(fields: [attribute_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "attribute_values_attribute_id_fk")
+  attribute_product attribute_product[]
+}
+
+model attributes {
+  id               Int             @id @default(autoincrement())
+  slug             String             
+  name             String             
+  created_at       DateTime?          @default(now())
+  updated_at       DateTime?          @default(now())
+  shop_id          Int?
+  attribute_values attribute_values[]
+}
+
+model balances {
+  id                    Int    @id @default(autoincrement())
+  shop_id               Int
+  admin_commission_rate Float?
+  total_earnings        Float     @default(0)
+  withdrawn_amount      Float     @default(0)
+  current_balance       Float     @default(0)
+  payment_info          Json?     @db.Json
+  created_at            DateTime? @default(now())
+  updated_at            DateTime? @default(now())
+}
+
+model banners {
+  id            String    @id @default(cuid())
+  type_id     Int
+  title       String
+  description String?
+  image       Json?     @db.Json
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  types       types     @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "banners_type_id_fk")
+}
+
+model categories {
+  id               Int             @id @default(autoincrement())
+  name             String             
+  slug             String             
+  icon             String?            
+  image            Json?              @db.Json
+  banner_image     Json?              @db.Json
+  details          String?
+  parent           Int?
+  created_at       DateTime?          @default(now())
+  updated_at       DateTime?          @default(now())
+  
+  categories       categories?        @relation("categoriesTocategories_parent", fields: [parent], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "categories_parent_fk")
+  other_categories categories[]       @relation("categoriesTocategories_parent")
+  category_product category_product[]
+}
+
+model category_product {
+  id            String    @id @default(cuid())
+  product_id  Int
+  category_id Int
+  categories  categories @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "category_product_category_id_fk")
+  Product    Product   @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "category_product_product_id_fk")
+}
+
+model coupons {
+  id            String    @id @default(cuid())
+  code        String    
+  description String?
+  image       Json?     @db.Json
+  type        String    @default("fixed") @db.VarChar(255)
+  amount      Float     @default(0)
+  active_from String    
+  expire_at   String    
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  
+}
+
+model failed_jobs {
+  id         Int   @id @default(autoincrement())
+  uuid       String   @unique(map: "failed_jobs_uuid_unique") 
+  connection String
+  queue      String
+  payload    String
+  exception  String
+  failed_at  DateTime @default(now()) 
+}
+
+model media {
+  id                    Int    @id @default(autoincrement())
+  model_type            String    
+  model_id              Int
+  uuid                  String?   @db.Uuid
+  collection_name       String    
+  name                  String    
+  file_name             String    
+  mime_type             String?   
+  disk                  String    
+  conversions_disk      String?   
+  size                  Int
+  manipulations         Json      @db.Json
+  generated_conversions Json      @db.Json
+  custom_properties     Json      @db.Json
+  responsive_images     Json      @db.Json
+  order_column          Int?
+  created_at            DateTime? @default(now())
+  updated_at            DateTime? @default(now())
+
+  @@index([model_type, model_id], map: "media_model_type_model_id_index")
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement())
+  migration String 
+  batch     Int
+}
+
+
+model order_product {
+ id            String    @id @default(cuid())
+  order_id            Int
+  product_id          Int
+  order_quantity      String             
+  unit_price          Float
+  subtotal            Float
+  deleted_at          DateTime?          @default(now())
+  created_at          DateTime?          @default(now())
+  updated_at          DateTime?          @default(now())
+  variation_option_id Int?
+  orders              orders             @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_product_order_id_fk")
+  Product            Product           @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_product_product_id_fk")
+  variation_options   variation_options? @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_product_variation_option_id_fk")
+}
+
+model order_status {
+  id         Int    @id @default(autoincrement())
+  name       String    
+  serial     Int
+  color      String?   
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+  orders     orders[]
+}
+
+model orders {
+id            String    @id @default(cuid())
+  tracking_number    String          @unique(map: "orders_tracking_number_unique") 
+  customer_id        Int
+  customer_contact   String          
+  status             Int
+  amount             Float
+  sales_tax          Float?
+  paid_total         Float?
+  total              Float?
+  coupon_id          Int?
+  discount           Float?
+  payment_id         String?         
+  payment_gateway    String?         
+  shipping_address   Json?           @db.Json
+  billing_address    Json?           @db.Json
+  logistics_provider Int?
+  delivery_fee       Float?
+  delivery_time      String?         
+  deleted_at         DateTime?       @default(now())
+  created_at         DateTime?       @default(now())
+  updated_at         DateTime?       @default(now())
+  shop_id            Int?
+  parent_id          Int?
+  users              User           @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_customer_id_fk")
+  orders             orders?         @relation("ordersToorders_parent_id", fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "orders_parent_id_fk")
+  order_status       order_status    @relation(fields: [status], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_status_fk")
+  order_product      order_product[]
+  other_orders       orders[]        @relation("ordersToorders_parent_id")
+}
+
+model product_tag {
+  id            String    @id @default(cuid())
+
+  tag_id     Int
+  Product   Product @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "product_tag_product_id_fk")
+  tags       tags     @relation(fields: [tag_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "product_tag_tag_id_fk")
+}
+
+
+
+model providers {
+  id            String    @id @default(cuid())
+  user_id          Int
+  provider_user_id String    
+  provider         String    
+  created_at       DateTime? @default(now())
+  updated_at       DateTime? @default(now())
+  users            User     @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "providers_user_id_fk")
+}
+
+
+
+model settings {
+  id         Int    @id @default(autoincrement())
+  options    Json      @db.Json
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+}
+
+model shipping_classes {
+  id         Int     @id @default(autoincrement())
+  name       String     
+  amount     Float
+  is_global  String     @default("1") 
+  type       String     @default("fixed") @db.VarChar(255)
+  created_at DateTime?  @default(now())
+  updated_at DateTime?  @default(now())
+  Product   Product[]
+}
+
+
+model tags {
+  id          Int        @id @default(autoincrement())
+  name        String        
+  slug        String        
+  icon        String?       
+  image       Json?         @db.Json
+  details     String?
+  created_at  DateTime?     @default(now())
+  updated_at  DateTime?     @default(now())
+  deleted_at  DateTime?     @default(now())
+  product_tag product_tag[]
+}
+
+model tax_classes {
+  id            String    @id @default(cuid())
+  country     String?   
+  state       String?   
+  zip         String?   
+  city        String?   
+  rate        Float
+  name        String?   
+  is_global   Int?
+  priority    Int?
+  on_shipping Boolean   @default(true)
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+}
+
+model types {
+  id                  Int     @id @default(autoincrement())
+  name                String     
+  slug                String     
+  icon                String?    
+  promotional_sliders Json?      @db.Json
+  images              Json?      @db.Json
+  created_at          DateTime?  @default(now())
+  updated_at          DateTime?  @default(now())
+  settings            Json?      @db.Json
+  banners             banners[]
+  Product            Product[]
+}
+
+model user_profiles {
+  id            String    @id @default(cuid())
+  avatar      Json?     @db.Json
+  bio         String?
+  socials     Json?     @db.Json
+  contact     String?   
+  customer_id Int
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  users       User     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_profiles_customer_id_fk")
+}
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -47,14 +345,15 @@ model User {
   role          Role      @default(USER)
   accounts      Account[]
   sessions      Session[]
+  
+  address                     address[]
+  orders                      orders[]
+  providers                   providers[] 
+  user_profiles               user_profiles[]
 }
 
 
 
-enum Role {
-  USER
-  ADMIN
-}
 
 model VerificationToken {
   identifier String
@@ -110,20 +409,71 @@ model Size {
 
 model Product {
   id          String    @id @default(cuid())
-  image       String[]
+  image       String
   description String
-  price       Float 
+  price       Float
   quantity    Int
   design      String
-  misure String
   material    String
   name        String   @unique
-  sku         String  @unique
-  price_id String 
-  sku_id String 
-  currency String
   created_at  DateTime  @default(now())
   updated_at  DateTime? @updatedAt
+  type_id           Int
+  sale_price        Float?
+  sku               String?             
+  in_stock          Boolean             @default(true)
+  is_taxable        Boolean             @default(false)
+  shipping_class_id Int?
+  status            String              @default("publish") @db.VarChar(255)
+  product_type      String              @default("simple") @db.VarChar(255)
+  unit              String              
+  max_price         Float?
+  min_price         Float?
+  video             Json?               @db.Json
+  shop_id           Int?
+  shipping_classes  shipping_classes?   @relation(fields: [shipping_class_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_shipping_class_id_fk")
+  types             types               @relation(fields: [type_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "products_type_id_fk")
+  attribute_product attribute_product[]
+  category_product  category_product[]
+  order_product     order_product[]
+  product_tag       product_tag[]
+  variation_options variation_options[]
   size        Size[]
   color       Color[]
+}
+
+
+
+model variation_options {
+ id String    @id @default(cuid())
+  title         String          
+  price         Float
+  sale_price    Float?
+  quantity      Int             @default(0)
+  is_disable    Boolean         @default(false)
+  sku           String?         
+  options       Json            @db.Json
+  product_id    Int?
+  created_at    DateTime?       @default(now())
+  updated_at    DateTime?       @default(now())
+  Product      Product?       @relation(fields: [id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "variation_options_product_id_fk")
+  order_product order_product[]
+}
+
+model withdraws {
+  id             Int    @id @default(autoincrement())
+  shop_id        Int
+  amount         Float
+  payment_method String?   
+  status         String    @default("pending") @db.VarChar(255)
+  details        String?
+  note           String?
+  
+  created_at     DateTime? @default(now())
+  updated_at     DateTime? @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
 }

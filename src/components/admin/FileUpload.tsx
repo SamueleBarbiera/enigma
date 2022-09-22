@@ -63,7 +63,6 @@ export default function FileUpLoader({ name }: FileUpLoaderProps) {
                                 value={images}
                                 maxNumber={4}
                                 allowNonImageType={false}
-                                maxFileSize={4.096}
                                 onChange={onFileDrop}
                             >
                                 {({

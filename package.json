@@ -16,7 +16,7 @@
         "start": "next start",
         "dev:1-db-gen": "prisma generate",
         "dev:2-db-push": "prisma db push",
-        "dev:3-db-seed": "prisma db seed",
+        "_dev:3-db-seed": "prisma db seed",
         "dev:4-db-migrate": "prisma migrate dev",
         "dev:5-run": "cross-env NODE_OPTIONS='--inspect' next dev",
         "build:1-generate": "prisma generate",

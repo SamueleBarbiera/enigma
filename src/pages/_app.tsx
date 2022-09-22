@@ -11,18 +11,12 @@ import { Toaster } from 'react-hot-toast'
 import superjson from 'superjson'
 import { withTRPC } from '@trpc/next'
 import { AppRouter } from 'src/server/router'
-import type { NextComponentType, NextPageContext } from 'next/dist/shared/lib/utils'
 import { Session } from 'next-auth'
+import { AppProps } from 'next/app'
 
-const MyApp = ({
-    Component,
-    pageProps: { session, ...pageProps },
-}: {
-    Component: NextComponentType<NextPageContext, unknown, unknown>
-    pageProps: { session: Session }
-}) => {
+const MyApp = ({ Component, pageProps }: AppProps<{ session: Session }>): JSX.Element => {
     return (
-        <SessionProvider session={session}>
+        <SessionProvider session={pageProps.session}>
             <CartProvider
                 cartMode="checkout-session"
                 stripe={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ''}

@@ -11,15 +11,6 @@ module.exports = {
         require('daisyui'),
     ],
     content: ['./src/**/*.{js,ts,jsx,tsx}'],
-
-    daisyui: {
-        styled: true,
-        base: true,
-        utils: true,
-        logs: true,
-        prefix: '',
-        darkTheme: 'dark',
-    },
     theme: {
         container: {
             center: true,
@@ -37,10 +28,6 @@ module.exports = {
             '2xl': '1536px',
         },
         extend: {
-            fontFamily: {
-                sans: ['Proxima Nova', ...defaultTheme.fontFamily.sans],
-                poppins: ['Poppins', 'sans-serif'],
-            },
             spacing: {
                 94: '22rem',
                 120: '30rem',

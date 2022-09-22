@@ -51,7 +51,8 @@
         "next.config.mjs",
         "tailwind.config.cjs",
         "postcss.config.cjs",
-        "next.config.mjs"
+        "next.config.mjs",
+        "src/components/admin/FormInputSIzes.tsx"
     ],
     "exclude": ["typings/browser.d.ts", "typings/browser", "node_modules"],
     "ts-node": {

@@ -29,6 +29,38 @@ export const createProdForm = createProtectedRouter()
                         quantity: input.quantity,
                         design: input.design,
                         material: input.material,
+                        color: {
+                            create: {
+                                purple: input.colors.purple,
+                                red: input.colors.red,
+                                orange: input.colors.orange,
+                                yellow: input.colors.yellow,
+                                black: input.colors.black,
+                                white: input.colors.white,
+                                pink: input.colors.pink,
+                                blue: input.colors.blue,
+                                sky: input.colors.sky,
+                                teal: input.colors.teal,
+                                green: input.colors.green,
+                                gray: input.colors.gray,
+                            },
+                        },
+                        size: {
+                            create: {
+                                xxs: input.sizes.xxs,
+                                xs: input.sizes.xs,
+                                s: input.sizes.s,
+                                m: input.sizes.m,
+                                l: input.sizes.l,
+                                xl: input.sizes.xl,
+                                xxl: input.sizes.xxl,
+                                xxxl: input.sizes.xxxl,
+                            },
+                        },
+                    },
+                    include: {
+                        color: true,
+                        size: true,
                     },
                 })
             } catch (error) {

@@ -12,6 +12,23 @@ import { TypeOf, z } from 'zod'
 import { GetServerSidePropsContext } from 'next'
 import { unstable_getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]'
+//import FormInputSIzes from '@/components/admin/FormInputSIzes'
+import FormInputColors from '@/components/admin/FormInputColors'
+
+export const ColorSchema = z.enum([
+    'red',
+    'orange',
+    'yellow',
+    'black',
+    'white',
+    'pink',
+    'blue',
+    'sky',
+    'teal',
+    'green',
+    'gray',
+])
+export const SizesSchema = z.enum(['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl'])
 
 export const validationSchema = z.object({
     image: z.string().min(1, 'Photo is required').url('Photo URL is invalid').array(),
@@ -22,6 +39,8 @@ export const validationSchema = z.object({
     quantity: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive().min(1)),
     design: z.string().min(2),
     material: z.string().min(2),
+    sizes: SizesSchema.array(),
+    colors: ColorSchema.array(),
 })
 
 export type AddProductInput = TypeOf<typeof validationSchema>
@@ -33,10 +52,7 @@ function useZodForm<TSchema extends z.ZodType>(
 ) {
     const form = useForm<TSchema['_input']>({
         ...props,
-        resolver: zodResolver(props.schema, undefined, {
-            // This makes it so we can use `.transform()`s on the schema without same transform getting applied again when it reaches the server
-            rawValues: true,
-        }),
+        resolver: zodResolver(props.schema, undefined, { rawValues: true }),
     })
 
     return form
@@ -44,6 +60,8 @@ function useZodForm<TSchema extends z.ZodType>(
 
 const AddProductPage = () => {
     const [isLoading, setisLoading] = useState<boolean>(false)
+    const [ErrorMsg, setErrorMsg] = useState<string>('')
+    const [isError, setError] = useState<boolean>(false)
 
     const { mutate: MutationOn } = trpc.useMutation(['createProduct.add'], {
         onError: (error) => {
@@ -57,6 +75,8 @@ const AddProductPage = () => {
         schema: validationSchema,
         defaultValues: {
             image: [''],
+            sizes: ['m', 's'],
+            colors: ['black', 'blue'],
             description: '',
             price: 1,
             quantity: 1,
@@ -77,10 +97,22 @@ const AddProductPage = () => {
         if (isSubmitSuccessful) {
             reset()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSubmitSuccessful])
+    }, [isSubmitSuccessful, reset])
 
     const handleOnSubmit = async (values: {
+        colors: (
+            | 'black'
+            | 'red'
+            | 'orange'
+            | 'yellow'
+            | 'white'
+            | 'pink'
+            | 'blue'
+            | 'sky'
+            | 'teal'
+            | 'green'
+            | 'gray'
+        )[]
         image: string[]
         name: string
         misure: string
@@ -89,6 +121,7 @@ const AddProductPage = () => {
         quantity: number
         design: string
         material: string
+        sizes: ('xl' | 'xs' | 'xxs' | 's' | 'm' | 'l' | 'xxl' | 'xxxl')[]
     }) => {
         let toastId
         try {
@@ -96,21 +129,22 @@ const AddProductPage = () => {
             setisLoading(true)
             MutationOn(values)
         } catch (err) {
-            setisLoading(true)
+            console.log('🚀 ~ file: Add.tsx ~ line 144 ~ AddProductPage ~ err', err)
+            setError(true)
             let message
             if (err instanceof Error) message = err.message
             else message = String(err)
+            setErrorMsg(message)
             toast.error(`Unable to submit ${message}`, { id: toastId })
         } finally {
             setisLoading(false)
-
             toast.success('Prodotto pubblicato', { id: toastId })
         }
     }
 
     return (
         <Layout>
-            <div className="flex h-full flex-col items-center justify-center">
+            <div className="flex h-screen flex-col items-center justify-center">
                 <h2 className="text-2xl font-bold">Add a product</h2>
                 <section className="bg-ct-blue-600 grid min-h-screen place-items-center py-8">
                     <div className="w-full">
@@ -126,9 +160,11 @@ const AddProductPage = () => {
                                 <FormInput label="Quantità" name="quantity" type="number" />
                                 <FormInput label="Design" name="design" type="text" />
                                 <FormInput label="Materiale" name="material" type="text" />
+                                {/* <FormInputSIzes label="Taglie" name="sizes" data={["xxs", "xs", "s", "m", "l", "xl", "xxl", "xxxl"]} /> */}
+                                <FormInputColors label="Colori" name="colors" options={ColorSchema.options} />
                                 <FileUpLoader name="image" />
                                 <ButtonForm loading={isLoading} textColor="text-ct-blue-600">
-                                    {isLoading ? 'Loading' : 'Submit'}
+                                    {isLoading ? 'Loading' : isError ? ErrorMsg : 'Submit'}
                                 </ButtonForm>
                             </form>
                         </FormProvider>
